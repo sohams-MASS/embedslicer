@@ -1,5 +1,3 @@
-import os
-
 from embedslicer.main import run
 
 
@@ -10,7 +8,7 @@ def _downward_transitions(ordered, eps=1e-3):
 
 def test_bunny_end_to_end(bunny_path, tmp_path):
     out = tmp_path / "bunny.gcode"
-    plan, layers, ordered = run(
+    plan, _layers, ordered = run(
         bunny_path,
         output=str(out),
         layer_height=0.2,
