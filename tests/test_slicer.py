@@ -1,4 +1,26 @@
+import trimesh
+
 from embedslicer.slicer import slice_mesh
+
+
+def test_islands_keep_true_world_xy_when_offset_varies_by_height():
+    # A 'leaning' object: a lower block centered at world x=0 (z 0..2) and an
+    # upper block centered at world x=4 (z 2..4). Each layer's true world X
+    # depends on height. The slicer must preserve that. trimesh's to_2D()
+    # recenters every section on its own origin, which collapsed all layers to
+    # ~x=0 and scrambled the stacked model -- this guards against that.
+    low = trimesh.creation.box(extents=[3, 3, 2])
+    low.apply_translation([0, 0, 1])  # x centered at 0, z 0..2
+    high = trimesh.creation.box(extents=[3, 3, 2])
+    high.apply_translation([4, 0, 3])  # x centered at 4, z 2..4
+    mesh = trimesh.util.concatenate([low, high])
+
+    layers = slice_mesh(mesh, layer_height=0.5, min_island_area=0.1)
+    low_layers = [l for l in layers if l.z < 2.0 and l.islands]
+    high_layers = [l for l in layers if l.z > 2.0 and l.islands]
+    assert low_layers and high_layers
+    assert all(abs(l.islands[0].centroid.x - 0.0) < 0.1 for l in low_layers)
+    assert all(abs(l.islands[0].centroid.x - 4.0) < 0.1 for l in high_layers)
 
 
 def test_y_mesh_island_counts(y_mesh):

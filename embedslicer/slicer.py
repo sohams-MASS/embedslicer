@@ -1,8 +1,25 @@
 import warnings
 
 import numpy as np
+from shapely.affinity import affine_transform
 
 from .model import Layer
+
+
+def _planar_to_world(poly, to_3D):
+    """Map a polygon from trimesh's recentered 2D section frame back to world XY.
+
+    `section.to_2D()` recenters each layer's coordinates on that section's own
+    origin, so the raw planar polygons lose their true XY position. The returned
+    to_3D transform inverts that; for our Z-normal slices its rotation is
+    identity, so this restores each layer's true world offset (and any rotation,
+    in the general case). Without this, every layer is recentered independently
+    and the stacked model is scrambled.
+    """
+    a, b = to_3D[0, 0], to_3D[0, 1]
+    d, e = to_3D[1, 0], to_3D[1, 1]
+    xoff, yoff = to_3D[0, 3], to_3D[1, 3]
+    return affine_transform(poly, [a, b, d, e, xoff, yoff])
 
 
 def _iter_polys(geom):
@@ -36,9 +53,10 @@ def slice_mesh(mesh, layer_height, min_island_area=0.0):
             islands = []
             section = mesh.section(plane_origin=[0, 0, z], plane_normal=[0, 0, 1])
             if section is not None:
-                planar, _ = section.to_2D()
+                planar, to_3D = section.to_2D()
+                to_3D = np.asarray(to_3D)
                 for poly in _iter_polys(planar.polygons_full):
                     if poly.area >= min_island_area:
-                        islands.append(poly)
+                        islands.append(_planar_to_world(poly, to_3D))
             layers.append(Layer(index=i, z=z, islands=islands))
     return layers
