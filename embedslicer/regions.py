@@ -48,6 +48,10 @@ def _span(comp):
     return max(levels) - min(levels) + 1
 
 
+def _base_layer(comp):
+    return min(li for li, _ in comp)
+
+
 def _base_centroid_x(comp, layers):
     li = min(level for level, _ in comp)
     ii = next(i for level, i in comp if level == li)
@@ -84,7 +88,7 @@ def _plan(nodes, adj, layers, k):
                     key=lambda i: abs(_base_centroid_x(list(branches[i]), layers) - cx),
                 )
                 branches[nearest].update(c)
-            branches.sort(key=lambda b: _base_centroid_x(list(b), layers))
+            branches.sort(key=lambda b: (_base_layer(list(b)), _base_centroid_x(list(b), layers)))
             result = []
             if trunk:
                 result.append(trunk)

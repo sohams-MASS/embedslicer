@@ -38,3 +38,55 @@ def test_each_group_is_bottom_up(y_mesh):
     for group in plan:
         layer_indices = [li for li, _ in group]
         assert layer_indices == sorted(layer_indices)
+
+
+def test_rootless_fragment_does_not_print_first():
+    # A rooted body (layers 0-3, at x=10) and a graph-disconnected fragment
+    # (layers 4-7, at x=0) that does NOT overlap the body. The rooted body must
+    # be printed before the floating fragment, regardless of centroid x.
+    from shapely.geometry import box
+
+    from embedslicer.model import Layer
+
+    layers = []
+    for i in range(4):
+        layers.append(Layer(index=i, z=float(i), islands=[box(10, 0, 12, 2)]))
+    for i in range(4, 8):
+        layers.append(Layer(index=i, z=float(i), islands=[box(0, 0, 2, 2)]))
+
+    plan = build_plan(layers, min_branch_layers=3)
+    base_layers = [min(li for li, _ in g) for g in plan]
+    # non-decreasing base layers -> no group prints above an un-printed support
+    assert base_layers == sorted(base_layers)
+    # printing starts at the bottom
+    assert 0 in {li for li, _ in plan[0]}
+
+
+def test_nested_split_recurses():
+    # Trunk (0-2) splits into left and right (3-5); the right branch itself
+    # splits into two prongs (6-8). Exercises the recursion.
+    from shapely.geometry import box
+
+    from embedslicer.model import Layer
+
+    layers = []
+    for i in range(3):
+        layers.append(Layer(index=i, z=float(i), islands=[box(0, 0, 20, 2)]))
+    for i in range(3, 6):
+        layers.append(Layer(index=i, z=float(i), islands=[box(2, 0, 4, 2), box(10, 0, 18, 2)]))
+    for i in range(6, 9):
+        layers.append(
+            Layer(
+                index=i,
+                z=float(i),
+                islands=[box(2, 0, 4, 2), box(10, 0, 12, 2), box(16, 0, 18, 2)],
+            )
+        )
+
+    plan = build_plan(layers, min_branch_layers=2)
+    # trunk + left + (right-trunk + 2 prongs) => at least 4 groups (nested split happened)
+    assert len(plan) >= 4
+    assert 0 in {li for li, _ in plan[0]}  # trunk prints first
+    for g in plan:
+        lis = [li for li, _ in g]
+        assert lis == sorted(lis)  # every group bottom-up
