@@ -20,10 +20,19 @@ def test_two_perimeters_offset_inward():
 
 
 def test_buffer_empty_stops_early():
-    sq = box(0, 0, 1, 1)
-    # 5 requested, but a 1x1 square can't hold that many 1mm-wide loops
+    sq = box(0, 0, 5, 5)
+    # 5 loops requested, but a 5x5 square only holds 2 full 1mm-wide loops
+    # (offsets -0.5 -> 4x4, -1.5 -> 2x2, -2.5 -> empty) so it stops early.
     paths = generate_perimeters(sq, line_width=1.0, perimeters=5)
     assert 0 < len(paths) < 5
+
+
+def test_thin_island_below_line_width_produces_no_loops():
+    # An island thinner than one line width yields no perimeters (known
+    # limitation: no thin-wall/gap-fill handling).
+    sq = box(0, 0, 0.5, 0.5)
+    paths = generate_perimeters(sq, line_width=1.0, perimeters=3)
+    assert paths == []
 
 
 def test_holes_produce_inner_loops():

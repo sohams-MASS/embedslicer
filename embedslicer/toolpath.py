@@ -19,30 +19,17 @@ def _ring_to_path(ring):
 
 
 def generate_perimeters(polygon, line_width, perimeters):
-    """Return inward-offset perimeter loops (exterior + any interior rings)."""
+    """Return inward-offset perimeter loops (exterior + any interior rings).
+
+    Buffers inward by line_width per loop and stops once the region is
+    exhausted. Islands thinner than one line width produce no loops (no
+    thin-wall / gap-fill handling in this version).
+    """
     paths = []
     for i in range(perimeters):
         offset = -line_width * (i + 0.5)
         shrunk = polygon.buffer(offset, join_style=2)  # 2 = mitre
         if shrunk.is_empty:
-            # Region exhausted for this offset. If we already have loops,
-            # stop. If this is the first (thinnest) loop and the island is
-            # simply too thin to hold a full-width loop, back the offset
-            # magnitude off until a valid centerline loop appears, emit it,
-            # then stop.
-            if paths or polygon.is_empty:
-                break
-            for _ in range(64):
-                offset *= 0.9
-                shrunk = polygon.buffer(offset, join_style=2)
-                if not shrunk.is_empty:
-                    break
-            if shrunk.is_empty:
-                break
-            for poly in _iter_polys(shrunk):
-                paths.append(_ring_to_path(poly.exterior))
-                for interior in poly.interiors:
-                    paths.append(_ring_to_path(interior))
             break
         for poly in _iter_polys(shrunk):
             paths.append(_ring_to_path(poly.exterior))
