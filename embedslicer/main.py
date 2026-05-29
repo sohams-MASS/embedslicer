@@ -13,6 +13,7 @@ def run(
     perimeters=2,
     min_island_area=0.2,
     min_branch_layers=3,
+    smoothing=0.05,
     print_feedrate=600.0,
     travel_feedrate=1800.0,
     preview=None,
@@ -20,7 +21,7 @@ def run(
     m = mesh.load_oriented(input_path, scale=scale, up_axis=up_axis)
     layers = slicer.slice_mesh(m, layer_height, min_island_area)
     plan = regions.build_plan(layers, min_branch_layers)
-    ordered = sequencer.order_paths(plan, layers, line_width, perimeters)
+    ordered = sequencer.order_paths(plan, layers, line_width, perimeters, smoothing=smoothing)
     text = gcode.write_gcode(ordered, print_feedrate, travel_feedrate)
     with open(output, "w") as f:
         f.write(text)
@@ -31,7 +32,7 @@ def run(
     if preview:
         from . import preview as preview_mod
 
-        preview_mod.render(plan, layers, preview, line_width, perimeters)
+        preview_mod.render(plan, layers, preview, line_width, perimeters, smoothing)
     return plan, layers, ordered
 
 
@@ -46,6 +47,12 @@ def main(argv=None):
     p.add_argument("--perimeters", type=int, default=2)
     p.add_argument("--min-island-area", type=float, default=0.2)
     p.add_argument("--min-branch-layers", type=int, default=3)
+    p.add_argument(
+        "--smoothing",
+        type=float,
+        default=0.05,
+        help="contour smoothing tolerance in mm (0 = off; larger = smoother)",
+    )
     p.add_argument("--print-feedrate", type=float, default=600.0)
     p.add_argument("--travel-feedrate", type=float, default=1800.0)
     p.add_argument("--preview", default=None, help="path to write a top-view PNG")
@@ -60,6 +67,7 @@ def main(argv=None):
         perimeters=a.perimeters,
         min_island_area=a.min_island_area,
         min_branch_layers=a.min_branch_layers,
+        smoothing=a.smoothing,
         print_feedrate=a.print_feedrate,
         travel_feedrate=a.travel_feedrate,
         preview=a.preview,
