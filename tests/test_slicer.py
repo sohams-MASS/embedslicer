@@ -1,6 +1,19 @@
 import trimesh
+from shapely.geometry import Polygon
 
-from embedslicer.slicer import slice_mesh
+from embedslicer.slicer import _drop_small_holes, slice_mesh
+
+
+def test_drop_small_holes_removes_speckle_keeps_real_cavity():
+    outer = [(0, 0), (20, 0), (20, 20), (0, 20)]
+    big_hole = [(5, 5), (15, 5), (15, 15), (5, 15)]  # area 100
+    speckle = [(1, 1), (1.3, 1), (1.3, 1.3), (1, 1.3)]  # area ~0.09
+    poly = Polygon(outer, [big_hole, speckle])
+    cleaned = _drop_small_holes(poly, min_area=0.2)
+    assert len(list(cleaned.interiors)) == 1
+    assert cleaned.interiors[0].is_ring
+    # the kept hole is the large cavity
+    assert Polygon(cleaned.interiors[0]).area > 50
 
 
 def test_islands_keep_true_world_xy_when_offset_varies_by_height():

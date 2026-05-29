@@ -60,6 +60,14 @@ def smooth_polygon(polygon, tolerance=0.05, point_spacing=0.3):
         holes.append(LinearRing(sm) if sm is not None else interior)
 
     result = Polygon(shell, holes)
-    if not result.is_valid or result.is_empty:
+    if result.is_valid and not result.is_empty:
+        return result
+    # Smoothing rings independently can make them touch/cross (common on the
+    # bunny's messy hollow base). Repair instead of discarding the smoothing
+    # and falling back to the raw jagged contour.
+    repaired = result.buffer(0)
+    if repaired.is_empty:
         return polygon
-    return result
+    if repaired.geom_type == "MultiPolygon":
+        repaired = max(repaired.geoms, key=lambda g: g.area)
+    return repaired if repaired.is_valid else polygon

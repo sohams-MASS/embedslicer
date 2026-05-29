@@ -2,8 +2,24 @@ import warnings
 
 import numpy as np
 from shapely.affinity import affine_transform
+from shapely.geometry import Polygon
 
 from .model import Layer
+
+
+def _drop_small_holes(poly, min_area):
+    """Remove interior rings (holes) smaller than min_area.
+
+    The Stanford bunny's reconstructed base produces speckle holes (sub-mm^2)
+    that are mesh noise, not real cavities. Dropping them stops them from
+    becoming jagged inner perimeters.
+    """
+    if min_area <= 0 or not poly.interiors:
+        return poly
+    kept = [r for r in poly.interiors if Polygon(r).area >= min_area]
+    if len(kept) == len(poly.interiors):
+        return poly
+    return Polygon(poly.exterior, kept)
 
 
 def _planar_to_world(poly, to_3D):
@@ -57,6 +73,7 @@ def slice_mesh(mesh, layer_height, min_island_area=0.0):
                 to_3D = np.asarray(to_3D)
                 for poly in _iter_polys(planar.polygons_full):
                     if poly.area >= min_island_area:
-                        islands.append(_planar_to_world(poly, to_3D))
+                        world = _planar_to_world(poly, to_3D)
+                        islands.append(_drop_small_holes(world, min_island_area))
             layers.append(Layer(index=i, z=z, islands=islands))
     return layers
