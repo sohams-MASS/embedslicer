@@ -5,8 +5,6 @@ Usage:
     python render_temporal_3d.py [input.ply] [output.html]
 """
 
-import sys
-
 import plotly.graph_objects as go
 from cmcrameri import cm as cmc
 
@@ -21,15 +19,15 @@ def batlow_plotly_scale(n=256):
     return scale
 
 
-def build_figure(input_path):
+def build_figure(input_path, line_width=0.4, min_branch_layers=3):
     _, _, ordered = run(
         input_path,
         output="/tmp/_render.gcode",
         layer_height=0.2,
-        line_width=0.4,
+        line_width=line_width,
         perimeters=2,
         min_island_area=0.2,
-        min_branch_layers=3,
+        min_branch_layers=min_branch_layers,
     )
     n = len(ordered)
     colorscale = batlow_plotly_scale()
@@ -98,11 +96,16 @@ def build_figure(input_path):
 
 
 def main():
-    input_path = sys.argv[1] if len(sys.argv) > 1 else "bunny.ply"
-    output_html = sys.argv[2] if len(sys.argv) > 2 else "bunny_3d.html"
-    fig = build_figure(input_path)
-    fig.write_html(output_html, include_plotlyjs=True, full_html=True)
-    print(f"wrote {output_html}")
+    import argparse
+    p = argparse.ArgumentParser()
+    p.add_argument("input", nargs="?", default="bunny.ply")
+    p.add_argument("output", nargs="?", default="bunny_3d.html")
+    p.add_argument("--line-width", type=float, default=0.4)
+    p.add_argument("--min-branch-layers", type=int, default=3)
+    a = p.parse_args()
+    fig = build_figure(a.input, line_width=a.line_width, min_branch_layers=a.min_branch_layers)
+    fig.write_html(a.output, include_plotlyjs=True, full_html=True)
+    print(f"wrote {a.output}")
 
 
 if __name__ == "__main__":
