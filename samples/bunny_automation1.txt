@@ -16,13 +16,13 @@ program
 end
 
 function print_network($jog_speed as real, $print_speed as real, $X_start as real, $Y_start as real, $Z_print as real, $Z_safe as real, $dwell_start as real, $dwell_end as real)
-; Automation1 Aerotech program
+; Automation1 Aerotech program — direct travel between passes (no safe-Z bouncing)
 
-; Print Pass 0 
-G1 X ($X_start+-1.8632) Y ($Y_start+-1.7158) F $jog_speed
-G1 A ($Z_print+-6.1228) F $jog_speed
 VelocityBlendingOn()
 CornerRoundingOn()
+
+; Print Pass 0 
+G1 X ($X_start+-1.8632) Y ($Y_start+-1.7158) A ($Z_print+-6.1228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-1.8632) Y ($Y_start+-1.7158) A ($Z_print+-6.1228) F $print_speed
 G1 X ($X_start+-1.8904) Y ($Y_start+-1.7151) A ($Z_print+-6.1228) F $print_speed
@@ -103,17 +103,10 @@ G1 X ($X_start+-2.2897) Y ($Y_start+-1.2645) A ($Z_print+-6.1228) F $print_speed
 G1 X ($X_start+-2.0625) Y ($Y_start+-1.5064) A ($Z_print+-6.1228) F $print_speed
 G1 X ($X_start+-1.8692) Y ($Y_start+-1.7084) A ($Z_print+-6.1228) F $print_speed
 G1 X ($X_start+-1.8632) Y ($Y_start+-1.7158) A ($Z_print+-6.1228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 1 
-G1 X ($X_start+-3.1650) Y ($Y_start+-0.3225) F $jog_speed
-G1 A ($Z_print+-6.1228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-3.1650) Y ($Y_start+-0.3225) A ($Z_print+-6.1228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-3.1650) Y ($Y_start+-0.3225) A ($Z_print+-6.1228) F $print_speed
 G1 X ($X_start+-3.3019) Y ($Y_start+-0.1252) A ($Z_print+-6.1228) F $print_speed
@@ -139,17 +132,10 @@ G1 X ($X_start+-2.2826) Y ($Y_start+0.7886) A ($Z_print+-6.1228) F $print_speed
 G1 X ($X_start+-2.7317) Y ($Y_start+0.5549) A ($Z_print+-6.1228) F $print_speed
 G1 X ($X_start+-3.0520) Y ($Y_start+0.1542) A ($Z_print+-6.1228) F $print_speed
 G1 X ($X_start+-3.1650) Y ($Y_start+-0.3225) A ($Z_print+-6.1228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 2 
-G1 X ($X_start+0.2444) Y ($Y_start+-4.2503) F $jog_speed
-G1 A ($Z_print+-5.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+0.2444) Y ($Y_start+-4.2503) A ($Z_print+-5.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+0.2444) Y ($Y_start+-4.2503) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+0.0094) Y ($Y_start+-4.2033) A ($Z_print+-5.9228) F $print_speed
@@ -258,17 +244,10 @@ G1 X ($X_start+1.0038) Y ($Y_start+-4.0999) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+0.7387) Y ($Y_start+-4.1893) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+0.4861) Y ($Y_start+-4.2429) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+0.2444) Y ($Y_start+-4.2503) A ($Z_print+-5.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 3 
-G1 X ($X_start+4.4777) Y ($Y_start+-1.2436) F $jog_speed
-G1 A ($Z_print+-5.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+4.4777) Y ($Y_start+-1.2436) A ($Z_print+-5.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+4.4777) Y ($Y_start+-1.2436) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+4.7427) Y ($Y_start+-1.2123) A ($Z_print+-5.9228) F $print_speed
@@ -287,17 +266,10 @@ G1 X ($X_start+4.2984) Y ($Y_start+-0.6144) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+4.2856) Y ($Y_start+-0.8209) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+4.3233) Y ($Y_start+-1.0312) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+4.4777) Y ($Y_start+-1.2436) A ($Z_print+-5.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 4 
-G1 X ($X_start+0.7826) Y ($Y_start+-3.5931) F $jog_speed
-G1 A ($Z_print+-5.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+0.7826) Y ($Y_start+-3.5931) A ($Z_print+-5.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+0.7826) Y ($Y_start+-3.5931) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+1.1061) Y ($Y_start+-3.5851) A ($Z_print+-5.9228) F $print_speed
@@ -369,17 +341,10 @@ G1 X ($X_start+-0.2085) Y ($Y_start+-3.3739) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+0.1058) Y ($Y_start+-3.4960) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+0.4432) Y ($Y_start+-3.5655) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+0.7826) Y ($Y_start+-3.5931) A ($Z_print+-5.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 5 
-G1 X ($X_start+-1.8682) Y ($Y_start+1.7925) F $jog_speed
-G1 A ($Z_print+-5.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-1.8682) Y ($Y_start+1.7925) A ($Z_print+-5.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-1.8682) Y ($Y_start+1.7925) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+-1.8603) Y ($Y_start+1.4392) A ($Z_print+-5.9228) F $print_speed
@@ -434,17 +399,10 @@ G1 X ($X_start+-2.6985) Y ($Y_start+1.4294) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+-2.4184) Y ($Y_start+1.5251) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+-2.1259) Y ($Y_start+1.6371) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+-1.8682) Y ($Y_start+1.7925) A ($Z_print+-5.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 6 
-G1 X ($X_start+4.2861) Y ($Y_start+-1.9662) F $jog_speed
-G1 A ($Z_print+-5.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+4.2861) Y ($Y_start+-1.9662) A ($Z_print+-5.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+4.2861) Y ($Y_start+-1.9662) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+4.2856) Y ($Y_start+-1.9451) A ($Z_print+-5.9228) F $print_speed
@@ -479,17 +437,10 @@ G1 X ($X_start+4.2921) Y ($Y_start+-1.6683) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+4.3905) Y ($Y_start+-1.6567) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+4.3060) Y ($Y_start+-1.8949) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+4.2861) Y ($Y_start+-1.9662) A ($Z_print+-5.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 7 
-G1 X ($X_start+-0.4404) Y ($Y_start+3.3379) F $jog_speed
-G1 A ($Z_print+-5.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-0.4404) Y ($Y_start+3.3379) A ($Z_print+-5.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-0.4404) Y ($Y_start+3.3379) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+-0.5056) Y ($Y_start+3.3253) A ($Z_print+-5.9228) F $print_speed
@@ -503,17 +454,10 @@ G1 X ($X_start+-0.9232) Y ($Y_start+3.3176) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+-0.7801) Y ($Y_start+3.3525) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+-0.5846) Y ($Y_start+3.3564) A ($Z_print+-5.9228) F $print_speed
 G1 X ($X_start+-0.4404) Y ($Y_start+3.3379) A ($Z_print+-5.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 8 
-G1 X ($X_start+0.2284) Y ($Y_start+-4.3104) F $jog_speed
-G1 A ($Z_print+-5.7228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+0.2284) Y ($Y_start+-4.3104) A ($Z_print+-5.7228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+0.2284) Y ($Y_start+-4.3104) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+-0.0053) Y ($Y_start+-4.2572) A ($Z_print+-5.7228) F $print_speed
@@ -625,17 +569,10 @@ G1 X ($X_start+0.9659) Y ($Y_start+-4.1528) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+0.7066) Y ($Y_start+-4.2492) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+0.4618) Y ($Y_start+-4.3052) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+0.2284) Y ($Y_start+-4.3104) A ($Z_print+-5.7228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 9 
-G1 X ($X_start+1.1353) Y ($Y_start+-3.3407) F $jog_speed
-G1 A ($Z_print+-5.7228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+1.1353) Y ($Y_start+-3.3407) A ($Z_print+-5.7228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+1.1353) Y ($Y_start+-3.3407) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+1.4525) Y ($Y_start+-3.3055) A ($Z_print+-5.7228) F $print_speed
@@ -705,17 +642,10 @@ G1 X ($X_start+0.2083) Y ($Y_start+-3.3025) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+0.5141) Y ($Y_start+-3.3621) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+0.8238) Y ($Y_start+-3.3656) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+1.1353) Y ($Y_start+-3.3407) A ($Z_print+-5.7228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 10 
-G1 X ($X_start+-1.6874) Y ($Y_start+1.9286) F $jog_speed
-G1 A ($Z_print+-5.7228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-1.6874) Y ($Y_start+1.9286) A ($Z_print+-5.7228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-1.6874) Y ($Y_start+1.9286) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+-1.6995) Y ($Y_start+1.8920) A ($Z_print+-5.7228) F $print_speed
@@ -789,17 +719,10 @@ G1 X ($X_start+-2.6189) Y ($Y_start+1.3165) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+-2.2617) Y ($Y_start+1.4507) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+-1.9085) Y ($Y_start+1.6763) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+-1.6874) Y ($Y_start+1.9286) A ($Z_print+-5.7228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 11 
-G1 X ($X_start+3.5385) Y ($Y_start+-3.0680) F $jog_speed
-G1 A ($Z_print+-5.7228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+3.5385) Y ($Y_start+-3.0680) A ($Z_print+-5.7228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+3.5385) Y ($Y_start+-3.0680) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+3.7670) Y ($Y_start+-2.8845) A ($Z_print+-5.7228) F $print_speed
@@ -857,17 +780,10 @@ G1 X ($X_start+3.9255) Y ($Y_start+-2.9257) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+3.7520) Y ($Y_start+-3.0066) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+3.5491) Y ($Y_start+-3.0661) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+3.5385) Y ($Y_start+-3.0680) A ($Z_print+-5.7228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 12 
-G1 X ($X_start+-0.2178) Y ($Y_start+3.2684) F $jog_speed
-G1 A ($Z_print+-5.7228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-0.2178) Y ($Y_start+3.2684) A ($Z_print+-5.7228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-0.2178) Y ($Y_start+3.2684) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+-0.5524) Y ($Y_start+3.1750) A ($Z_print+-5.7228) F $print_speed
@@ -882,17 +798,10 @@ G1 X ($X_start+-0.8478) Y ($Y_start+3.2529) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+-0.6649) Y ($Y_start+3.2820) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+-0.4281) Y ($Y_start+3.2858) A ($Z_print+-5.7228) F $print_speed
 G1 X ($X_start+-0.2178) Y ($Y_start+3.2684) A ($Z_print+-5.7228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 13 
-G1 X ($X_start+0.2954) Y ($Y_start+-4.3090) F $jog_speed
-G1 A ($Z_print+-5.5228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+0.2954) Y ($Y_start+-4.3090) A ($Z_print+-5.5228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+0.2954) Y ($Y_start+-4.3090) A ($Z_print+-5.5228) F $print_speed
 G1 X ($X_start+0.0515) Y ($Y_start+-4.2582) A ($Z_print+-5.5228) F $print_speed
@@ -1006,17 +915,10 @@ G1 X ($X_start+1.0163) Y ($Y_start+-4.1386) A ($Z_print+-5.5228) F $print_speed
 G1 X ($X_start+0.7671) Y ($Y_start+-4.2398) A ($Z_print+-5.5228) F $print_speed
 G1 X ($X_start+0.5292) Y ($Y_start+-4.3001) A ($Z_print+-5.5228) F $print_speed
 G1 X ($X_start+0.2954) Y ($Y_start+-4.3090) A ($Z_print+-5.5228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 14 
-G1 X ($X_start+0.3290) Y ($Y_start+-3.9074) F $jog_speed
-G1 A ($Z_print+-5.5228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+0.3290) Y ($Y_start+-3.9074) A ($Z_print+-5.5228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+0.3290) Y ($Y_start+-3.9074) A ($Z_print+-5.5228) F $print_speed
 G1 X ($X_start+0.1730) Y ($Y_start+-3.8749) A ($Z_print+-5.5228) F $print_speed
@@ -1130,17 +1032,10 @@ G1 X ($X_start+0.8533) Y ($Y_start+-3.7731) A ($Z_print+-5.5228) F $print_speed
 G1 X ($X_start+0.6421) Y ($Y_start+-3.8588) A ($Z_print+-5.5228) F $print_speed
 G1 X ($X_start+0.4718) Y ($Y_start+-3.9020) A ($Z_print+-5.5228) F $print_speed
 G1 X ($X_start+0.3290) Y ($Y_start+-3.9074) A ($Z_print+-5.5228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 15 
-G1 X ($X_start+0.3775) Y ($Y_start+-4.2754) F $jog_speed
-G1 A ($Z_print+-5.3228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+0.3775) Y ($Y_start+-4.2754) A ($Z_print+-5.3228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+0.3775) Y ($Y_start+-4.2754) A ($Z_print+-5.3228) F $print_speed
 G1 X ($X_start+0.1416) Y ($Y_start+-4.2310) A ($Z_print+-5.3228) F $print_speed
@@ -1256,17 +1151,10 @@ G1 X ($X_start+1.1269) Y ($Y_start+-4.1000) A ($Z_print+-5.3228) F $print_speed
 G1 X ($X_start+0.8638) Y ($Y_start+-4.2011) A ($Z_print+-5.3228) F $print_speed
 G1 X ($X_start+0.6147) Y ($Y_start+-4.2631) A ($Z_print+-5.3228) F $print_speed
 G1 X ($X_start+0.3775) Y ($Y_start+-4.2754) A ($Z_print+-5.3228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 16 
-G1 X ($X_start+0.4045) Y ($Y_start+-3.8734) F $jog_speed
-G1 A ($Z_print+-5.3228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+0.4045) Y ($Y_start+-3.8734) A ($Z_print+-5.3228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+0.4045) Y ($Y_start+-3.8734) A ($Z_print+-5.3228) F $print_speed
 G1 X ($X_start+0.2566) Y ($Y_start+-3.8456) A ($Z_print+-5.3228) F $print_speed
@@ -1382,17 +1270,10 @@ G1 X ($X_start+0.9718) Y ($Y_start+-3.7310) A ($Z_print+-5.3228) F $print_speed
 G1 X ($X_start+0.7432) Y ($Y_start+-3.8189) A ($Z_print+-5.3228) F $print_speed
 G1 X ($X_start+0.5555) Y ($Y_start+-3.8656) A ($Z_print+-5.3228) F $print_speed
 G1 X ($X_start+0.4045) Y ($Y_start+-3.8734) A ($Z_print+-5.3228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 17 
-G1 X ($X_start+0.3721) Y ($Y_start+-4.1930) F $jog_speed
-G1 A ($Z_print+-5.1228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+0.3721) Y ($Y_start+-4.1930) A ($Z_print+-5.1228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+0.3721) Y ($Y_start+-4.1930) A ($Z_print+-5.1228) F $print_speed
 G1 X ($X_start+0.1367) Y ($Y_start+-4.1280) A ($Z_print+-5.1228) F $print_speed
@@ -1509,17 +1390,10 @@ G1 X ($X_start+1.1065) Y ($Y_start+-4.0680) A ($Z_print+-5.1228) F $print_speed
 G1 X ($X_start+0.8489) Y ($Y_start+-4.1544) A ($Z_print+-5.1228) F $print_speed
 G1 X ($X_start+0.6053) Y ($Y_start+-4.1993) A ($Z_print+-5.1228) F $print_speed
 G1 X ($X_start+0.3721) Y ($Y_start+-4.1930) A ($Z_print+-5.1228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 18 
-G1 X ($X_start+0.4316) Y ($Y_start+-3.7945) F $jog_speed
-G1 A ($Z_print+-5.1228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+0.4316) Y ($Y_start+-3.7945) A ($Z_print+-5.1228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+0.4316) Y ($Y_start+-3.7945) A ($Z_print+-5.1228) F $print_speed
 G1 X ($X_start+0.2810) Y ($Y_start+-3.7529) A ($Z_print+-5.1228) F $print_speed
@@ -1636,17 +1510,10 @@ G1 X ($X_start+0.9642) Y ($Y_start+-3.6938) A ($Z_print+-5.1228) F $print_speed
 G1 X ($X_start+0.7485) Y ($Y_start+-3.7662) A ($Z_print+-5.1228) F $print_speed
 G1 X ($X_start+0.5741) Y ($Y_start+-3.7983) A ($Z_print+-5.1228) F $print_speed
 G1 X ($X_start+0.4316) Y ($Y_start+-3.7945) A ($Z_print+-5.1228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 19 
-G1 X ($X_start+0.4309) Y ($Y_start+-4.1313) F $jog_speed
-G1 A ($Z_print+-4.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+0.4309) Y ($Y_start+-4.1313) A ($Z_print+-4.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+0.4309) Y ($Y_start+-4.1313) A ($Z_print+-4.9228) F $print_speed
 G1 X ($X_start+0.2470) Y ($Y_start+-4.0664) A ($Z_print+-4.9228) F $print_speed
@@ -1762,17 +1629,10 @@ G1 X ($X_start+1.1700) Y ($Y_start+-3.9413) A ($Z_print+-4.9228) F $print_speed
 G1 X ($X_start+0.8860) Y ($Y_start+-4.0576) A ($Z_print+-4.9228) F $print_speed
 G1 X ($X_start+0.6362) Y ($Y_start+-4.1266) A ($Z_print+-4.9228) F $print_speed
 G1 X ($X_start+0.4309) Y ($Y_start+-4.1313) A ($Z_print+-4.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 20 
-G1 X ($X_start+-3.1228) Y ($Y_start+0.4272) F $jog_speed
-G1 A ($Z_print+-4.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-3.1228) Y ($Y_start+0.4272) A ($Z_print+-4.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-3.1228) Y ($Y_start+0.4272) A ($Z_print+-4.9228) F $print_speed
 G1 X ($X_start+-3.1205) Y ($Y_start+0.4409) A ($Z_print+-4.9228) F $print_speed
@@ -1886,17 +1746,10 @@ G1 X ($X_start+-2.6010) Y ($Y_start+0.0650) A ($Z_print+-4.9228) F $print_speed
 G1 X ($X_start+-2.9077) Y ($Y_start+0.2571) A ($Z_print+-4.9228) F $print_speed
 G1 X ($X_start+-3.0935) Y ($Y_start+0.3906) A ($Z_print+-4.9228) F $print_speed
 G1 X ($X_start+-3.1228) Y ($Y_start+0.4272) A ($Z_print+-4.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 21 
-G1 X ($X_start+3.0544) Y ($Y_start+-3.9075) F $jog_speed
-G1 A ($Z_print+-4.7228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+3.0544) Y ($Y_start+-3.9075) A ($Z_print+-4.7228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+3.0544) Y ($Y_start+-3.9075) A ($Z_print+-4.7228) F $print_speed
 G1 X ($X_start+2.8004) Y ($Y_start+-3.9202) A ($Z_print+-4.7228) F $print_speed
@@ -2008,17 +1861,10 @@ G1 X ($X_start+3.7892) Y ($Y_start+-3.6405) A ($Z_print+-4.7228) F $print_speed
 G1 X ($X_start+3.5439) Y ($Y_start+-3.7642) A ($Z_print+-4.7228) F $print_speed
 G1 X ($X_start+3.2995) Y ($Y_start+-3.8549) A ($Z_print+-4.7228) F $print_speed
 G1 X ($X_start+3.0544) Y ($Y_start+-3.9075) A ($Z_print+-4.7228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 22 
-G1 X ($X_start+-2.3990) Y ($Y_start+-2.4405) F $jog_speed
-G1 A ($Z_print+-4.7228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-2.3990) Y ($Y_start+-2.4405) A ($Z_print+-4.7228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-2.3990) Y ($Y_start+-2.4405) A ($Z_print+-4.7228) F $print_speed
 G1 X ($X_start+-2.3260) Y ($Y_start+-2.2784) A ($Z_print+-4.7228) F $print_speed
@@ -2126,17 +1972,10 @@ G1 X ($X_start+-1.7198) Y ($Y_start+-2.4740) A ($Z_print+-4.7228) F $print_speed
 G1 X ($X_start+-2.0203) Y ($Y_start+-2.4662) A ($Z_print+-4.7228) F $print_speed
 G1 X ($X_start+-2.2958) Y ($Y_start+-2.4532) A ($Z_print+-4.7228) F $print_speed
 G1 X ($X_start+-2.3990) Y ($Y_start+-2.4405) A ($Z_print+-4.7228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 23 
-G1 X ($X_start+2.6485) Y ($Y_start+-4.1383) F $jog_speed
-G1 A ($Z_print+-4.5228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.6485) Y ($Y_start+-4.1383) A ($Z_print+-4.5228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.6485) Y ($Y_start+-4.1383) A ($Z_print+-4.5228) F $print_speed
 G1 X ($X_start+2.3889) Y ($Y_start+-4.1149) A ($Z_print+-4.5228) F $print_speed
@@ -2247,17 +2086,10 @@ G1 X ($X_start+3.3858) Y ($Y_start+-3.9750) A ($Z_print+-4.5228) F $print_speed
 G1 X ($X_start+3.1420) Y ($Y_start+-4.0651) A ($Z_print+-4.5228) F $print_speed
 G1 X ($X_start+2.8972) Y ($Y_start+-4.1208) A ($Z_print+-4.5228) F $print_speed
 G1 X ($X_start+2.6485) Y ($Y_start+-4.1383) A ($Z_print+-4.5228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 24 
-G1 X ($X_start+2.6524) Y ($Y_start+-3.7370) F $jog_speed
-G1 A ($Z_print+-4.5228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.6524) Y ($Y_start+-3.7370) A ($Z_print+-4.5228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.6524) Y ($Y_start+-3.7370) A ($Z_print+-4.5228) F $print_speed
 G1 X ($X_start+2.4490) Y ($Y_start+-3.7187) A ($Z_print+-4.5228) F $print_speed
@@ -2368,17 +2200,10 @@ G1 X ($X_start+3.2275) Y ($Y_start+-3.6070) A ($Z_print+-4.5228) F $print_speed
 G1 X ($X_start+3.0278) Y ($Y_start+-3.6808) A ($Z_print+-4.5228) F $print_speed
 G1 X ($X_start+2.8384) Y ($Y_start+-3.7239) A ($Z_print+-4.5228) F $print_speed
 G1 X ($X_start+2.6524) Y ($Y_start+-3.7370) A ($Z_print+-4.5228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 25 
-G1 X ($X_start+2.5440) Y ($Y_start+-4.2775) F $jog_speed
-G1 A ($Z_print+-4.3228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.5440) Y ($Y_start+-4.2775) A ($Z_print+-4.3228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.5440) Y ($Y_start+-4.2775) A ($Z_print+-4.3228) F $print_speed
 G1 X ($X_start+2.2812) Y ($Y_start+-4.2581) A ($Z_print+-4.3228) F $print_speed
@@ -2490,17 +2315,10 @@ G1 X ($X_start+3.3002) Y ($Y_start+-4.1325) A ($Z_print+-4.3228) F $print_speed
 G1 X ($X_start+3.0513) Y ($Y_start+-4.2118) A ($Z_print+-4.3228) F $print_speed
 G1 X ($X_start+2.7998) Y ($Y_start+-4.2612) A ($Z_print+-4.3228) F $print_speed
 G1 X ($X_start+2.5440) Y ($Y_start+-4.2775) A ($Z_print+-4.3228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 26 
-G1 X ($X_start+2.5461) Y ($Y_start+-3.8765) F $jog_speed
-G1 A ($Z_print+-4.3228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.5461) Y ($Y_start+-3.8765) A ($Z_print+-4.3228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.5461) Y ($Y_start+-3.8765) A ($Z_print+-4.3228) F $print_speed
 G1 X ($X_start+2.3357) Y ($Y_start+-3.8610) A ($Z_print+-4.3228) F $print_speed
@@ -2612,17 +2430,10 @@ G1 X ($X_start+3.1602) Y ($Y_start+-3.7573) A ($Z_print+-4.3228) F $print_speed
 G1 X ($X_start+2.9517) Y ($Y_start+-3.8237) A ($Z_print+-4.3228) F $print_speed
 G1 X ($X_start+2.7483) Y ($Y_start+-3.8637) A ($Z_print+-4.3228) F $print_speed
 G1 X ($X_start+2.5461) Y ($Y_start+-3.8765) A ($Z_print+-4.3228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 27 
-G1 X ($X_start+2.5333) Y ($Y_start+-4.3128) F $jog_speed
-G1 A ($Z_print+-4.1228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.5333) Y ($Y_start+-4.3128) A ($Z_print+-4.1228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.5333) Y ($Y_start+-4.3128) A ($Z_print+-4.1228) F $print_speed
 G1 X ($X_start+2.2615) Y ($Y_start+-4.3016) A ($Z_print+-4.1228) F $print_speed
@@ -2736,17 +2547,10 @@ G1 X ($X_start+3.3195) Y ($Y_start+-4.1856) A ($Z_print+-4.1228) F $print_speed
 G1 X ($X_start+3.0619) Y ($Y_start+-4.2529) A ($Z_print+-4.1228) F $print_speed
 G1 X ($X_start+2.8000) Y ($Y_start+-4.2960) A ($Z_print+-4.1228) F $print_speed
 G1 X ($X_start+2.5333) Y ($Y_start+-4.3128) A ($Z_print+-4.1228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 28 
-G1 X ($X_start+2.5289) Y ($Y_start+-3.9123) F $jog_speed
-G1 A ($Z_print+-4.1228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.5289) Y ($Y_start+-3.9123) A ($Z_print+-4.1228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.5289) Y ($Y_start+-3.9123) A ($Z_print+-4.1228) F $print_speed
 G1 X ($X_start+2.2991) Y ($Y_start+-3.9028) A ($Z_print+-4.1228) F $print_speed
@@ -2860,17 +2664,10 @@ G1 X ($X_start+3.2022) Y ($Y_start+-3.8028) A ($Z_print+-4.1228) F $print_speed
 G1 X ($X_start+2.9787) Y ($Y_start+-3.8612) A ($Z_print+-4.1228) F $print_speed
 G1 X ($X_start+2.7548) Y ($Y_start+-3.8980) A ($Z_print+-4.1228) F $print_speed
 G1 X ($X_start+2.5289) Y ($Y_start+-3.9123) A ($Z_print+-4.1228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 29 
-G1 X ($X_start+2.6232) Y ($Y_start+-4.3364) F $jog_speed
-G1 A ($Z_print+-3.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.6232) Y ($Y_start+-4.3364) A ($Z_print+-3.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.6232) Y ($Y_start+-4.3364) A ($Z_print+-3.9228) F $print_speed
 G1 X ($X_start+2.3432) Y ($Y_start+-4.3380) A ($Z_print+-3.9228) F $print_speed
@@ -2985,17 +2782,10 @@ G1 X ($X_start+3.4301) Y ($Y_start+-4.1876) A ($Z_print+-3.9228) F $print_speed
 G1 X ($X_start+3.1667) Y ($Y_start+-4.2593) A ($Z_print+-3.9228) F $print_speed
 G1 X ($X_start+2.8979) Y ($Y_start+-4.3095) A ($Z_print+-3.9228) F $print_speed
 G1 X ($X_start+2.6232) Y ($Y_start+-4.3364) A ($Z_print+-3.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 30 
-G1 X ($X_start+2.6025) Y ($Y_start+-3.9365) F $jog_speed
-G1 A ($Z_print+-3.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.6025) Y ($Y_start+-3.9365) A ($Z_print+-3.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.6025) Y ($Y_start+-3.9365) A ($Z_print+-3.9228) F $print_speed
 G1 X ($X_start+2.3602) Y ($Y_start+-3.9379) A ($Z_print+-3.9228) F $print_speed
@@ -3110,17 +2900,10 @@ G1 X ($X_start+3.3105) Y ($Y_start+-3.8056) A ($Z_print+-3.9228) F $print_speed
 G1 X ($X_start+3.0773) Y ($Y_start+-3.8691) A ($Z_print+-3.9228) F $print_speed
 G1 X ($X_start+2.8417) Y ($Y_start+-3.9131) A ($Z_print+-3.9228) F $print_speed
 G1 X ($X_start+2.6025) Y ($Y_start+-3.9365) A ($Z_print+-3.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 31 
-G1 X ($X_start+2.7293) Y ($Y_start+-4.3414) F $jog_speed
-G1 A ($Z_print+-3.7228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.7293) Y ($Y_start+-4.3414) A ($Z_print+-3.7228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.7293) Y ($Y_start+-4.3414) A ($Z_print+-3.7228) F $print_speed
 G1 X ($X_start+2.4446) Y ($Y_start+-4.3615) A ($Z_print+-3.7228) F $print_speed
@@ -3236,17 +3019,10 @@ G1 X ($X_start+3.5592) Y ($Y_start+-4.1672) A ($Z_print+-3.7228) F $print_speed
 G1 X ($X_start+3.2877) Y ($Y_start+-4.2431) A ($Z_print+-3.7228) F $print_speed
 G1 X ($X_start+3.0109) Y ($Y_start+-4.3015) A ($Z_print+-3.7228) F $print_speed
 G1 X ($X_start+2.7293) Y ($Y_start+-4.3414) A ($Z_print+-3.7228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 32 
-G1 X ($X_start+2.6871) Y ($Y_start+-3.9434) F $jog_speed
-G1 A ($Z_print+-3.7228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.6871) Y ($Y_start+-3.9434) A ($Z_print+-3.7228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.6871) Y ($Y_start+-3.9434) A ($Z_print+-3.7228) F $print_speed
 G1 X ($X_start+2.4326) Y ($Y_start+-3.9613) A ($Z_print+-3.7228) F $print_speed
@@ -3362,17 +3138,10 @@ G1 X ($X_start+3.4395) Y ($Y_start+-3.7853) A ($Z_print+-3.7228) F $print_speed
 G1 X ($X_start+3.1924) Y ($Y_start+-3.8544) A ($Z_print+-3.7228) F $print_speed
 G1 X ($X_start+2.9415) Y ($Y_start+-3.9073) A ($Z_print+-3.7228) F $print_speed
 G1 X ($X_start+2.6871) Y ($Y_start+-3.9434) A ($Z_print+-3.7228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 33 
-G1 X ($X_start+2.8939) Y ($Y_start+-4.4170) F $jog_speed
-G1 A ($Z_print+-3.5228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.8939) Y ($Y_start+-4.4170) A ($Z_print+-3.5228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.8939) Y ($Y_start+-4.4170) A ($Z_print+-3.5228) F $print_speed
 G1 X ($X_start+2.6195) Y ($Y_start+-4.4570) A ($Z_print+-3.5228) F $print_speed
@@ -3492,17 +3261,10 @@ G1 X ($X_start+3.6791) Y ($Y_start+-4.1714) A ($Z_print+-3.5228) F $print_speed
 G1 X ($X_start+3.4224) Y ($Y_start+-4.2718) A ($Z_print+-3.5228) F $print_speed
 G1 X ($X_start+3.1613) Y ($Y_start+-4.3544) A ($Z_print+-3.5228) F $print_speed
 G1 X ($X_start+2.8939) Y ($Y_start+-4.4170) A ($Z_print+-3.5228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 34 
-G1 X ($X_start+2.8194) Y ($Y_start+-4.0236) F $jog_speed
-G1 A ($Z_print+-3.5228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.8194) Y ($Y_start+-4.0236) A ($Z_print+-3.5228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.8194) Y ($Y_start+-4.0236) A ($Z_print+-3.5228) F $print_speed
 G1 X ($X_start+2.5800) Y ($Y_start+-4.0585) A ($Z_print+-3.5228) F $print_speed
@@ -3622,17 +3384,10 @@ G1 X ($X_start+3.5234) Y ($Y_start+-3.8028) A ($Z_print+-3.5228) F $print_speed
 G1 X ($X_start+3.2891) Y ($Y_start+-3.8944) A ($Z_print+-3.5228) F $print_speed
 G1 X ($X_start+3.0552) Y ($Y_start+-3.9685) A ($Z_print+-3.5228) F $print_speed
 G1 X ($X_start+2.8194) Y ($Y_start+-4.0236) A ($Z_print+-3.5228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 35 
-G1 X ($X_start+2.8869) Y ($Y_start+-4.5114) F $jog_speed
-G1 A ($Z_print+-3.3228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.8869) Y ($Y_start+-4.5114) A ($Z_print+-3.3228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.8869) Y ($Y_start+-4.5114) A ($Z_print+-3.3228) F $print_speed
 G1 X ($X_start+2.6112) Y ($Y_start+-4.5537) A ($Z_print+-3.3228) F $print_speed
@@ -3754,17 +3509,10 @@ G1 X ($X_start+3.6650) Y ($Y_start+-4.2428) A ($Z_print+-3.3228) F $print_speed
 G1 X ($X_start+3.4116) Y ($Y_start+-4.3528) A ($Z_print+-3.3228) F $print_speed
 G1 X ($X_start+3.1531) Y ($Y_start+-4.4434) A ($Z_print+-3.3228) F $print_speed
 G1 X ($X_start+2.8869) Y ($Y_start+-4.5114) A ($Z_print+-3.3228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 36 
-G1 X ($X_start+-1.4269) Y ($Y_start+-2.6075) F $jog_speed
-G1 A ($Z_print+-3.3228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-1.4269) Y ($Y_start+-2.6075) A ($Z_print+-3.3228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-1.4269) Y ($Y_start+-2.6075) A ($Z_print+-3.3228) F $print_speed
 G1 X ($X_start+-1.5066) Y ($Y_start+-2.5087) A ($Z_print+-3.3228) F $print_speed
@@ -3885,17 +3633,10 @@ G1 X ($X_start+-0.8187) Y ($Y_start+-2.4188) A ($Z_print+-3.3228) F $print_speed
 G1 X ($X_start+-1.1696) Y ($Y_start+-2.5366) A ($Z_print+-3.3228) F $print_speed
 G1 X ($X_start+-1.4043) Y ($Y_start+-2.6065) A ($Z_print+-3.3228) F $print_speed
 G1 X ($X_start+-1.4269) Y ($Y_start+-2.6075) A ($Z_print+-3.3228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 37 
-G1 X ($X_start+2.8112) Y ($Y_start+-4.5699) F $jog_speed
-G1 A ($Z_print+-3.1228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.8112) Y ($Y_start+-4.5699) A ($Z_print+-3.1228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.8112) Y ($Y_start+-4.5699) A ($Z_print+-3.1228) F $print_speed
 G1 X ($X_start+2.5347) Y ($Y_start+-4.5953) A ($Z_print+-3.1228) F $print_speed
@@ -4019,17 +3760,10 @@ G1 X ($X_start+3.5810) Y ($Y_start+-4.3241) A ($Z_print+-3.1228) F $print_speed
 G1 X ($X_start+3.3310) Y ($Y_start+-4.4308) A ($Z_print+-3.1228) F $print_speed
 G1 X ($X_start+3.0756) Y ($Y_start+-4.5140) A ($Z_print+-3.1228) F $print_speed
 G1 X ($X_start+2.8112) Y ($Y_start+-4.5699) A ($Z_print+-3.1228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 38 
-G1 X ($X_start+2.7513) Y ($Y_start+-4.1737) F $jog_speed
-G1 A ($Z_print+-3.1228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.7513) Y ($Y_start+-4.1737) A ($Z_print+-3.1228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.7513) Y ($Y_start+-4.1737) A ($Z_print+-3.1228) F $print_speed
 G1 X ($X_start+2.5208) Y ($Y_start+-4.1949) A ($Z_print+-3.1228) F $print_speed
@@ -4153,17 +3887,10 @@ G1 X ($X_start+3.4114) Y ($Y_start+-3.9615) A ($Z_print+-3.1228) F $print_speed
 G1 X ($X_start+3.1902) Y ($Y_start+-4.0560) A ($Z_print+-3.1228) F $print_speed
 G1 X ($X_start+2.9719) Y ($Y_start+-4.1271) A ($Z_print+-3.1228) F $print_speed
 G1 X ($X_start+2.7513) Y ($Y_start+-4.1737) A ($Z_print+-3.1228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 39 
-G1 X ($X_start+2.5266) Y ($Y_start+-4.5447) F $jog_speed
-G1 A ($Z_print+-2.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.5266) Y ($Y_start+-4.5447) A ($Z_print+-2.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.5266) Y ($Y_start+-4.5447) A ($Z_print+-2.9228) F $print_speed
 G1 X ($X_start+2.2360) Y ($Y_start+-4.5492) A ($Z_print+-2.9228) F $print_speed
@@ -4288,17 +4015,10 @@ G1 X ($X_start+3.3614) Y ($Y_start+-4.4138) A ($Z_print+-2.9228) F $print_speed
 G1 X ($X_start+3.0909) Y ($Y_start+-4.4768) A ($Z_print+-2.9228) F $print_speed
 G1 X ($X_start+2.8125) Y ($Y_start+-4.5203) A ($Z_print+-2.9228) F $print_speed
 G1 X ($X_start+2.5266) Y ($Y_start+-4.5447) A ($Z_print+-2.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 40 
-G1 X ($X_start+2.5064) Y ($Y_start+-4.1450) F $jog_speed
-G1 A ($Z_print+-2.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.5064) Y ($Y_start+-4.1450) A ($Z_print+-2.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.5064) Y ($Y_start+-4.1450) A ($Z_print+-2.9228) F $print_speed
 G1 X ($X_start+2.2463) Y ($Y_start+-4.1490) A ($Z_print+-2.9228) F $print_speed
@@ -4423,17 +4143,10 @@ G1 X ($X_start+3.2558) Y ($Y_start+-4.0277) A ($Z_print+-2.9228) F $print_speed
 G1 X ($X_start+3.0145) Y ($Y_start+-4.0838) A ($Z_print+-2.9228) F $print_speed
 G1 X ($X_start+2.7645) Y ($Y_start+-4.1230) A ($Z_print+-2.9228) F $print_speed
 G1 X ($X_start+2.5064) Y ($Y_start+-4.1450) A ($Z_print+-2.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 41 
-G1 X ($X_start+2.4891) Y ($Y_start+-4.5480) F $jog_speed
-G1 A ($Z_print+-2.7228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.4891) Y ($Y_start+-4.5480) A ($Z_print+-2.7228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.4891) Y ($Y_start+-4.5480) A ($Z_print+-2.7228) F $print_speed
 G1 X ($X_start+2.2041) Y ($Y_start+-4.5527) A ($Z_print+-2.7228) F $print_speed
@@ -4560,17 +4273,10 @@ G1 X ($X_start+3.3218) Y ($Y_start+-4.4108) A ($Z_print+-2.7228) F $print_speed
 G1 X ($X_start+3.0488) Y ($Y_start+-4.4757) A ($Z_print+-2.7228) F $print_speed
 G1 X ($X_start+2.7712) Y ($Y_start+-4.5218) A ($Z_print+-2.7228) F $print_speed
 G1 X ($X_start+2.4891) Y ($Y_start+-4.5480) A ($Z_print+-2.7228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 42 
-G1 X ($X_start+2.4673) Y ($Y_start+-4.1483) F $jog_speed
-G1 A ($Z_print+-2.7228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.4673) Y ($Y_start+-4.1483) A ($Z_print+-2.7228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.4673) Y ($Y_start+-4.1483) A ($Z_print+-2.7228) F $print_speed
 G1 X ($X_start+2.2142) Y ($Y_start+-4.1525) A ($Z_print+-2.7228) F $print_speed
@@ -4697,17 +4403,10 @@ G1 X ($X_start+3.2164) Y ($Y_start+-4.0247) A ($Z_print+-2.7228) F $print_speed
 G1 X ($X_start+2.9696) Y ($Y_start+-4.0834) A ($Z_print+-2.7228) F $print_speed
 G1 X ($X_start+2.7199) Y ($Y_start+-4.1249) A ($Z_print+-2.7228) F $print_speed
 G1 X ($X_start+2.4673) Y ($Y_start+-4.1483) A ($Z_print+-2.7228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 43 
-G1 X ($X_start+2.3684) Y ($Y_start+-4.6072) F $jog_speed
-G1 A ($Z_print+-2.5228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.3684) Y ($Y_start+-4.6072) A ($Z_print+-2.5228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.3684) Y ($Y_start+-4.6072) A ($Z_print+-2.5228) F $print_speed
 G1 X ($X_start+2.0846) Y ($Y_start+-4.6024) A ($Z_print+-2.5228) F $print_speed
@@ -4836,17 +4535,10 @@ G1 X ($X_start+3.1921) Y ($Y_start+-4.4882) A ($Z_print+-2.5228) F $print_speed
 G1 X ($X_start+2.9226) Y ($Y_start+-4.5486) A ($Z_print+-2.5228) F $print_speed
 G1 X ($X_start+2.6481) Y ($Y_start+-4.5887) A ($Z_print+-2.5228) F $print_speed
 G1 X ($X_start+2.3684) Y ($Y_start+-4.6072) A ($Z_print+-2.5228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 44 
-G1 X ($X_start+2.3585) Y ($Y_start+-4.2070) F $jog_speed
-G1 A ($Z_print+-2.5228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.3585) Y ($Y_start+-4.2070) A ($Z_print+-2.5228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.3585) Y ($Y_start+-4.2070) A ($Z_print+-2.5228) F $print_speed
 G1 X ($X_start+2.1091) Y ($Y_start+-4.2028) A ($Z_print+-2.5228) F $print_speed
@@ -4975,17 +4667,10 @@ G1 X ($X_start+3.0909) Y ($Y_start+-4.1009) A ($Z_print+-2.5228) F $print_speed
 G1 X ($X_start+2.8498) Y ($Y_start+-4.1549) A ($Z_print+-2.5228) F $print_speed
 G1 X ($X_start+2.6059) Y ($Y_start+-4.1906) A ($Z_print+-2.5228) F $print_speed
 G1 X ($X_start+2.3585) Y ($Y_start+-4.2070) A ($Z_print+-2.5228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 45 
-G1 X ($X_start+2.3287) Y ($Y_start+-4.6579) F $jog_speed
-G1 A ($Z_print+-2.3228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.3287) Y ($Y_start+-4.6579) A ($Z_print+-2.3228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.3287) Y ($Y_start+-4.6579) A ($Z_print+-2.3228) F $print_speed
 G1 X ($X_start+2.0495) Y ($Y_start+-4.6514) A ($Z_print+-2.3228) F $print_speed
@@ -5115,17 +4800,10 @@ G1 X ($X_start+3.1485) Y ($Y_start+-4.5522) A ($Z_print+-2.3228) F $print_speed
 G1 X ($X_start+2.8790) Y ($Y_start+-4.6071) A ($Z_print+-2.3228) F $print_speed
 G1 X ($X_start+2.6057) Y ($Y_start+-4.6427) A ($Z_print+-2.3228) F $print_speed
 G1 X ($X_start+2.3287) Y ($Y_start+-4.6579) A ($Z_print+-2.3228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 46 
-G1 X ($X_start+2.3224) Y ($Y_start+-4.2576) F $jog_speed
-G1 A ($Z_print+-2.3228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.3224) Y ($Y_start+-4.2576) A ($Z_print+-2.3228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.3224) Y ($Y_start+-4.2576) A ($Z_print+-2.3228) F $print_speed
 G1 X ($X_start+2.0759) Y ($Y_start+-4.2520) A ($Z_print+-2.3228) F $print_speed
@@ -5253,17 +4931,10 @@ G1 X ($X_start+3.0553) Y ($Y_start+-4.1630) A ($Z_print+-2.3228) F $print_speed
 G1 X ($X_start+2.8132) Y ($Y_start+-4.2123) A ($Z_print+-2.3228) F $print_speed
 G1 X ($X_start+2.5689) Y ($Y_start+-4.2441) A ($Z_print+-2.3228) F $print_speed
 G1 X ($X_start+2.3224) Y ($Y_start+-4.2576) A ($Z_print+-2.3228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 47 
-G1 X ($X_start+2.3109) Y ($Y_start+-4.6992) F $jog_speed
-G1 A ($Z_print+-2.1228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.3109) Y ($Y_start+-4.6992) A ($Z_print+-2.1228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.3109) Y ($Y_start+-4.6992) A ($Z_print+-2.1228) F $print_speed
 G1 X ($X_start+2.0282) Y ($Y_start+-4.6937) A ($Z_print+-2.1228) F $print_speed
@@ -5388,17 +5059,10 @@ G1 X ($X_start+3.1508) Y ($Y_start+-4.5990) A ($Z_print+-2.1228) F $print_speed
 G1 X ($X_start+2.8748) Y ($Y_start+-4.6513) A ($Z_print+-2.1228) F $print_speed
 G1 X ($X_start+2.5942) Y ($Y_start+-4.6848) A ($Z_print+-2.1228) F $print_speed
 G1 X ($X_start+2.3109) Y ($Y_start+-4.6992) A ($Z_print+-2.1228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 48 
-G1 X ($X_start+2.3046) Y ($Y_start+-4.2990) F $jog_speed
-G1 A ($Z_print+-2.1228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.3046) Y ($Y_start+-4.2990) A ($Z_print+-2.1228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.3046) Y ($Y_start+-4.2990) A ($Z_print+-2.1228) F $print_speed
 G1 X ($X_start+2.0523) Y ($Y_start+-4.2941) A ($Z_print+-2.1228) F $print_speed
@@ -5523,17 +5187,10 @@ G1 X ($X_start+3.0626) Y ($Y_start+-4.2085) A ($Z_print+-2.1228) F $print_speed
 G1 X ($X_start+2.8138) Y ($Y_start+-4.2557) A ($Z_print+-2.1228) F $print_speed
 G1 X ($X_start+2.5603) Y ($Y_start+-4.2860) A ($Z_print+-2.1228) F $print_speed
 G1 X ($X_start+2.3046) Y ($Y_start+-4.2990) A ($Z_print+-2.1228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 49 
-G1 X ($X_start+2.2765) Y ($Y_start+-4.6995) F $jog_speed
-G1 A ($Z_print+-1.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.2765) Y ($Y_start+-4.6995) A ($Z_print+-1.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.2765) Y ($Y_start+-4.6995) A ($Z_print+-1.9228) F $print_speed
 G1 X ($X_start+1.9938) Y ($Y_start+-4.7072) A ($Z_print+-1.9228) F $print_speed
@@ -5659,17 +5316,10 @@ G1 X ($X_start+3.1273) Y ($Y_start+-4.5846) A ($Z_print+-1.9228) F $print_speed
 G1 X ($X_start+2.8453) Y ($Y_start+-4.6375) A ($Z_print+-1.9228) F $print_speed
 G1 X ($X_start+2.5613) Y ($Y_start+-4.6759) A ($Z_print+-1.9228) F $print_speed
 G1 X ($X_start+2.2765) Y ($Y_start+-4.6995) A ($Z_print+-1.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 50 
-G1 X ($X_start+2.2545) Y ($Y_start+-4.2999) F $jog_speed
-G1 A ($Z_print+-1.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.2545) Y ($Y_start+-4.2999) A ($Z_print+-1.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.2545) Y ($Y_start+-4.2999) A ($Z_print+-1.9228) F $print_speed
 G1 X ($X_start+1.9973) Y ($Y_start+-4.3070) A ($Z_print+-1.9228) F $print_speed
@@ -5795,17 +5445,10 @@ G1 X ($X_start+3.0435) Y ($Y_start+-4.1934) A ($Z_print+-1.9228) F $print_speed
 G1 X ($X_start+2.7816) Y ($Y_start+-4.2425) A ($Z_print+-1.9228) F $print_speed
 G1 X ($X_start+2.5180) Y ($Y_start+-4.2781) A ($Z_print+-1.9228) F $print_speed
 G1 X ($X_start+2.2545) Y ($Y_start+-4.2999) A ($Z_print+-1.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 51 
-G1 X ($X_start+2.3049) Y ($Y_start+-4.6808) F $jog_speed
-G1 A ($Z_print+-1.7228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.3049) Y ($Y_start+-4.6808) A ($Z_print+-1.7228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.3049) Y ($Y_start+-4.6808) A ($Z_print+-1.7228) F $print_speed
 G1 X ($X_start+2.0196) Y ($Y_start+-4.6939) A ($Z_print+-1.7228) F $print_speed
@@ -5932,17 +5575,10 @@ G1 X ($X_start+3.1694) Y ($Y_start+-4.5599) A ($Z_print+-1.7228) F $print_speed
 G1 X ($X_start+2.8820) Y ($Y_start+-4.6134) A ($Z_print+-1.7228) F $print_speed
 G1 X ($X_start+2.5934) Y ($Y_start+-4.6537) A ($Z_print+-1.7228) F $print_speed
 G1 X ($X_start+2.3049) Y ($Y_start+-4.6808) A ($Z_print+-1.7228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 52 
-G1 X ($X_start+2.2770) Y ($Y_start+-4.2816) F $jog_speed
-G1 A ($Z_print+-1.7228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.2770) Y ($Y_start+-4.2816) A ($Z_print+-1.7228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.2770) Y ($Y_start+-4.2816) A ($Z_print+-1.7228) F $print_speed
 G1 X ($X_start+2.0136) Y ($Y_start+-4.2937) A ($Z_print+-1.7228) F $print_speed
@@ -6069,17 +5705,10 @@ G1 X ($X_start+3.0871) Y ($Y_start+-4.1683) A ($Z_print+-1.7228) F $print_speed
 G1 X ($X_start+2.8177) Y ($Y_start+-4.2185) A ($Z_print+-1.7228) F $print_speed
 G1 X ($X_start+2.5470) Y ($Y_start+-4.2563) A ($Z_print+-1.7228) F $print_speed
 G1 X ($X_start+2.2770) Y ($Y_start+-4.2816) A ($Z_print+-1.7228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 53 
-G1 X ($X_start+1.7295) Y ($Y_start+-4.6714) F $jog_speed
-G1 A ($Z_print+-1.5228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+1.7295) Y ($Y_start+-4.6714) A ($Z_print+-1.5228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+1.7295) Y ($Y_start+-4.6714) A ($Z_print+-1.5228) F $print_speed
 G1 X ($X_start+1.4501) Y ($Y_start+-4.6497) A ($Z_print+-1.5228) F $print_speed
@@ -6207,17 +5836,10 @@ G1 X ($X_start+2.5842) Y ($Y_start+-4.6466) A ($Z_print+-1.5228) F $print_speed
 G1 X ($X_start+2.2988) Y ($Y_start+-4.6694) A ($Z_print+-1.5228) F $print_speed
 G1 X ($X_start+2.0134) Y ($Y_start+-4.6777) A ($Z_print+-1.5228) F $print_speed
 G1 X ($X_start+1.7295) Y ($Y_start+-4.6714) A ($Z_print+-1.5228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 54 
-G1 X ($X_start+1.7494) Y ($Y_start+-4.2717) F $jog_speed
-G1 A ($Z_print+-1.5228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+1.7494) Y ($Y_start+-4.2717) A ($Z_print+-1.5228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+1.7494) Y ($Y_start+-4.2717) A ($Z_print+-1.5228) F $print_speed
 G1 X ($X_start+1.4952) Y ($Y_start+-4.2520) A ($Z_print+-1.5228) F $print_speed
@@ -6345,17 +5967,10 @@ G1 X ($X_start+2.5423) Y ($Y_start+-4.2487) A ($Z_print+-1.5228) F $print_speed
 G1 X ($X_start+2.2770) Y ($Y_start+-4.2699) A ($Z_print+-1.5228) F $print_speed
 G1 X ($X_start+2.0121) Y ($Y_start+-4.2776) A ($Z_print+-1.5228) F $print_speed
 G1 X ($X_start+1.7494) Y ($Y_start+-4.2717) A ($Z_print+-1.5228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 55 
-G1 X ($X_start+1.7212) Y ($Y_start+-4.6715) F $jog_speed
-G1 A ($Z_print+-1.3228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+1.7212) Y ($Y_start+-4.6715) A ($Z_print+-1.3228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+1.7212) Y ($Y_start+-4.6715) A ($Z_print+-1.3228) F $print_speed
 G1 X ($X_start+1.4456) Y ($Y_start+-4.6515) A ($Z_print+-1.3228) F $print_speed
@@ -6483,17 +6098,10 @@ G1 X ($X_start+2.5732) Y ($Y_start+-4.6413) A ($Z_print+-1.3228) F $print_speed
 G1 X ($X_start+2.2872) Y ($Y_start+-4.6661) A ($Z_print+-1.3228) F $print_speed
 G1 X ($X_start+2.0027) Y ($Y_start+-4.6762) A ($Z_print+-1.3228) F $print_speed
 G1 X ($X_start+1.7212) Y ($Y_start+-4.6715) A ($Z_print+-1.3228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 56 
-G1 X ($X_start+1.7390) Y ($Y_start+-4.2718) F $jog_speed
-G1 A ($Z_print+-1.3228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+1.7390) Y ($Y_start+-4.2718) A ($Z_print+-1.3228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+1.7390) Y ($Y_start+-4.2718) A ($Z_print+-1.3228) F $print_speed
 G1 X ($X_start+1.4886) Y ($Y_start+-4.2536) A ($Z_print+-1.3228) F $print_speed
@@ -6621,17 +6229,10 @@ G1 X ($X_start+2.5287) Y ($Y_start+-4.2436) A ($Z_print+-1.3228) F $print_speed
 G1 X ($X_start+2.2628) Y ($Y_start+-4.2667) A ($Z_print+-1.3228) F $print_speed
 G1 X ($X_start+1.9989) Y ($Y_start+-4.2761) A ($Z_print+-1.3228) F $print_speed
 G1 X ($X_start+1.7390) Y ($Y_start+-4.2718) A ($Z_print+-1.3228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 57 
-G1 X ($X_start+1.7325) Y ($Y_start+-4.7110) F $jog_speed
-G1 A ($Z_print+-1.1228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+1.7325) Y ($Y_start+-4.7110) A ($Z_print+-1.1228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+1.7325) Y ($Y_start+-4.7110) A ($Z_print+-1.1228) F $print_speed
 G1 X ($X_start+1.4568) Y ($Y_start+-4.6902) A ($Z_print+-1.1228) F $print_speed
@@ -6760,17 +6361,10 @@ G1 X ($X_start+2.5636) Y ($Y_start+-4.6544) A ($Z_print+-1.1228) F $print_speed
 G1 X ($X_start+2.2866) Y ($Y_start+-4.6915) A ($Z_print+-1.1228) F $print_speed
 G1 X ($X_start+2.0095) Y ($Y_start+-4.7109) A ($Z_print+-1.1228) F $print_speed
 G1 X ($X_start+1.7325) Y ($Y_start+-4.7110) A ($Z_print+-1.1228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 58 
-G1 X ($X_start+1.7475) Y ($Y_start+-4.3110) F $jog_speed
-G1 A ($Z_print+-1.1228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+1.7475) Y ($Y_start+-4.3110) A ($Z_print+-1.1228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+1.7475) Y ($Y_start+-4.3110) A ($Z_print+-1.1228) F $print_speed
 G1 X ($X_start+1.5040) Y ($Y_start+-4.2926) A ($Z_print+-1.1228) F $print_speed
@@ -6899,17 +6493,10 @@ G1 X ($X_start+2.4992) Y ($Y_start+-4.2595) A ($Z_print+-1.1228) F $print_speed
 G1 X ($X_start+2.2460) Y ($Y_start+-4.2933) A ($Z_print+-1.1228) F $print_speed
 G1 X ($X_start+1.9954) Y ($Y_start+-4.3109) A ($Z_print+-1.1228) F $print_speed
 G1 X ($X_start+1.7475) Y ($Y_start+-4.3110) A ($Z_print+-1.1228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 59 
-G1 X ($X_start+1.8321) Y ($Y_start+-4.7033) F $jog_speed
-G1 A ($Z_print+-0.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+1.8321) Y ($Y_start+-4.7033) A ($Z_print+-0.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+1.8321) Y ($Y_start+-4.7033) A ($Z_print+-0.9228) F $print_speed
 G1 X ($X_start+1.5565) Y ($Y_start+-4.6817) A ($Z_print+-0.9228) F $print_speed
@@ -7037,17 +6624,10 @@ G1 X ($X_start+2.6641) Y ($Y_start+-4.6317) A ($Z_print+-0.9228) F $print_speed
 G1 X ($X_start+2.3862) Y ($Y_start+-4.6763) A ($Z_print+-0.9228) F $print_speed
 G1 X ($X_start+2.1089) Y ($Y_start+-4.7009) A ($Z_print+-0.9228) F $print_speed
 G1 X ($X_start+1.8321) Y ($Y_start+-4.7033) A ($Z_print+-0.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 60 
-G1 X ($X_start+1.8460) Y ($Y_start+-4.3032) F $jog_speed
-G1 A ($Z_print+-0.9228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+1.8460) Y ($Y_start+-4.3032) A ($Z_print+-0.9228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+1.8460) Y ($Y_start+-4.3032) A ($Z_print+-0.9228) F $print_speed
 G1 X ($X_start+1.6062) Y ($Y_start+-4.2844) A ($Z_print+-0.9228) F $print_speed
@@ -7175,17 +6755,10 @@ G1 X ($X_start+2.5886) Y ($Y_start+-4.2387) A ($Z_print+-0.9228) F $print_speed
 G1 X ($X_start+2.3368) Y ($Y_start+-4.2791) A ($Z_print+-0.9228) F $print_speed
 G1 X ($X_start+2.0894) Y ($Y_start+-4.3010) A ($Z_print+-0.9228) F $print_speed
 G1 X ($X_start+1.8460) Y ($Y_start+-4.3032) A ($Z_print+-0.9228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 61 
-G1 X ($X_start+1.8356) Y ($Y_start+-4.6594) F $jog_speed
-G1 A ($Z_print+-0.7228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+1.8356) Y ($Y_start+-4.6594) A ($Z_print+-0.7228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+1.8356) Y ($Y_start+-4.6594) A ($Z_print+-0.7228) F $print_speed
 G1 X ($X_start+1.5328) Y ($Y_start+-4.6546) A ($Z_print+-0.7228) F $print_speed
@@ -7313,17 +6886,10 @@ G1 X ($X_start+2.7000) Y ($Y_start+-4.5676) A ($Z_print+-0.7228) F $print_speed
 G1 X ($X_start+2.4202) Y ($Y_start+-4.6138) A ($Z_print+-0.7228) F $print_speed
 G1 X ($X_start+2.1326) Y ($Y_start+-4.6449) A ($Z_print+-0.7228) F $print_speed
 G1 X ($X_start+1.8356) Y ($Y_start+-4.6594) A ($Z_print+-0.7228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 62 
-G1 X ($X_start+1.8290) Y ($Y_start+-4.2592) F $jog_speed
-G1 A ($Z_print+-0.7228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+1.8290) Y ($Y_start+-4.2592) A ($Z_print+-0.7228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+1.8290) Y ($Y_start+-4.2592) A ($Z_print+-0.7228) F $print_speed
 G1 X ($X_start+1.5570) Y ($Y_start+-4.2549) A ($Z_print+-0.7228) F $print_speed
@@ -7451,17 +7017,10 @@ G1 X ($X_start+2.6245) Y ($Y_start+-4.1746) A ($Z_print+-0.7228) F $print_speed
 G1 X ($X_start+2.3661) Y ($Y_start+-4.2173) A ($Z_print+-0.7228) F $print_speed
 G1 X ($X_start+2.1013) Y ($Y_start+-4.2459) A ($Z_print+-0.7228) F $print_speed
 G1 X ($X_start+1.8290) Y ($Y_start+-4.2592) A ($Z_print+-0.7228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 63 
-G1 X ($X_start+1.9291) Y ($Y_start+-4.6333) F $jog_speed
-G1 A ($Z_print+-0.5228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+1.9291) Y ($Y_start+-4.6333) A ($Z_print+-0.5228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+1.9291) Y ($Y_start+-4.6333) A ($Z_print+-0.5228) F $print_speed
 G1 X ($X_start+1.6416) Y ($Y_start+-4.6266) A ($Z_print+-0.5228) F $print_speed
@@ -7588,17 +7147,10 @@ G1 X ($X_start+2.7764) Y ($Y_start+-4.5160) A ($Z_print+-0.5228) F $print_speed
 G1 X ($X_start+2.4972) Y ($Y_start+-4.5748) A ($Z_print+-0.5228) F $print_speed
 G1 X ($X_start+2.2150) Y ($Y_start+-4.6149) A ($Z_print+-0.5228) F $print_speed
 G1 X ($X_start+1.9291) Y ($Y_start+-4.6333) A ($Z_print+-0.5228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 64 
-G1 X ($X_start+1.9210) Y ($Y_start+-4.2330) F $jog_speed
-G1 A ($Z_print+-0.5228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+1.9210) Y ($Y_start+-4.2330) A ($Z_print+-0.5228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+1.9210) Y ($Y_start+-4.2330) A ($Z_print+-0.5228) F $print_speed
 G1 X ($X_start+1.6722) Y ($Y_start+-4.2272) A ($Z_print+-0.5228) F $print_speed
@@ -7725,17 +7277,10 @@ G1 X ($X_start+2.6830) Y ($Y_start+-4.1269) A ($Z_print+-0.5228) F $print_speed
 G1 X ($X_start+2.4278) Y ($Y_start+-4.1807) A ($Z_print+-0.5228) F $print_speed
 G1 X ($X_start+2.1740) Y ($Y_start+-4.2167) A ($Z_print+-0.5228) F $print_speed
 G1 X ($X_start+1.9210) Y ($Y_start+-4.2330) A ($Z_print+-0.5228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 65 
-G1 X ($X_start+2.0236) Y ($Y_start+-4.5674) F $jog_speed
-G1 A ($Z_print+-0.3228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.0236) Y ($Y_start+-4.5674) A ($Z_print+-0.3228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.0236) Y ($Y_start+-4.5674) A ($Z_print+-0.3228) F $print_speed
 G1 X ($X_start+1.7411) Y ($Y_start+-4.5615) A ($Z_print+-0.3228) F $print_speed
@@ -7861,17 +7406,10 @@ G1 X ($X_start+2.8607) Y ($Y_start+-4.4450) A ($Z_print+-0.3228) F $print_speed
 G1 X ($X_start+2.5840) Y ($Y_start+-4.5062) A ($Z_print+-0.3228) F $print_speed
 G1 X ($X_start+2.3052) Y ($Y_start+-4.5480) A ($Z_print+-0.3228) F $print_speed
 G1 X ($X_start+2.0236) Y ($Y_start+-4.5674) A ($Z_print+-0.3228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 66 
-G1 X ($X_start+2.0140) Y ($Y_start+-4.1671) F $jog_speed
-G1 A ($Z_print+-0.3228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.0140) Y ($Y_start+-4.1671) A ($Z_print+-0.3228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.0140) Y ($Y_start+-4.1671) A ($Z_print+-0.3228) F $print_speed
 G1 X ($X_start+1.7708) Y ($Y_start+-4.1620) A ($Z_print+-0.3228) F $print_speed
@@ -7997,17 +7535,10 @@ G1 X ($X_start+2.7630) Y ($Y_start+-4.0569) A ($Z_print+-0.3228) F $print_speed
 G1 X ($X_start+2.5111) Y ($Y_start+-4.1126) A ($Z_print+-0.3228) F $print_speed
 G1 X ($X_start+2.2617) Y ($Y_start+-4.1500) A ($Z_print+-0.3228) F $print_speed
 G1 X ($X_start+2.0140) Y ($Y_start+-4.1671) A ($Z_print+-0.3228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 67 
-G1 X ($X_start+2.0268) Y ($Y_start+-4.4746) F $jog_speed
-G1 A ($Z_print+-0.1228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.0268) Y ($Y_start+-4.4746) A ($Z_print+-0.1228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.0268) Y ($Y_start+-4.4746) A ($Z_print+-0.1228) F $print_speed
 G1 X ($X_start+1.7508) Y ($Y_start+-4.4594) A ($Z_print+-0.1228) F $print_speed
@@ -8132,17 +7663,10 @@ G1 X ($X_start+2.8530) Y ($Y_start+-4.3652) A ($Z_print+-0.1228) F $print_speed
 G1 X ($X_start+2.5782) Y ($Y_start+-4.4243) A ($Z_print+-0.1228) F $print_speed
 G1 X ($X_start+2.3030) Y ($Y_start+-4.4618) A ($Z_print+-0.1228) F $print_speed
 G1 X ($X_start+2.0268) Y ($Y_start+-4.4746) A ($Z_print+-0.1228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 68 
-G1 X ($X_start+2.0286) Y ($Y_start+-4.0741) F $jog_speed
-G1 A ($Z_print+-0.1228) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.0286) Y ($Y_start+-4.0741) A ($Z_print+-0.1228) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.0286) Y ($Y_start+-4.0741) A ($Z_print+-0.1228) F $print_speed
 G1 X ($X_start+1.7960) Y ($Y_start+-4.0613) A ($Z_print+-0.1228) F $print_speed
@@ -8267,17 +7791,10 @@ G1 X ($X_start+2.7568) Y ($Y_start+-3.9768) A ($Z_print+-0.1228) F $print_speed
 G1 X ($X_start+2.5091) Y ($Y_start+-4.0300) A ($Z_print+-0.1228) F $print_speed
 G1 X ($X_start+2.2666) Y ($Y_start+-4.0631) A ($Z_print+-0.1228) F $print_speed
 G1 X ($X_start+2.0286) Y ($Y_start+-4.0741) A ($Z_print+-0.1228) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 69 
-G1 X ($X_start+2.1312) Y ($Y_start+-4.3114) F $jog_speed
-G1 A ($Z_print+0.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.1312) Y ($Y_start+-4.3114) A ($Z_print+0.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.1312) Y ($Y_start+-4.3114) A ($Z_print+0.0772) F $print_speed
 G1 X ($X_start+1.8684) Y ($Y_start+-4.2813) A ($Z_print+0.0772) F $print_speed
@@ -8400,17 +7917,10 @@ G1 X ($X_start+2.9420) Y ($Y_start+-4.2288) A ($Z_print+0.0772) F $print_speed
 G1 X ($X_start+2.6677) Y ($Y_start+-4.2821) A ($Z_print+0.0772) F $print_speed
 G1 X ($X_start+2.3974) Y ($Y_start+-4.3108) A ($Z_print+0.0772) F $print_speed
 G1 X ($X_start+2.1312) Y ($Y_start+-4.3114) A ($Z_print+0.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 70 
-G1 X ($X_start+2.1537) Y ($Y_start+-3.9114) F $jog_speed
-G1 A ($Z_print+0.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.1537) Y ($Y_start+-3.9114) A ($Z_print+0.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.1537) Y ($Y_start+-3.9114) A ($Z_print+0.0772) F $print_speed
 G1 X ($X_start+1.9367) Y ($Y_start+-3.8865) A ($Z_print+0.0772) F $print_speed
@@ -8533,17 +8043,10 @@ G1 X ($X_start+2.8519) Y ($Y_start+-3.8388) A ($Z_print+0.0772) F $print_speed
 G1 X ($X_start+2.6083) Y ($Y_start+-3.8862) A ($Z_print+0.0772) F $print_speed
 G1 X ($X_start+2.3758) Y ($Y_start+-3.9109) A ($Z_print+0.0772) F $print_speed
 G1 X ($X_start+2.1537) Y ($Y_start+-3.9114) A ($Z_print+0.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 71 
-G1 X ($X_start+2.4809) Y ($Y_start+-4.0271) F $jog_speed
-G1 A ($Z_print+0.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.4809) Y ($Y_start+-4.0271) A ($Z_print+0.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.4809) Y ($Y_start+-4.0271) A ($Z_print+0.2772) F $print_speed
 G1 X ($X_start+2.2082) Y ($Y_start+-4.0290) A ($Z_print+0.2772) F $print_speed
@@ -8663,17 +8166,10 @@ G1 X ($X_start+3.3304) Y ($Y_start+-3.9406) A ($Z_print+0.2772) F $print_speed
 G1 X ($X_start+3.0450) Y ($Y_start+-3.9827) A ($Z_print+0.2772) F $print_speed
 G1 X ($X_start+2.7611) Y ($Y_start+-4.0114) A ($Z_print+0.2772) F $print_speed
 G1 X ($X_start+2.4809) Y ($Y_start+-4.0271) A ($Z_print+0.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 72 
-G1 X ($X_start+2.4682) Y ($Y_start+-3.6272) F $jog_speed
-G1 A ($Z_print+0.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.4682) Y ($Y_start+-3.6272) A ($Z_print+0.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.4682) Y ($Y_start+-3.6272) A ($Z_print+0.2772) F $print_speed
 G1 X ($X_start+2.2197) Y ($Y_start+-3.6290) A ($Z_print+0.2772) F $print_speed
@@ -8793,17 +8289,10 @@ G1 X ($X_start+3.2629) Y ($Y_start+-3.5463) A ($Z_print+0.2772) F $print_speed
 G1 X ($X_start+2.9957) Y ($Y_start+-3.5856) A ($Z_print+0.2772) F $print_speed
 G1 X ($X_start+2.7297) Y ($Y_start+-3.6125) A ($Z_print+0.2772) F $print_speed
 G1 X ($X_start+2.4682) Y ($Y_start+-3.6272) A ($Z_print+0.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 73 
-G1 X ($X_start+2.5454) Y ($Y_start+-3.7223) F $jog_speed
-G1 A ($Z_print+0.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.5454) Y ($Y_start+-3.7223) A ($Z_print+0.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.5454) Y ($Y_start+-3.7223) A ($Z_print+0.4772) F $print_speed
 G1 X ($X_start+2.2715) Y ($Y_start+-3.6874) A ($Z_print+0.4772) F $print_speed
@@ -8921,17 +8410,10 @@ G1 X ($X_start+3.3827) Y ($Y_start+-3.7378) A ($Z_print+0.4772) F $print_speed
 G1 X ($X_start+3.1020) Y ($Y_start+-3.7485) A ($Z_print+0.4772) F $print_speed
 G1 X ($X_start+2.8224) Y ($Y_start+-3.7431) A ($Z_print+0.4772) F $print_speed
 G1 X ($X_start+2.5454) Y ($Y_start+-3.7223) A ($Z_print+0.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 74 
-G1 X ($X_start+2.5857) Y ($Y_start+-3.3242) F $jog_speed
-G1 A ($Z_print+0.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.5857) Y ($Y_start+-3.3242) A ($Z_print+0.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.5857) Y ($Y_start+-3.3242) A ($Z_print+0.4772) F $print_speed
 G1 X ($X_start+2.3306) Y ($Y_start+-3.2917) A ($Z_print+0.4772) F $print_speed
@@ -9049,17 +8531,10 @@ G1 X ($X_start+3.3555) Y ($Y_start+-3.3386) A ($Z_print+0.4772) F $print_speed
 G1 X ($X_start+3.0983) Y ($Y_start+-3.3484) A ($Z_print+0.4772) F $print_speed
 G1 X ($X_start+2.8412) Y ($Y_start+-3.3434) A ($Z_print+0.4772) F $print_speed
 G1 X ($X_start+2.5857) Y ($Y_start+-3.3242) A ($Z_print+0.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 75 
-G1 X ($X_start+3.8286) Y ($Y_start+-3.5299) F $jog_speed
-G1 A ($Z_print+0.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+3.8286) Y ($Y_start+-3.5299) A ($Z_print+0.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+3.8286) Y ($Y_start+-3.5299) A ($Z_print+0.6772) F $print_speed
 G1 X ($X_start+3.5582) Y ($Y_start+-3.5333) A ($Z_print+0.6772) F $print_speed
@@ -9175,17 +8650,10 @@ G1 X ($X_start+4.6137) Y ($Y_start+-3.3602) A ($Z_print+0.6772) F $print_speed
 G1 X ($X_start+4.3564) Y ($Y_start+-3.4428) A ($Z_print+0.6772) F $print_speed
 G1 X ($X_start+4.0943) Y ($Y_start+-3.4998) A ($Z_print+0.6772) F $print_speed
 G1 X ($X_start+3.8286) Y ($Y_start+-3.5299) A ($Z_print+0.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 76 
-G1 X ($X_start+3.8036) Y ($Y_start+-3.1302) F $jog_speed
-G1 A ($Z_print+0.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+3.8036) Y ($Y_start+-3.1302) A ($Z_print+0.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+3.8036) Y ($Y_start+-3.1302) A ($Z_print+0.6772) F $print_speed
 G1 X ($X_start+3.5695) Y ($Y_start+-3.1331) A ($Z_print+0.6772) F $print_speed
@@ -9301,17 +8769,10 @@ G1 X ($X_start+4.4737) Y ($Y_start+-2.9850) A ($Z_print+0.6772) F $print_speed
 G1 X ($X_start+4.2525) Y ($Y_start+-3.0561) A ($Z_print+0.6772) F $print_speed
 G1 X ($X_start+4.0291) Y ($Y_start+-3.1046) A ($Z_print+0.6772) F $print_speed
 G1 X ($X_start+3.8036) Y ($Y_start+-3.1302) A ($Z_print+0.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 77 
-G1 X ($X_start+3.8946) Y ($Y_start+-3.3825) F $jog_speed
-G1 A ($Z_print+0.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+3.8946) Y ($Y_start+-3.3825) A ($Z_print+0.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+3.8946) Y ($Y_start+-3.3825) A ($Z_print+0.8772) F $print_speed
 G1 X ($X_start+3.6238) Y ($Y_start+-3.3901) A ($Z_print+0.8772) F $print_speed
@@ -9426,17 +8887,10 @@ G1 X ($X_start+4.6712) Y ($Y_start+-3.2002) A ($Z_print+0.8772) F $print_speed
 G1 X ($X_start+4.4178) Y ($Y_start+-3.2871) A ($Z_print+0.8772) F $print_speed
 G1 X ($X_start+4.1586) Y ($Y_start+-3.3483) A ($Z_print+0.8772) F $print_speed
 G1 X ($X_start+3.8946) Y ($Y_start+-3.3825) A ($Z_print+0.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 78 
-G1 X ($X_start+3.8631) Y ($Y_start+-2.9832) F $jog_speed
-G1 A ($Z_print+0.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+3.8631) Y ($Y_start+-2.9832) A ($Z_print+0.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+3.8631) Y ($Y_start+-2.9832) A ($Z_print+0.8772) F $print_speed
 G1 X ($X_start+3.6268) Y ($Y_start+-2.9899) A ($Z_print+0.8772) F $print_speed
@@ -9551,17 +9005,10 @@ G1 X ($X_start+4.5236) Y ($Y_start+-2.8279) A ($Z_print+0.8772) F $print_speed
 G1 X ($X_start+4.3067) Y ($Y_start+-2.9023) A ($Z_print+0.8772) F $print_speed
 G1 X ($X_start+4.0867) Y ($Y_start+-2.9542) A ($Z_print+0.8772) F $print_speed
 G1 X ($X_start+3.8631) Y ($Y_start+-2.9832) A ($Z_print+0.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 79 
-G1 X ($X_start+2.4100) Y ($Y_start+-3.2366) F $jog_speed
-G1 A ($Z_print+1.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.4100) Y ($Y_start+-3.2366) A ($Z_print+1.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.4100) Y ($Y_start+-3.2366) A ($Z_print+1.0772) F $print_speed
 G1 X ($X_start+2.1169) Y ($Y_start+-3.2343) A ($Z_print+1.0772) F $print_speed
@@ -9674,17 +9121,10 @@ G1 X ($X_start+3.2783) Y ($Y_start+-3.2363) A ($Z_print+1.0772) F $print_speed
 G1 X ($X_start+2.9921) Y ($Y_start+-3.2404) A ($Z_print+1.0772) F $print_speed
 G1 X ($X_start+2.7025) Y ($Y_start+-3.2394) A ($Z_print+1.0772) F $print_speed
 G1 X ($X_start+2.4100) Y ($Y_start+-3.2366) A ($Z_print+1.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 80 
-G1 X ($X_start+2.4135) Y ($Y_start+-2.8366) F $jog_speed
-G1 A ($Z_print+1.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.4135) Y ($Y_start+-2.8366) A ($Z_print+1.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.4135) Y ($Y_start+-2.8366) A ($Z_print+1.0772) F $print_speed
 G1 X ($X_start+2.1209) Y ($Y_start+-2.8344) A ($Z_print+1.0772) F $print_speed
@@ -9797,17 +9237,10 @@ G1 X ($X_start+3.2666) Y ($Y_start+-2.8364) A ($Z_print+1.0772) F $print_speed
 G1 X ($X_start+2.9899) Y ($Y_start+-2.8404) A ($Z_print+1.0772) F $print_speed
 G1 X ($X_start+2.7050) Y ($Y_start+-2.8394) A ($Z_print+1.0772) F $print_speed
 G1 X ($X_start+2.4135) Y ($Y_start+-2.8366) A ($Z_print+1.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 81 
-G1 X ($X_start+2.0281) Y ($Y_start+-3.2184) F $jog_speed
-G1 A ($Z_print+1.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.0281) Y ($Y_start+-3.2184) A ($Z_print+1.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.0281) Y ($Y_start+-3.2184) A ($Z_print+1.2772) F $print_speed
 G1 X ($X_start+1.7447) Y ($Y_start+-3.1950) A ($Z_print+1.2772) F $print_speed
@@ -9919,17 +9352,10 @@ G1 X ($X_start+2.8868) Y ($Y_start+-3.2026) A ($Z_print+1.2772) F $print_speed
 G1 X ($X_start+2.5987) Y ($Y_start+-3.2212) A ($Z_print+1.2772) F $print_speed
 G1 X ($X_start+2.3124) Y ($Y_start+-3.2270) A ($Z_print+1.2772) F $print_speed
 G1 X ($X_start+2.0281) Y ($Y_start+-3.2184) A ($Z_print+1.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 82 
-G1 X ($X_start+2.0506) Y ($Y_start+-2.8189) F $jog_speed
-G1 A ($Z_print+1.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.0506) Y ($Y_start+-2.8189) A ($Z_print+1.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.0506) Y ($Y_start+-2.8189) A ($Z_print+1.2772) F $print_speed
 G1 X ($X_start+1.7863) Y ($Y_start+-2.7971) A ($Z_print+1.2772) F $print_speed
@@ -10041,17 +9467,10 @@ G1 X ($X_start+2.8530) Y ($Y_start+-2.8039) A ($Z_print+1.2772) F $print_speed
 G1 X ($X_start+2.5817) Y ($Y_start+-2.8215) A ($Z_print+1.2772) F $print_speed
 G1 X ($X_start+2.3144) Y ($Y_start+-2.8269) A ($Z_print+1.2772) F $print_speed
 G1 X ($X_start+2.0506) Y ($Y_start+-2.8189) A ($Z_print+1.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 83 
-G1 X ($X_start+-5.0097) Y ($Y_start+-3.1789) F $jog_speed
-G1 A ($Z_print+1.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-5.0097) Y ($Y_start+-3.1789) A ($Z_print+1.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-5.0097) Y ($Y_start+-3.1789) A ($Z_print+1.4772) F $print_speed
 G1 X ($X_start+-5.0617) Y ($Y_start+-3.1518) A ($Z_print+1.4772) F $print_speed
@@ -10165,17 +9584,10 @@ G1 X ($X_start+-4.3775) Y ($Y_start+-2.9053) A ($Z_print+1.4772) F $print_speed
 G1 X ($X_start+-4.6627) Y ($Y_start+-3.0513) A ($Z_print+1.4772) F $print_speed
 G1 X ($X_start+-4.8899) Y ($Y_start+-3.1574) A ($Z_print+1.4772) F $print_speed
 G1 X ($X_start+-5.0097) Y ($Y_start+-3.1789) A ($Z_print+1.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 84 
-G1 X ($X_start+-4.8369) Y ($Y_start+-2.6912) F $jog_speed
-G1 A ($Z_print+1.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.8369) Y ($Y_start+-2.6912) A ($Z_print+1.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.8369) Y ($Y_start+-2.6912) A ($Z_print+1.4772) F $print_speed
 G1 X ($X_start+-4.8417) Y ($Y_start+-2.6780) A ($Z_print+1.4772) F $print_speed
@@ -10285,17 +9697,10 @@ G1 X ($X_start+-3.7959) Y ($Y_start+-2.3241) A ($Z_print+1.4772) F $print_speed
 G1 X ($X_start+-4.1740) Y ($Y_start+-2.3972) A ($Z_print+1.4772) F $print_speed
 G1 X ($X_start+-4.5414) Y ($Y_start+-2.5399) A ($Z_print+1.4772) F $print_speed
 G1 X ($X_start+-4.8369) Y ($Y_start+-2.6912) A ($Z_print+1.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 85 
-G1 X ($X_start+-4.7800) Y ($Y_start+-3.6450) F $jog_speed
-G1 A ($Z_print+1.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.7800) Y ($Y_start+-3.6450) A ($Z_print+1.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.7800) Y ($Y_start+-3.6450) A ($Z_print+1.6772) F $print_speed
 G1 X ($X_start+-4.9669) Y ($Y_start+-3.6656) A ($Z_print+1.6772) F $print_speed
@@ -10411,17 +9816,10 @@ G1 X ($X_start+-4.2375) Y ($Y_start+-3.1591) A ($Z_print+1.6772) F $print_speed
 G1 X ($X_start+-4.4330) Y ($Y_start+-3.3765) A ($Z_print+1.6772) F $print_speed
 G1 X ($X_start+-4.6116) Y ($Y_start+-3.5491) A ($Z_print+1.6772) F $print_speed
 G1 X ($X_start+-4.7800) Y ($Y_start+-3.6450) A ($Z_print+1.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 86 
-G1 X ($X_start+-4.9061) Y ($Y_start+-3.2565) F $jog_speed
-G1 A ($Z_print+1.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.9061) Y ($Y_start+-3.2565) A ($Z_print+1.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.9061) Y ($Y_start+-3.2565) A ($Z_print+1.6772) F $print_speed
 G1 X ($X_start+-4.9435) Y ($Y_start+-3.2606) A ($Z_print+1.6772) F $print_speed
@@ -10537,17 +9935,10 @@ G1 X ($X_start+-4.5239) Y ($Y_start+-2.8794) A ($Z_print+1.6772) F $print_speed
 G1 X ($X_start+-4.7211) Y ($Y_start+-3.0986) A ($Z_print+1.6772) F $print_speed
 G1 X ($X_start+-4.8534) Y ($Y_start+-3.2264) A ($Z_print+1.6772) F $print_speed
 G1 X ($X_start+-4.9061) Y ($Y_start+-3.2565) A ($Z_print+1.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 87 
-G1 X ($X_start+-4.5748) Y ($Y_start+-3.9453) F $jog_speed
-G1 A ($Z_print+1.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.5748) Y ($Y_start+-3.9453) A ($Z_print+1.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.5748) Y ($Y_start+-3.9453) A ($Z_print+1.8772) F $print_speed
 G1 X ($X_start+-4.7413) Y ($Y_start+-3.9490) A ($Z_print+1.8772) F $print_speed
@@ -10664,17 +10055,10 @@ G1 X ($X_start+-4.1356) Y ($Y_start+-3.4394) A ($Z_print+1.8772) F $print_speed
 G1 X ($X_start+-4.2937) Y ($Y_start+-3.6858) A ($Z_print+1.8772) F $print_speed
 G1 X ($X_start+-4.4411) Y ($Y_start+-3.8644) A ($Z_print+1.8772) F $print_speed
 G1 X ($X_start+-4.5748) Y ($Y_start+-3.9453) A ($Z_print+1.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 88 
-G1 X ($X_start+-4.6955) Y ($Y_start+-3.5442) F $jog_speed
-G1 A ($Z_print+1.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.6955) Y ($Y_start+-3.5442) A ($Z_print+1.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.6955) Y ($Y_start+-3.5442) A ($Z_print+1.8772) F $print_speed
 G1 X ($X_start+-4.8357) Y ($Y_start+-3.5005) A ($Z_print+1.8772) F $print_speed
@@ -10789,17 +10173,10 @@ G1 X ($X_start+-4.2749) Y ($Y_start+-2.9329) A ($Z_print+1.8772) F $print_speed
 G1 X ($X_start+-4.4694) Y ($Y_start+-3.2190) A ($Z_print+1.8772) F $print_speed
 G1 X ($X_start+-4.6174) Y ($Y_start+-3.4496) A ($Z_print+1.8772) F $print_speed
 G1 X ($X_start+-4.6955) Y ($Y_start+-3.5442) A ($Z_print+1.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 89 
-G1 X ($X_start+-4.4935) Y ($Y_start+-4.0681) F $jog_speed
-G1 A ($Z_print+2.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4935) Y ($Y_start+-4.0681) A ($Z_print+2.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4935) Y ($Y_start+-4.0681) A ($Z_print+2.0772) F $print_speed
 G1 X ($X_start+-4.6916) Y ($Y_start+-4.0779) A ($Z_print+2.0772) F $print_speed
@@ -10916,17 +10293,10 @@ G1 X ($X_start+-4.0333) Y ($Y_start+-3.6321) A ($Z_print+2.0772) F $print_speed
 G1 X ($X_start+-4.1872) Y ($Y_start+-3.8439) A ($Z_print+2.0772) F $print_speed
 G1 X ($X_start+-4.3385) Y ($Y_start+-3.9925) A ($Z_print+2.0772) F $print_speed
 G1 X ($X_start+-4.4935) Y ($Y_start+-4.0681) A ($Z_print+2.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 90 
-G1 X ($X_start+-4.5951) Y ($Y_start+-3.6726) F $jog_speed
-G1 A ($Z_print+2.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.5951) Y ($Y_start+-3.6726) A ($Z_print+2.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.5951) Y ($Y_start+-3.6726) A ($Z_print+2.0772) F $print_speed
 G1 X ($X_start+-4.6598) Y ($Y_start+-3.6758) A ($Z_print+2.0772) F $print_speed
@@ -11043,17 +10413,10 @@ G1 X ($X_start+-4.3624) Y ($Y_start+-3.4046) A ($Z_print+2.0772) F $print_speed
 G1 X ($X_start+-4.4913) Y ($Y_start+-3.5818) A ($Z_print+2.0772) F $print_speed
 G1 X ($X_start+-4.5724) Y ($Y_start+-3.6615) A ($Z_print+2.0772) F $print_speed
 G1 X ($X_start+-4.5951) Y ($Y_start+-3.6726) A ($Z_print+2.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 91 
-G1 X ($X_start+-4.4967) Y ($Y_start+-4.1591) F $jog_speed
-G1 A ($Z_print+2.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4967) Y ($Y_start+-4.1591) A ($Z_print+2.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4967) Y ($Y_start+-4.1591) A ($Z_print+2.2772) F $print_speed
 G1 X ($X_start+-4.7009) Y ($Y_start+-4.1461) A ($Z_print+2.2772) F $print_speed
@@ -11170,17 +10533,10 @@ G1 X ($X_start+-4.0125) Y ($Y_start+-3.8297) A ($Z_print+2.2772) F $print_speed
 G1 X ($X_start+-4.1740) Y ($Y_start+-4.0019) A ($Z_print+2.2772) F $print_speed
 G1 X ($X_start+-4.3324) Y ($Y_start+-4.1114) A ($Z_print+2.2772) F $print_speed
 G1 X ($X_start+-4.4967) Y ($Y_start+-4.1591) A ($Z_print+2.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 92 
-G1 X ($X_start+-4.5411) Y ($Y_start+-3.7555) F $jog_speed
-G1 A ($Z_print+2.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.5411) Y ($Y_start+-3.7555) A ($Z_print+2.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.5411) Y ($Y_start+-3.7555) A ($Z_print+2.2772) F $print_speed
 G1 X ($X_start+-4.6339) Y ($Y_start+-3.7496) A ($Z_print+2.2772) F $print_speed
@@ -11297,17 +10653,10 @@ G1 X ($X_start+-4.3205) Y ($Y_start+-3.5734) A ($Z_print+2.2772) F $print_speed
 G1 X ($X_start+-4.4366) Y ($Y_start+-3.6971) A ($Z_print+2.2772) F $print_speed
 G1 X ($X_start+-4.5065) Y ($Y_start+-3.7454) A ($Z_print+2.2772) F $print_speed
 G1 X ($X_start+-4.5411) Y ($Y_start+-3.7555) A ($Z_print+2.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 93 
-G1 X ($X_start+-4.5596) Y ($Y_start+-4.2407) F $jog_speed
-G1 A ($Z_print+2.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.5596) Y ($Y_start+-4.2407) A ($Z_print+2.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.5596) Y ($Y_start+-4.2407) A ($Z_print+2.4772) F $print_speed
 G1 X ($X_start+-4.7585) Y ($Y_start+-4.2133) A ($Z_print+2.4772) F $print_speed
@@ -11423,17 +10772,10 @@ G1 X ($X_start+-4.0129) Y ($Y_start+-3.8929) A ($Z_print+2.4772) F $print_speed
 G1 X ($X_start+-4.2001) Y ($Y_start+-4.0738) A ($Z_print+2.4772) F $print_speed
 G1 X ($X_start+-4.3843) Y ($Y_start+-4.1941) A ($Z_print+2.4772) F $print_speed
 G1 X ($X_start+-4.5596) Y ($Y_start+-4.2407) A ($Z_print+2.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 94 
-G1 X ($X_start+-4.5846) Y ($Y_start+-3.8335) F $jog_speed
-G1 A ($Z_print+2.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.5846) Y ($Y_start+-3.8335) A ($Z_print+2.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.5846) Y ($Y_start+-3.8335) A ($Z_print+2.4772) F $print_speed
 G1 X ($X_start+-4.6564) Y ($Y_start+-3.8236) A ($Z_print+2.4772) F $print_speed
@@ -11549,17 +10891,10 @@ G1 X ($X_start+-4.3055) Y ($Y_start+-3.6195) A ($Z_print+2.4772) F $print_speed
 G1 X ($X_start+-4.4506) Y ($Y_start+-3.7597) A ($Z_print+2.4772) F $print_speed
 G1 X ($X_start+-4.5492) Y ($Y_start+-3.8240) A ($Z_print+2.4772) F $print_speed
 G1 X ($X_start+-4.5846) Y ($Y_start+-3.8335) A ($Z_print+2.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 95 
-G1 X ($X_start+-4.5468) Y ($Y_start+-4.2424) F $jog_speed
-G1 A ($Z_print+2.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.5468) Y ($Y_start+-4.2424) A ($Z_print+2.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.5468) Y ($Y_start+-4.2424) A ($Z_print+2.6772) F $print_speed
 G1 X ($X_start+-4.7526) Y ($Y_start+-4.2138) A ($Z_print+2.6772) F $print_speed
@@ -11674,17 +11009,10 @@ G1 X ($X_start+-4.0259) Y ($Y_start+-3.9199) A ($Z_print+2.6772) F $print_speed
 G1 X ($X_start+-4.2055) Y ($Y_start+-4.0944) A ($Z_print+2.6772) F $print_speed
 G1 X ($X_start+-4.3770) Y ($Y_start+-4.2024) A ($Z_print+2.6772) F $print_speed
 G1 X ($X_start+-4.5468) Y ($Y_start+-4.2424) A ($Z_print+2.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 96 
-G1 X ($X_start+-4.5657) Y ($Y_start+-3.8359) F $jog_speed
-G1 A ($Z_print+2.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.5657) Y ($Y_start+-3.8359) A ($Z_print+2.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.5657) Y ($Y_start+-3.8359) A ($Z_print+2.6772) F $print_speed
 G1 X ($X_start+-4.6556) Y ($Y_start+-3.8234) A ($Z_print+2.6772) F $print_speed
@@ -11799,17 +11127,10 @@ G1 X ($X_start+-4.3208) Y ($Y_start+-3.6486) A ($Z_print+2.6772) F $print_speed
 G1 X ($X_start+-4.4542) Y ($Y_start+-3.7783) A ($Z_print+2.6772) F $print_speed
 G1 X ($X_start+-4.5336) Y ($Y_start+-3.8284) A ($Z_print+2.6772) F $print_speed
 G1 X ($X_start+-4.5657) Y ($Y_start+-3.8359) A ($Z_print+2.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 97 
-G1 X ($X_start+-4.6621) Y ($Y_start+-4.2062) F $jog_speed
-G1 A ($Z_print+2.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.6621) Y ($Y_start+-4.2062) A ($Z_print+2.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.6621) Y ($Y_start+-4.2062) A ($Z_print+2.8772) F $print_speed
 G1 X ($X_start+-4.9024) Y ($Y_start+-4.2100) A ($Z_print+2.8772) F $print_speed
@@ -11923,17 +11244,10 @@ G1 X ($X_start+-4.0687) Y ($Y_start+-3.8957) A ($Z_print+2.8772) F $print_speed
 G1 X ($X_start+-4.2630) Y ($Y_start+-4.0438) A ($Z_print+2.8772) F $print_speed
 G1 X ($X_start+-4.4561) Y ($Y_start+-4.1492) A ($Z_print+2.8772) F $print_speed
 G1 X ($X_start+-4.6621) Y ($Y_start+-4.2062) A ($Z_print+2.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 98 
-G1 X ($X_start+-4.7195) Y ($Y_start+-3.8070) F $jog_speed
-G1 A ($Z_print+2.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.7195) Y ($Y_start+-3.8070) A ($Z_print+2.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.7195) Y ($Y_start+-3.8070) A ($Z_print+2.8772) F $print_speed
 G1 X ($X_start+-4.8685) Y ($Y_start+-3.8094) A ($Z_print+2.8772) F $print_speed
@@ -12047,17 +11361,10 @@ G1 X ($X_start+-4.3232) Y ($Y_start+-3.5867) A ($Z_print+2.8772) F $print_speed
 G1 X ($X_start+-4.4813) Y ($Y_start+-3.7072) A ($Z_print+2.8772) F $print_speed
 G1 X ($X_start+-4.6072) Y ($Y_start+-3.7760) A ($Z_print+2.8772) F $print_speed
 G1 X ($X_start+-4.7195) Y ($Y_start+-3.8070) A ($Z_print+2.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 99 
-G1 X ($X_start+-4.7389) Y ($Y_start+-4.2117) F $jog_speed
-G1 A ($Z_print+3.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.7389) Y ($Y_start+-4.2117) A ($Z_print+3.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.7389) Y ($Y_start+-4.2117) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+-4.9557) Y ($Y_start+-4.2317) A ($Z_print+3.0772) F $print_speed
@@ -12128,17 +11435,10 @@ G1 X ($X_start+-4.0883) Y ($Y_start+-3.8105) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+-4.3076) Y ($Y_start+-3.9919) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+-4.5255) Y ($Y_start+-4.1304) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+-4.7389) Y ($Y_start+-4.2117) A ($Z_print+3.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 100 
-G1 X ($X_start+-4.8302) Y ($Y_start+-3.8184) F $jog_speed
-G1 A ($Z_print+3.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.8302) Y ($Y_start+-3.8184) A ($Z_print+3.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.8302) Y ($Y_start+-3.8184) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+-4.9419) Y ($Y_start+-3.8288) A ($Z_print+3.0772) F $print_speed
@@ -12209,17 +11509,10 @@ G1 X ($X_start+-4.3534) Y ($Y_start+-3.5106) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+-4.5433) Y ($Y_start+-3.6678) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+-4.7058) Y ($Y_start+-3.7710) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+-4.8302) Y ($Y_start+-3.8184) A ($Z_print+3.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 101 
-G1 X ($X_start+-5.1144) Y ($Y_start+-4.2170) F $jog_speed
-G1 A ($Z_print+3.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-5.1144) Y ($Y_start+-4.2170) A ($Z_print+3.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-5.1144) Y ($Y_start+-4.2170) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+-5.3344) Y ($Y_start+-4.1754) A ($Z_print+3.2772) F $print_speed
@@ -12284,17 +11577,10 @@ G1 X ($X_start+-4.3360) Y ($Y_start+-3.9849) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+-4.5850) Y ($Y_start+-4.1171) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+-4.8569) Y ($Y_start+-4.1976) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+-5.1144) Y ($Y_start+-4.2170) A ($Z_print+3.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 102 
-G1 X ($X_start+-5.0919) Y ($Y_start+-3.8142) F $jog_speed
-G1 A ($Z_print+3.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-5.0919) Y ($Y_start+-3.8142) A ($Z_print+3.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-5.0919) Y ($Y_start+-3.8142) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+-5.2055) Y ($Y_start+-3.7927) A ($Z_print+3.2772) F $print_speed
@@ -12359,17 +11645,10 @@ G1 X ($X_start+-4.5650) Y ($Y_start+-3.6536) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+-4.7371) Y ($Y_start+-3.7450) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+-4.9296) Y ($Y_start+-3.8019) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+-5.0919) Y ($Y_start+-3.8142) A ($Z_print+3.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 103 
-G1 X ($X_start+-5.0998) Y ($Y_start+-4.1817) F $jog_speed
-G1 A ($Z_print+3.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-5.0998) Y ($Y_start+-4.1817) A ($Z_print+3.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-5.0998) Y ($Y_start+-4.1817) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+-5.2960) Y ($Y_start+-4.1501) A ($Z_print+3.4772) F $print_speed
@@ -12430,17 +11709,10 @@ G1 X ($X_start+-4.4401) Y ($Y_start+-3.8897) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+-4.6711) Y ($Y_start+-4.0440) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+-4.8944) Y ($Y_start+-4.1455) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+-5.0998) Y ($Y_start+-4.1817) A ($Z_print+3.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 104 
-G1 X ($X_start+-5.1028) Y ($Y_start+-3.7761) F $jog_speed
-G1 A ($Z_print+3.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-5.1028) Y ($Y_start+-3.7761) A ($Z_print+3.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-5.1028) Y ($Y_start+-3.7761) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+-5.1734) Y ($Y_start+-3.7647) A ($Z_print+3.4772) F $print_speed
@@ -12501,17 +11773,10 @@ G1 X ($X_start+-4.6792) Y ($Y_start+-3.5684) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+-4.8663) Y ($Y_start+-3.6933) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+-5.0137) Y ($Y_start+-3.7604) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+-5.1028) Y ($Y_start+-3.7761) A ($Z_print+3.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 105 
-G1 X ($X_start+-5.0980) Y ($Y_start+-4.1325) F $jog_speed
-G1 A ($Z_print+3.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-5.0980) Y ($Y_start+-4.1325) A ($Z_print+3.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-5.0980) Y ($Y_start+-4.1325) A ($Z_print+3.6772) F $print_speed
 G1 X ($X_start+-5.3011) Y ($Y_start+-4.0995) A ($Z_print+3.6772) F $print_speed
@@ -12571,17 +11836,10 @@ G1 X ($X_start+-4.4539) Y ($Y_start+-3.8202) A ($Z_print+3.6772) F $print_speed
 G1 X ($X_start+-4.6765) Y ($Y_start+-3.9842) A ($Z_print+3.6772) F $print_speed
 G1 X ($X_start+-4.8938) Y ($Y_start+-4.0929) A ($Z_print+3.6772) F $print_speed
 G1 X ($X_start+-5.0980) Y ($Y_start+-4.1325) A ($Z_print+3.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 106 
-G1 X ($X_start+-5.1042) Y ($Y_start+-3.7263) F $jog_speed
-G1 A ($Z_print+3.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-5.1042) Y ($Y_start+-3.7263) A ($Z_print+3.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-5.1042) Y ($Y_start+-3.7263) A ($Z_print+3.6772) F $print_speed
 G1 X ($X_start+-5.1767) Y ($Y_start+-3.7145) A ($Z_print+3.6772) F $print_speed
@@ -12641,17 +11899,10 @@ G1 X ($X_start+-4.7075) Y ($Y_start+-3.5101) A ($Z_print+3.6772) F $print_speed
 G1 X ($X_start+-4.8861) Y ($Y_start+-3.6418) A ($Z_print+3.6772) F $print_speed
 G1 X ($X_start+-5.0238) Y ($Y_start+-3.7107) A ($Z_print+3.6772) F $print_speed
 G1 X ($X_start+-5.1042) Y ($Y_start+-3.7263) A ($Z_print+3.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 107 
-G1 X ($X_start+-5.0017) Y ($Y_start+-4.0306) F $jog_speed
-G1 A ($Z_print+3.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-5.0017) Y ($Y_start+-4.0306) A ($Z_print+3.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-5.0017) Y ($Y_start+-4.0306) A ($Z_print+3.8772) F $print_speed
 G1 X ($X_start+-5.1867) Y ($Y_start+-4.0111) A ($Z_print+3.8772) F $print_speed
@@ -12709,17 +11960,10 @@ G1 X ($X_start+-4.4179) Y ($Y_start+-3.7069) A ($Z_print+3.8772) F $print_speed
 G1 X ($X_start+-4.6250) Y ($Y_start+-3.8763) A ($Z_print+3.8772) F $print_speed
 G1 X ($X_start+-4.8203) Y ($Y_start+-3.9863) A ($Z_print+3.8772) F $print_speed
 G1 X ($X_start+-5.0017) Y ($Y_start+-4.0306) A ($Z_print+3.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 108 
-G1 X ($X_start+-5.0290) Y ($Y_start+-3.6255) F $jog_speed
-G1 A ($Z_print+3.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-5.0290) Y ($Y_start+-3.6255) A ($Z_print+3.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-5.0290) Y ($Y_start+-3.6255) A ($Z_print+3.8772) F $print_speed
 G1 X ($X_start+-5.0860) Y ($Y_start+-3.6195) A ($Z_print+3.8772) F $print_speed
@@ -12777,17 +12021,10 @@ G1 X ($X_start+-4.6866) Y ($Y_start+-3.4100) A ($Z_print+3.8772) F $print_speed
 G1 X ($X_start+-4.8514) Y ($Y_start+-3.5448) A ($Z_print+3.8772) F $print_speed
 G1 X ($X_start+-4.9686) Y ($Y_start+-3.6107) A ($Z_print+3.8772) F $print_speed
 G1 X ($X_start+-5.0290) Y ($Y_start+-3.6255) A ($Z_print+3.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 109 
-G1 X ($X_start+-4.9839) Y ($Y_start+-3.9254) F $jog_speed
-G1 A ($Z_print+4.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.9839) Y ($Y_start+-3.9254) A ($Z_print+4.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.9839) Y ($Y_start+-3.9254) A ($Z_print+4.0772) F $print_speed
 G1 X ($X_start+-5.1748) Y ($Y_start+-3.8998) A ($Z_print+4.0772) F $print_speed
@@ -12844,17 +12081,10 @@ G1 X ($X_start+-4.4110) Y ($Y_start+-3.6362) A ($Z_print+4.0772) F $print_speed
 G1 X ($X_start+-4.6109) Y ($Y_start+-3.7917) A ($Z_print+4.0772) F $print_speed
 G1 X ($X_start+-4.8017) Y ($Y_start+-3.8893) A ($Z_print+4.0772) F $print_speed
 G1 X ($X_start+-4.9839) Y ($Y_start+-3.9254) A ($Z_print+4.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 110 
-G1 X ($X_start+-4.9966) Y ($Y_start+-3.5201) F $jog_speed
-G1 A ($Z_print+4.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.9966) Y ($Y_start+-3.5201) A ($Z_print+4.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.9966) Y ($Y_start+-3.5201) A ($Z_print+4.0772) F $print_speed
 G1 X ($X_start+-5.0672) Y ($Y_start+-3.5107) A ($Z_print+4.0772) F $print_speed
@@ -12911,17 +12141,10 @@ G1 X ($X_start+-4.6751) Y ($Y_start+-3.3349) A ($Z_print+4.0772) F $print_speed
 G1 X ($X_start+-4.8266) Y ($Y_start+-3.4527) A ($Z_print+4.0772) F $print_speed
 G1 X ($X_start+-4.9342) Y ($Y_start+-3.5077) A ($Z_print+4.0772) F $print_speed
 G1 X ($X_start+-4.9966) Y ($Y_start+-3.5201) A ($Z_print+4.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 111 
-G1 X ($X_start+-4.9701) Y ($Y_start+-3.8203) F $jog_speed
-G1 A ($Z_print+4.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.9701) Y ($Y_start+-3.8203) A ($Z_print+4.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.9701) Y ($Y_start+-3.8203) A ($Z_print+4.2772) F $print_speed
 G1 X ($X_start+-5.1587) Y ($Y_start+-3.7903) A ($Z_print+4.2772) F $print_speed
@@ -12977,17 +12200,10 @@ G1 X ($X_start+-4.4015) Y ($Y_start+-3.5423) A ($Z_print+4.2772) F $print_speed
 G1 X ($X_start+-4.6005) Y ($Y_start+-3.6943) A ($Z_print+4.2772) F $print_speed
 G1 X ($X_start+-4.7900) Y ($Y_start+-3.7881) A ($Z_print+4.2772) F $print_speed
 G1 X ($X_start+-4.9701) Y ($Y_start+-3.8203) A ($Z_print+4.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 112 
-G1 X ($X_start+-4.9739) Y ($Y_start+-3.4146) F $jog_speed
-G1 A ($Z_print+4.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.9739) Y ($Y_start+-3.4146) A ($Z_print+4.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.9739) Y ($Y_start+-3.4146) A ($Z_print+4.2772) F $print_speed
 G1 X ($X_start+-5.0415) Y ($Y_start+-3.4039) A ($Z_print+4.2772) F $print_speed
@@ -13043,17 +12259,10 @@ G1 X ($X_start+-4.6637) Y ($Y_start+-3.2392) A ($Z_print+4.2772) F $print_speed
 G1 X ($X_start+-4.8127) Y ($Y_start+-3.3530) A ($Z_print+4.2772) F $print_speed
 G1 X ($X_start+-4.9164) Y ($Y_start+-3.4044) A ($Z_print+4.2772) F $print_speed
 G1 X ($X_start+-4.9739) Y ($Y_start+-3.4146) A ($Z_print+4.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 113 
-G1 X ($X_start+-4.8907) Y ($Y_start+-3.6897) F $jog_speed
-G1 A ($Z_print+4.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.8907) Y ($Y_start+-3.6897) A ($Z_print+4.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.8907) Y ($Y_start+-3.6897) A ($Z_print+4.4772) F $print_speed
 G1 X ($X_start+-5.0856) Y ($Y_start+-3.6661) A ($Z_print+4.4772) F $print_speed
@@ -13107,17 +12316,10 @@ G1 X ($X_start+-4.2873) Y ($Y_start+-3.3913) A ($Z_print+4.4772) F $print_speed
 G1 X ($X_start+-4.4976) Y ($Y_start+-3.5497) A ($Z_print+4.4772) F $print_speed
 G1 X ($X_start+-4.6995) Y ($Y_start+-3.6508) A ($Z_print+4.4772) F $print_speed
 G1 X ($X_start+-4.8907) Y ($Y_start+-3.6897) A ($Z_print+4.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 114 
-G1 X ($X_start+-4.9069) Y ($Y_start+-3.2848) F $jog_speed
-G1 A ($Z_print+4.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.9069) Y ($Y_start+-3.2848) A ($Z_print+4.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.9069) Y ($Y_start+-3.2848) A ($Z_print+4.4772) F $print_speed
 G1 X ($X_start+-4.9828) Y ($Y_start+-3.2756) A ($Z_print+4.4772) F $print_speed
@@ -13171,17 +12373,10 @@ G1 X ($X_start+-4.5467) Y ($Y_start+-3.0859) A ($Z_print+4.4772) F $print_speed
 G1 X ($X_start+-4.7093) Y ($Y_start+-3.2083) A ($Z_print+4.4772) F $print_speed
 G1 X ($X_start+-4.8312) Y ($Y_start+-3.2694) A ($Z_print+4.4772) F $print_speed
 G1 X ($X_start+-4.9069) Y ($Y_start+-3.2848) A ($Z_print+4.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 115 
-G1 X ($X_start+-4.8541) Y ($Y_start+-3.5584) F $jog_speed
-G1 A ($Z_print+4.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.8541) Y ($Y_start+-3.5584) A ($Z_print+4.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.8541) Y ($Y_start+-3.5584) A ($Z_print+4.6772) F $print_speed
 G1 X ($X_start+-5.0528) Y ($Y_start+-3.5319) A ($Z_print+4.6772) F $print_speed
@@ -13235,17 +12430,10 @@ G1 X ($X_start+-4.2061) Y ($Y_start+-3.2720) A ($Z_print+4.6772) F $print_speed
 G1 X ($X_start+-4.4323) Y ($Y_start+-3.4248) A ($Z_print+4.6772) F $print_speed
 G1 X ($X_start+-4.6504) Y ($Y_start+-3.5225) A ($Z_print+4.6772) F $print_speed
 G1 X ($X_start+-4.8541) Y ($Y_start+-3.5584) A ($Z_print+4.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 116 
-G1 X ($X_start+-4.8625) Y ($Y_start+-3.1538) F $jog_speed
-G1 A ($Z_print+4.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.8625) Y ($Y_start+-3.1538) A ($Z_print+4.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.8625) Y ($Y_start+-3.1538) A ($Z_print+4.6772) F $print_speed
 G1 X ($X_start+-4.9458) Y ($Y_start+-3.1426) A ($Z_print+4.6772) F $print_speed
@@ -13299,17 +12487,10 @@ G1 X ($X_start+-4.4500) Y ($Y_start+-2.9540) A ($Z_print+4.6772) F $print_speed
 G1 X ($X_start+-4.6275) Y ($Y_start+-3.0740) A ($Z_print+4.6772) F $print_speed
 G1 X ($X_start+-4.7687) Y ($Y_start+-3.1372) A ($Z_print+4.6772) F $print_speed
 G1 X ($X_start+-4.8625) Y ($Y_start+-3.1538) A ($Z_print+4.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 117 
-G1 X ($X_start+-4.7933) Y ($Y_start+-3.3925) F $jog_speed
-G1 A ($Z_print+4.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.7933) Y ($Y_start+-3.3925) A ($Z_print+4.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.7933) Y ($Y_start+-3.3925) A ($Z_print+4.8772) F $print_speed
 G1 X ($X_start+-5.0018) Y ($Y_start+-3.3627) A ($Z_print+4.8772) F $print_speed
@@ -13366,17 +12547,10 @@ G1 X ($X_start+-4.1083) Y ($Y_start+-3.1455) A ($Z_print+4.8772) F $print_speed
 G1 X ($X_start+-4.3447) Y ($Y_start+-3.2801) A ($Z_print+4.8772) F $print_speed
 G1 X ($X_start+-4.5756) Y ($Y_start+-3.3644) A ($Z_print+4.8772) F $print_speed
 G1 X ($X_start+-4.7933) Y ($Y_start+-3.3925) A ($Z_print+4.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 118 
-G1 X ($X_start+-4.7905) Y ($Y_start+-2.9888) F $jog_speed
-G1 A ($Z_print+4.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.7905) Y ($Y_start+-2.9888) A ($Z_print+4.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.7905) Y ($Y_start+-2.9888) A ($Z_print+4.8772) F $print_speed
 G1 X ($X_start+-4.8959) Y ($Y_start+-2.9737) A ($Z_print+4.8772) F $print_speed
@@ -13428,17 +12602,10 @@ G1 X ($X_start+-4.3284) Y ($Y_start+-2.8106) A ($Z_print+4.8772) F $print_speed
 G1 X ($X_start+-4.5134) Y ($Y_start+-2.9158) A ($Z_print+4.8772) F $print_speed
 G1 X ($X_start+-4.6710) Y ($Y_start+-2.9734) A ($Z_print+4.8772) F $print_speed
 G1 X ($X_start+-4.7905) Y ($Y_start+-2.9888) A ($Z_print+4.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 119 
-G1 X ($X_start+-4.7585) Y ($Y_start+-3.2023) F $jog_speed
-G1 A ($Z_print+5.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.7585) Y ($Y_start+-3.2023) A ($Z_print+5.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.7585) Y ($Y_start+-3.2023) A ($Z_print+5.0772) F $print_speed
 G1 X ($X_start+-4.9845) Y ($Y_start+-3.1572) A ($Z_print+5.0772) F $print_speed
@@ -13500,17 +12667,10 @@ G1 X ($X_start+-4.0480) Y ($Y_start+-3.0201) A ($Z_print+5.0772) F $print_speed
 G1 X ($X_start+-4.2887) Y ($Y_start+-3.1305) A ($Z_print+5.0772) F $print_speed
 G1 X ($X_start+-4.5274) Y ($Y_start+-3.1926) A ($Z_print+5.0772) F $print_speed
 G1 X ($X_start+-4.7585) Y ($Y_start+-3.2023) A ($Z_print+5.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 120 
-G1 X ($X_start+-4.7273) Y ($Y_start+-2.8006) F $jog_speed
-G1 A ($Z_print+5.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.7273) Y ($Y_start+-2.8006) A ($Z_print+5.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.7273) Y ($Y_start+-2.8006) A ($Z_print+5.0772) F $print_speed
 G1 X ($X_start+-4.8638) Y ($Y_start+-2.7734) A ($Z_print+5.0772) F $print_speed
@@ -13559,17 +12719,10 @@ G1 X ($X_start+-4.2413) Y ($Y_start+-2.6687) A ($Z_print+5.0772) F $print_speed
 G1 X ($X_start+-4.4234) Y ($Y_start+-2.7522) A ($Z_print+5.0772) F $print_speed
 G1 X ($X_start+-4.5868) Y ($Y_start+-2.7947) A ($Z_print+5.0772) F $print_speed
 G1 X ($X_start+-4.7273) Y ($Y_start+-2.8006) A ($Z_print+5.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 121 
-G1 X ($X_start+-4.6634) Y ($Y_start+-3.0166) F $jog_speed
-G1 A ($Z_print+5.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.6634) Y ($Y_start+-3.0166) A ($Z_print+5.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.6634) Y ($Y_start+-3.0166) A ($Z_print+5.2772) F $print_speed
 G1 X ($X_start+-4.8913) Y ($Y_start+-2.9706) A ($Z_print+5.2772) F $print_speed
@@ -13637,17 +12790,10 @@ G1 X ($X_start+-3.9715) Y ($Y_start+-2.8525) A ($Z_print+5.2772) F $print_speed
 G1 X ($X_start+-4.2034) Y ($Y_start+-2.9545) A ($Z_print+5.2772) F $print_speed
 G1 X ($X_start+-4.4351) Y ($Y_start+-3.0103) A ($Z_print+5.2772) F $print_speed
 G1 X ($X_start+-4.6634) Y ($Y_start+-3.0166) A ($Z_print+5.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 122 
-G1 X ($X_start+-4.6288) Y ($Y_start+-2.6155) F $jog_speed
-G1 A ($Z_print+5.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.6288) Y ($Y_start+-2.6155) A ($Z_print+5.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.6288) Y ($Y_start+-2.6155) A ($Z_print+5.2772) F $print_speed
 G1 X ($X_start+-4.7726) Y ($Y_start+-2.5865) A ($Z_print+5.2772) F $print_speed
@@ -13699,17 +12845,10 @@ G1 X ($X_start+-4.1604) Y ($Y_start+-2.4986) A ($Z_print+5.2772) F $print_speed
 G1 X ($X_start+-4.3319) Y ($Y_start+-2.5740) A ($Z_print+5.2772) F $print_speed
 G1 X ($X_start+-4.4880) Y ($Y_start+-2.6117) A ($Z_print+5.2772) F $print_speed
 G1 X ($X_start+-4.6288) Y ($Y_start+-2.6155) A ($Z_print+5.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 123 
-G1 X ($X_start+-4.3672) Y ($Y_start+-2.7986) F $jog_speed
-G1 A ($Z_print+5.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.3672) Y ($Y_start+-2.7986) A ($Z_print+5.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.3672) Y ($Y_start+-2.7986) A ($Z_print+5.4772) F $print_speed
 G1 X ($X_start+-4.6301) Y ($Y_start+-2.7710) A ($Z_print+5.4772) F $print_speed
@@ -13785,17 +12924,10 @@ G1 X ($X_start+-3.6087) Y ($Y_start+-2.5930) A ($Z_print+5.4772) F $print_speed
 G1 X ($X_start+-3.8469) Y ($Y_start+-2.7070) A ($Z_print+5.4772) F $print_speed
 G1 X ($X_start+-4.1035) Y ($Y_start+-2.7767) A ($Z_print+5.4772) F $print_speed
 G1 X ($X_start+-4.3672) Y ($Y_start+-2.7986) A ($Z_print+5.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 124 
-G1 X ($X_start+-4.3627) Y ($Y_start+-2.3969) F $jog_speed
-G1 A ($Z_print+5.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.3627) Y ($Y_start+-2.3969) A ($Z_print+5.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.3627) Y ($Y_start+-2.3969) A ($Z_print+5.4772) F $print_speed
 G1 X ($X_start+-4.5535) Y ($Y_start+-2.3768) A ($Z_print+5.4772) F $print_speed
@@ -13856,17 +12988,10 @@ G1 X ($X_start+-3.8157) Y ($Y_start+-2.2486) A ($Z_print+5.4772) F $print_speed
 G1 X ($X_start+-3.9868) Y ($Y_start+-2.3305) A ($Z_print+5.4772) F $print_speed
 G1 X ($X_start+-4.1731) Y ($Y_start+-2.3811) A ($Z_print+5.4772) F $print_speed
 G1 X ($X_start+-4.3627) Y ($Y_start+-2.3969) A ($Z_print+5.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 125 
-G1 X ($X_start+-4.2399) Y ($Y_start+5.1490) F $jog_speed
-G1 A ($Z_print+5.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.2399) Y ($Y_start+5.1490) A ($Z_print+5.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.2399) Y ($Y_start+5.1490) A ($Z_print+5.6772) F $print_speed
 G1 X ($X_start+-4.1818) Y ($Y_start+5.0689) A ($Z_print+5.6772) F $print_speed
@@ -13946,17 +13071,10 @@ G1 X ($X_start+-4.4900) Y ($Y_start+4.4176) A ($Z_print+5.6772) F $print_speed
 G1 X ($X_start+-4.4225) Y ($Y_start+4.7035) A ($Z_print+5.6772) F $print_speed
 G1 X ($X_start+-4.3332) Y ($Y_start+4.9671) A ($Z_print+5.6772) F $print_speed
 G1 X ($X_start+-4.2399) Y ($Y_start+5.1490) A ($Z_print+5.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 126 
-G1 X ($X_start+-4.1903) Y ($Y_start+3.5895) F $jog_speed
-G1 A ($Z_print+5.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.1903) Y ($Y_start+3.5895) A ($Z_print+5.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.1903) Y ($Y_start+3.5895) A ($Z_print+5.6772) F $print_speed
 G1 X ($X_start+-4.1901) Y ($Y_start+3.5879) A ($Z_print+5.6772) F $print_speed
@@ -14019,17 +13137,10 @@ G1 X ($X_start+-4.2406) Y ($Y_start+2.8835) A ($Z_print+5.6772) F $print_speed
 G1 X ($X_start+-4.2205) Y ($Y_start+3.1801) A ($Z_print+5.6772) F $print_speed
 G1 X ($X_start+-4.1995) Y ($Y_start+3.4787) A ($Z_print+5.6772) F $print_speed
 G1 X ($X_start+-4.1903) Y ($Y_start+3.5895) A ($Z_print+5.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 127 
-G1 X ($X_start+-4.1789) Y ($Y_start+5.5535) F $jog_speed
-G1 A ($Z_print+5.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.1789) Y ($Y_start+5.5535) A ($Z_print+5.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.1789) Y ($Y_start+5.5535) A ($Z_print+5.8772) F $print_speed
 G1 X ($X_start+-4.0887) Y ($Y_start+5.4067) A ($Z_print+5.8772) F $print_speed
@@ -14113,17 +13224,10 @@ G1 X ($X_start+-4.3679) Y ($Y_start+4.8470) A ($Z_print+5.8772) F $print_speed
 G1 X ($X_start+-4.3052) Y ($Y_start+5.1836) A ($Z_print+5.8772) F $print_speed
 G1 X ($X_start+-4.2264) Y ($Y_start+5.4615) A ($Z_print+5.8772) F $print_speed
 G1 X ($X_start+-4.1789) Y ($Y_start+5.5535) A ($Z_print+5.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 128 
-G1 X ($X_start+-4.4340) Y ($Y_start+0.7220) F $jog_speed
-G1 A ($Z_print+5.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4340) Y ($Y_start+0.7220) A ($Z_print+5.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4340) Y ($Y_start+0.7220) A ($Z_print+5.8772) F $print_speed
 G1 X ($X_start+-4.3042) Y ($Y_start+0.3389) A ($Z_print+5.8772) F $print_speed
@@ -14169,17 +13273,10 @@ G1 X ($X_start+-4.7477) Y ($Y_start+-0.0740) A ($Z_print+5.8772) F $print_speed
 G1 X ($X_start+-4.5774) Y ($Y_start+0.2573) A ($Z_print+5.8772) F $print_speed
 G1 X ($X_start+-4.4504) Y ($Y_start+0.6233) A ($Z_print+5.8772) F $print_speed
 G1 X ($X_start+-4.4340) Y ($Y_start+0.7220) A ($Z_print+5.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 129 
-G1 X ($X_start+-4.4071) Y ($Y_start+1.5350) F $jog_speed
-G1 A ($Z_print+5.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4071) Y ($Y_start+1.5350) A ($Z_print+5.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4071) Y ($Y_start+1.5350) A ($Z_print+5.8772) F $print_speed
 G1 X ($X_start+-4.4198) Y ($Y_start+1.6675) A ($Z_print+5.8772) F $print_speed
@@ -14198,17 +13295,10 @@ G1 X ($X_start+-4.1573) Y ($Y_start+2.3985) A ($Z_print+5.8772) F $print_speed
 G1 X ($X_start+-4.2243) Y ($Y_start+2.1276) A ($Z_print+5.8772) F $print_speed
 G1 X ($X_start+-4.3234) Y ($Y_start+1.8093) A ($Z_print+5.8772) F $print_speed
 G1 X ($X_start+-4.4071) Y ($Y_start+1.5350) A ($Z_print+5.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 130 
-G1 X ($X_start+-4.1132) Y ($Y_start+-1.4244) F $jog_speed
-G1 A ($Z_print+6.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.1132) Y ($Y_start+-1.4244) A ($Z_print+6.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.1132) Y ($Y_start+-1.4244) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-4.2973) Y ($Y_start+-1.3860) A ($Z_print+6.0772) F $print_speed
@@ -14227,17 +13317,10 @@ G1 X ($X_start+-3.6742) Y ($Y_start+-1.0536) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-3.7760) Y ($Y_start+-1.2341) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-3.9373) Y ($Y_start+-1.3709) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-4.1132) Y ($Y_start+-1.4244) A ($Z_print+6.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 131 
-G1 X ($X_start+-4.2967) Y ($Y_start+-0.8323) F $jog_speed
-G1 A ($Z_print+6.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.2967) Y ($Y_start+-0.8323) A ($Z_print+6.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.2967) Y ($Y_start+-0.8323) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-4.2955) Y ($Y_start+-0.8315) A ($Z_print+6.0772) F $print_speed
@@ -14253,17 +13336,10 @@ G1 X ($X_start+-4.1382) Y ($Y_start+-1.0106) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-4.2113) Y ($Y_start+-0.9610) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-4.2829) Y ($Y_start+-0.8705) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-4.2967) Y ($Y_start+-0.8323) A ($Z_print+6.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 132 
-G1 X ($X_start+-4.4912) Y ($Y_start+1.0527) F $jog_speed
-G1 A ($Z_print+6.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4912) Y ($Y_start+1.0527) A ($Z_print+6.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4912) Y ($Y_start+1.0527) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-4.5357) Y ($Y_start+1.0698) A ($Z_print+6.0772) F $print_speed
@@ -14304,17 +13380,10 @@ G1 X ($X_start+-4.1427) Y ($Y_start+1.4598) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-4.2869) Y ($Y_start+1.2289) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-4.4234) Y ($Y_start+1.0823) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-4.4912) Y ($Y_start+1.0527) A ($Z_print+6.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 133 
-G1 X ($X_start+-4.4290) Y ($Y_start+1.7917) F $jog_speed
-G1 A ($Z_print+6.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4290) Y ($Y_start+1.7917) A ($Z_print+6.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4290) Y ($Y_start+1.7917) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-4.4360) Y ($Y_start+1.8176) A ($Z_print+6.0772) F $print_speed
@@ -14333,17 +13402,10 @@ G1 X ($X_start+-4.2141) Y ($Y_start+2.4085) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-4.2936) Y ($Y_start+2.1379) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-4.3874) Y ($Y_start+1.8804) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-4.4290) Y ($Y_start+1.7917) A ($Z_print+6.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 134 
-G1 X ($X_start+-4.4185) Y ($Y_start+1.5499) F $jog_speed
-G1 A ($Z_print+6.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4185) Y ($Y_start+1.5499) A ($Z_print+6.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4185) Y ($Y_start+1.5499) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-4.5035) Y ($Y_start+1.5819) A ($Z_print+6.2772) F $print_speed
@@ -14383,17 +13445,10 @@ G1 X ($X_start+-4.0746) Y ($Y_start+1.9363) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-4.2164) Y ($Y_start+1.7043) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-4.3434) Y ($Y_start+1.5754) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-4.4185) Y ($Y_start+1.5499) A ($Z_print+6.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 135 
-G1 X ($X_start+-4.4208) Y ($Y_start+2.1420) F $jog_speed
-G1 A ($Z_print+6.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4208) Y ($Y_start+2.1420) A ($Z_print+6.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4208) Y ($Y_start+2.1420) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-4.4858) Y ($Y_start+2.3157) A ($Z_print+6.2772) F $print_speed
@@ -14411,17 +13466,10 @@ G1 X ($X_start+-4.1404) Y ($Y_start+2.9470) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-4.2154) Y ($Y_start+2.6672) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-4.3154) Y ($Y_start+2.3780) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-4.4208) Y ($Y_start+2.1420) A ($Z_print+6.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 136 
-G1 X ($X_start+-4.4463) Y ($Y_start+1.9230) F $jog_speed
-G1 A ($Z_print+6.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4463) Y ($Y_start+1.9230) A ($Z_print+6.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4463) Y ($Y_start+1.9230) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-4.5389) Y ($Y_start+1.9574) A ($Z_print+6.4772) F $print_speed
@@ -14460,17 +13508,10 @@ G1 X ($X_start+-4.0774) Y ($Y_start+2.2864) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-4.2257) Y ($Y_start+2.0697) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-4.3595) Y ($Y_start+1.9486) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-4.4463) Y ($Y_start+1.9230) A ($Z_print+6.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 137 
-G1 X ($X_start+-4.4352) Y ($Y_start+2.4718) F $jog_speed
-G1 A ($Z_print+6.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4352) Y ($Y_start+2.4718) A ($Z_print+6.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4352) Y ($Y_start+2.4718) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-4.4414) Y ($Y_start+2.4823) A ($Z_print+6.4772) F $print_speed
@@ -14490,17 +13531,10 @@ G1 X ($X_start+-4.2100) Y ($Y_start+2.9860) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-4.3084) Y ($Y_start+2.7218) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-4.4234) Y ($Y_start+2.4890) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-4.4352) Y ($Y_start+2.4718) A ($Z_print+6.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 138 
-G1 X ($X_start+-4.4540) Y ($Y_start+2.2610) F $jog_speed
-G1 A ($Z_print+6.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4540) Y ($Y_start+2.2610) A ($Z_print+6.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4540) Y ($Y_start+2.2610) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-4.5635) Y ($Y_start+2.3084) A ($Z_print+6.6772) F $print_speed
@@ -14537,17 +13571,10 @@ G1 X ($X_start+-4.0780) Y ($Y_start+2.6240) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-4.2268) Y ($Y_start+2.4031) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-4.3624) Y ($Y_start+2.2835) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-4.4540) Y ($Y_start+2.2610) A ($Z_print+6.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 139 
-G1 X ($X_start+-4.4427) Y ($Y_start+2.7985) F $jog_speed
-G1 A ($Z_print+6.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4427) Y ($Y_start+2.7985) A ($Z_print+6.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4427) Y ($Y_start+2.7985) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-4.4849) Y ($Y_start+2.8724) A ($Z_print+6.6772) F $print_speed
@@ -14565,17 +13592,10 @@ G1 X ($X_start+-4.2257) Y ($Y_start+3.3221) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-4.3158) Y ($Y_start+3.0574) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-4.4267) Y ($Y_start+2.8222) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-4.4427) Y ($Y_start+2.7985) A ($Z_print+6.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 140 
-G1 X ($X_start+-4.4253) Y ($Y_start+2.6337) F $jog_speed
-G1 A ($Z_print+6.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4253) Y ($Y_start+2.6337) A ($Z_print+6.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4253) Y ($Y_start+2.6337) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-4.5364) Y ($Y_start+2.6710) A ($Z_print+6.8772) F $print_speed
@@ -14611,17 +13631,10 @@ G1 X ($X_start+-4.0712) Y ($Y_start+3.0377) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-4.2055) Y ($Y_start+2.8013) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-4.3346) Y ($Y_start+2.6654) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-4.4253) Y ($Y_start+2.6337) A ($Z_print+6.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 141 
-G1 X ($X_start+-4.4541) Y ($Y_start+3.1734) F $jog_speed
-G1 A ($Z_print+6.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4541) Y ($Y_start+3.1734) A ($Z_print+6.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4541) Y ($Y_start+3.1734) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-4.4948) Y ($Y_start+3.2342) A ($Z_print+6.8772) F $print_speed
@@ -14639,17 +13652,10 @@ G1 X ($X_start+-4.2621) Y ($Y_start+3.7223) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-4.3363) Y ($Y_start+3.4566) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-4.4330) Y ($Y_start+3.2106) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-4.4541) Y ($Y_start+3.1734) A ($Z_print+6.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 142 
-G1 X ($X_start+-4.4641) Y ($Y_start+3.0353) F $jog_speed
-G1 A ($Z_print+7.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4641) Y ($Y_start+3.0353) A ($Z_print+7.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4641) Y ($Y_start+3.0353) A ($Z_print+7.0772) F $print_speed
 G1 X ($X_start+-4.5749) Y ($Y_start+3.0791) A ($Z_print+7.0772) F $print_speed
@@ -14682,17 +13688,10 @@ G1 X ($X_start+-4.1174) Y ($Y_start+3.4383) A ($Z_print+7.0772) F $print_speed
 G1 X ($X_start+-4.2501) Y ($Y_start+3.1999) A ($Z_print+7.0772) F $print_speed
 G1 X ($X_start+-4.3784) Y ($Y_start+3.0636) A ($Z_print+7.0772) F $print_speed
 G1 X ($X_start+-4.4641) Y ($Y_start+3.0353) A ($Z_print+7.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 143 
-G1 X ($X_start+-4.4864) Y ($Y_start+3.5978) F $jog_speed
-G1 A ($Z_print+7.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4864) Y ($Y_start+3.5978) A ($Z_print+7.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4864) Y ($Y_start+3.5978) A ($Z_print+7.0772) F $print_speed
 G1 X ($X_start+-4.5253) Y ($Y_start+3.6616) A ($Z_print+7.0772) F $print_speed
@@ -14708,17 +13707,10 @@ G1 X ($X_start+-4.3243) Y ($Y_start+4.0987) A ($Z_print+7.0772) F $print_speed
 G1 X ($X_start+-4.3896) Y ($Y_start+3.8476) A ($Z_print+7.0772) F $print_speed
 G1 X ($X_start+-4.4809) Y ($Y_start+3.6076) A ($Z_print+7.0772) F $print_speed
 G1 X ($X_start+-4.4864) Y ($Y_start+3.5978) A ($Z_print+7.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 144 
-G1 X ($X_start+-4.5132) Y ($Y_start+3.4404) F $jog_speed
-G1 A ($Z_print+7.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.5132) Y ($Y_start+3.4404) A ($Z_print+7.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.5132) Y ($Y_start+3.4404) A ($Z_print+7.2772) F $print_speed
 G1 X ($X_start+-4.6283) Y ($Y_start+3.4966) A ($Z_print+7.2772) F $print_speed
@@ -14750,17 +13742,10 @@ G1 X ($X_start+-4.1801) Y ($Y_start+3.8445) A ($Z_print+7.2772) F $print_speed
 G1 X ($X_start+-4.3093) Y ($Y_start+3.6024) A ($Z_print+7.2772) F $print_speed
 G1 X ($X_start+-4.4352) Y ($Y_start+3.4642) A ($Z_print+7.2772) F $print_speed
 G1 X ($X_start+-4.5132) Y ($Y_start+3.4404) A ($Z_print+7.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 145 
-G1 X ($X_start+-4.5335) Y ($Y_start+4.0428) F $jog_speed
-G1 A ($Z_print+7.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.5335) Y ($Y_start+4.0428) A ($Z_print+7.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.5335) Y ($Y_start+4.0428) A ($Z_print+7.2772) F $print_speed
 G1 X ($X_start+-4.5652) Y ($Y_start+4.1018) A ($Z_print+7.2772) F $print_speed
@@ -14774,17 +13759,10 @@ G1 X ($X_start+-4.3576) Y ($Y_start+4.7321) A ($Z_print+7.2772) F $print_speed
 G1 X ($X_start+-4.4015) Y ($Y_start+4.4791) A ($Z_print+7.2772) F $print_speed
 G1 X ($X_start+-4.4616) Y ($Y_start+4.2396) A ($Z_print+7.2772) F $print_speed
 G1 X ($X_start+-4.5335) Y ($Y_start+4.0428) A ($Z_print+7.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 146 
-G1 X ($X_start+-4.5269) Y ($Y_start+3.9320) F $jog_speed
-G1 A ($Z_print+7.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.5269) Y ($Y_start+3.9320) A ($Z_print+7.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.5269) Y ($Y_start+3.9320) A ($Z_print+7.4772) F $print_speed
 G1 X ($X_start+-4.6435) Y ($Y_start+3.9830) A ($Z_print+7.4772) F $print_speed
@@ -14812,17 +13790,10 @@ G1 X ($X_start+-4.2305) Y ($Y_start+4.3859) A ($Z_print+7.4772) F $print_speed
 G1 X ($X_start+-4.3436) Y ($Y_start+4.1212) A ($Z_print+7.4772) F $print_speed
 G1 X ($X_start+-4.4587) Y ($Y_start+3.9608) A ($Z_print+7.4772) F $print_speed
 G1 X ($X_start+-4.5269) Y ($Y_start+3.9320) A ($Z_print+7.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 147 
-G1 X ($X_start+-4.5895) Y ($Y_start+4.5775) F $jog_speed
-G1 A ($Z_print+7.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.5895) Y ($Y_start+4.5775) A ($Z_print+7.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.5895) Y ($Y_start+4.5775) A ($Z_print+7.4772) F $print_speed
 G1 X ($X_start+-4.6074) Y ($Y_start+4.6588) A ($Z_print+7.4772) F $print_speed
@@ -14831,17 +13802,10 @@ G1 X ($X_start+-4.5414) Y ($Y_start+4.7962) A ($Z_print+7.4772) F $print_speed
 G1 X ($X_start+-4.5114) Y ($Y_start+4.8343) A ($Z_print+7.4772) F $print_speed
 G1 X ($X_start+-4.5252) Y ($Y_start+4.7813) A ($Z_print+7.4772) F $print_speed
 G1 X ($X_start+-4.5895) Y ($Y_start+4.5775) A ($Z_print+7.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 148 
-G1 X ($X_start+-4.5809) Y ($Y_start+4.6029) F $jog_speed
-G1 A ($Z_print+7.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.5809) Y ($Y_start+4.6029) A ($Z_print+7.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.5809) Y ($Y_start+4.6029) A ($Z_print+7.6772) F $print_speed
 G1 X ($X_start+-4.7359) Y ($Y_start+4.6623) A ($Z_print+7.6772) F $print_speed
@@ -14866,17 +13830,10 @@ G1 X ($X_start+-4.2550) Y ($Y_start+4.9810) A ($Z_print+7.6772) F $print_speed
 G1 X ($X_start+-4.3776) Y ($Y_start+4.7451) A ($Z_print+7.6772) F $print_speed
 G1 X ($X_start+-4.4886) Y ($Y_start+4.6266) A ($Z_print+7.6772) F $print_speed
 G1 X ($X_start+-4.5809) Y ($Y_start+4.6029) A ($Z_print+7.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 149 
-G1 X ($X_start+-4.6789) Y ($Y_start+5.0861) F $jog_speed
-G1 A ($Z_print+7.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.6789) Y ($Y_start+5.0861) A ($Z_print+7.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.6789) Y ($Y_start+5.0861) A ($Z_print+7.8772) F $print_speed
 G1 X ($X_start+-4.8392) Y ($Y_start+5.1520) A ($Z_print+7.8772) F $print_speed
@@ -14898,17 +13855,10 @@ G1 X ($X_start+-4.2707) Y ($Y_start+5.4600) A ($Z_print+7.8772) F $print_speed
 G1 X ($X_start+-4.4234) Y ($Y_start+5.2300) A ($Z_print+7.8772) F $print_speed
 G1 X ($X_start+-4.5598) Y ($Y_start+5.1095) A ($Z_print+7.8772) F $print_speed
 G1 X ($X_start+-4.6789) Y ($Y_start+5.0861) A ($Z_print+7.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 150 
-G1 X ($X_start+-4.7349) Y ($Y_start+5.4773) F $jog_speed
-G1 A ($Z_print+8.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.7349) Y ($Y_start+5.4773) A ($Z_print+8.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.7349) Y ($Y_start+5.4773) A ($Z_print+8.0772) F $print_speed
 G1 X ($X_start+-4.8523) Y ($Y_start+5.5361) A ($Z_print+8.0772) F $print_speed
@@ -14927,17 +13877,10 @@ G1 X ($X_start+-4.2618) Y ($Y_start+5.8258) A ($Z_print+8.0772) F $print_speed
 G1 X ($X_start+-4.4513) Y ($Y_start+5.6129) A ($Z_print+8.0772) F $print_speed
 G1 X ($X_start+-4.6154) Y ($Y_start+5.4957) A ($Z_print+8.0772) F $print_speed
 G1 X ($X_start+-4.7349) Y ($Y_start+5.4773) A ($Z_print+8.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 151 
-G1 X ($X_start+-4.7468) Y ($Y_start+5.8347) F $jog_speed
-G1 A ($Z_print+8.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.7468) Y ($Y_start+5.8347) A ($Z_print+8.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.7468) Y ($Y_start+5.8347) A ($Z_print+8.2772) F $print_speed
 G1 X ($X_start+-4.7969) Y ($Y_start+5.8712) A ($Z_print+8.2772) F $print_speed
@@ -14954,17 +13897,10 @@ G1 X ($X_start+-4.2836) Y ($Y_start+6.0776) A ($Z_print+8.2772) F $print_speed
 G1 X ($X_start+-4.4808) Y ($Y_start+5.9142) A ($Z_print+8.2772) F $print_speed
 G1 X ($X_start+-4.6460) Y ($Y_start+5.8349) A ($Z_print+8.2772) F $print_speed
 G1 X ($X_start+-4.7468) Y ($Y_start+5.8347) A ($Z_print+8.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 152 
-G1 X ($X_start+-4.4133) Y ($Y_start+6.2981) F $jog_speed
-G1 A ($Z_print+8.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-4.4133) Y ($Y_start+6.2981) A ($Z_print+8.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-4.4133) Y ($Y_start+6.2981) A ($Z_print+8.4772) F $print_speed
 G1 X ($X_start+-4.3542) Y ($Y_start+6.3923) A ($Z_print+8.4772) F $print_speed
@@ -14973,17 +13909,10 @@ G1 X ($X_start+-4.1384) Y ($Y_start+6.5665) A ($Z_print+8.4772) F $print_speed
 G1 X ($X_start+-4.2315) Y ($Y_start+6.4599) A ($Z_print+8.4772) F $print_speed
 G1 X ($X_start+-4.3747) Y ($Y_start+6.3268) A ($Z_print+8.4772) F $print_speed
 G1 X ($X_start+-4.4133) Y ($Y_start+6.2981) A ($Z_print+8.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 153 
-G1 X ($X_start+-2.9493) Y ($Y_start+-0.0189) F $jog_speed
-G1 A ($Z_print+6.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-2.9493) Y ($Y_start+-0.0189) A ($Z_print+6.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-2.9493) Y ($Y_start+-0.0189) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-3.0545) Y ($Y_start+0.0613) A ($Z_print+6.0772) F $print_speed
@@ -15015,17 +13944,10 @@ G1 X ($X_start+-2.2355) Y ($Y_start+0.1440) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-2.5236) Y ($Y_start+0.0263) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-2.7771) Y ($Y_start+-0.0348) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-2.9493) Y ($Y_start+-0.0189) A ($Z_print+6.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 154 
-G1 X ($X_start+-2.6388) Y ($Y_start+0.4113) F $jog_speed
-G1 A ($Z_print+6.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-2.6388) Y ($Y_start+0.4113) A ($Z_print+6.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-2.6388) Y ($Y_start+0.4113) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-2.5240) Y ($Y_start+0.5686) A ($Z_print+6.0772) F $print_speed
@@ -15046,17 +13968,10 @@ G1 X ($X_start+-1.8810) Y ($Y_start+0.7605) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-2.1321) Y ($Y_start+0.6368) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-2.3975) Y ($Y_start+0.5099) A ($Z_print+6.0772) F $print_speed
 G1 X ($X_start+-2.6388) Y ($Y_start+0.4113) A ($Z_print+6.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 155 
-G1 X ($X_start+-2.5025) Y ($Y_start+0.1427) F $jog_speed
-G1 A ($Z_print+6.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-2.5025) Y ($Y_start+0.1427) A ($Z_print+6.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-2.5025) Y ($Y_start+0.1427) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-2.6420) Y ($Y_start+0.1833) A ($Z_print+6.2772) F $print_speed
@@ -15090,17 +14005,10 @@ G1 X ($X_start+-1.7646) Y ($Y_start+0.4730) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-2.0520) Y ($Y_start+0.3081) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-2.3086) Y ($Y_start+0.1832) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-2.5025) Y ($Y_start+0.1427) A ($Z_print+6.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 156 
-G1 X ($X_start+-2.4450) Y ($Y_start+0.5633) F $jog_speed
-G1 A ($Z_print+6.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-2.4450) Y ($Y_start+0.5633) A ($Z_print+6.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-2.4450) Y ($Y_start+0.5633) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-2.4462) Y ($Y_start+0.5794) A ($Z_print+6.2772) F $print_speed
@@ -15126,17 +14034,10 @@ G1 X ($X_start+-1.9524) Y ($Y_start+0.8264) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-2.2393) Y ($Y_start+0.6618) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-2.4391) Y ($Y_start+0.5646) A ($Z_print+6.2772) F $print_speed
 G1 X ($X_start+-2.4450) Y ($Y_start+0.5633) A ($Z_print+6.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 157 
-G1 X ($X_start+-2.3432) Y ($Y_start+0.2930) F $jog_speed
-G1 A ($Z_print+6.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-2.3432) Y ($Y_start+0.2930) A ($Z_print+6.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-2.3432) Y ($Y_start+0.2930) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-2.5128) Y ($Y_start+0.3442) A ($Z_print+6.4772) F $print_speed
@@ -15171,17 +14072,10 @@ G1 X ($X_start+-1.6396) Y ($Y_start+0.6300) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-1.9058) Y ($Y_start+0.4546) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-2.1452) Y ($Y_start+0.3301) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-2.3432) Y ($Y_start+0.2930) A ($Z_print+6.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 158 
-G1 X ($X_start+-2.2002) Y ($Y_start+0.7523) F $jog_speed
-G1 A ($Z_print+6.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-2.2002) Y ($Y_start+0.7523) A ($Z_print+6.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-2.2002) Y ($Y_start+0.7523) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-2.1876) Y ($Y_start+0.7766) A ($Z_print+6.4772) F $print_speed
@@ -15205,17 +14099,10 @@ G1 X ($X_start+-1.5321) Y ($Y_start+1.1608) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-1.8526) Y ($Y_start+0.9687) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-2.1087) Y ($Y_start+0.7999) A ($Z_print+6.4772) F $print_speed
 G1 X ($X_start+-2.2002) Y ($Y_start+0.7523) A ($Z_print+6.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 159 
-G1 X ($X_start+-2.1155) Y ($Y_start+0.4214) F $jog_speed
-G1 A ($Z_print+6.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-2.1155) Y ($Y_start+0.4214) A ($Z_print+6.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-2.1155) Y ($Y_start+0.4214) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-2.2439) Y ($Y_start+0.4572) A ($Z_print+6.6772) F $print_speed
@@ -15251,17 +14138,10 @@ G1 X ($X_start+-1.4550) Y ($Y_start+0.8158) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-1.7150) Y ($Y_start+0.6120) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-1.9452) Y ($Y_start+0.4680) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-2.1155) Y ($Y_start+0.4214) A ($Z_print+6.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 160 
-G1 X ($X_start+-2.0437) Y ($Y_start+0.8782) F $jog_speed
-G1 A ($Z_print+6.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-2.0437) Y ($Y_start+0.8782) A ($Z_print+6.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-2.0437) Y ($Y_start+0.8782) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-2.0384) Y ($Y_start+0.8924) A ($Z_print+6.6772) F $print_speed
@@ -15273,17 +14153,10 @@ G1 X ($X_start+-1.4084) Y ($Y_start+1.3572) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-1.7006) Y ($Y_start+1.1315) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-1.9451) Y ($Y_start+0.9398) A ($Z_print+6.6772) F $print_speed
 G1 X ($X_start+-2.0437) Y ($Y_start+0.8782) A ($Z_print+6.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 161 
-G1 X ($X_start+-1.8891) Y ($Y_start+0.5477) F $jog_speed
-G1 A ($Z_print+6.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-1.8891) Y ($Y_start+0.5477) A ($Z_print+6.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-1.8891) Y ($Y_start+0.5477) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-2.0799) Y ($Y_start+0.5921) A ($Z_print+6.8772) F $print_speed
@@ -15318,17 +14191,10 @@ G1 X ($X_start+-1.2863) Y ($Y_start+0.9444) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-1.5017) Y ($Y_start+0.7346) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-1.7027) Y ($Y_start+0.5951) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-1.8891) Y ($Y_start+0.5477) A ($Z_print+6.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 162 
-G1 X ($X_start+-1.7684) Y ($Y_start+1.0364) F $jog_speed
-G1 A ($Z_print+6.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-1.7684) Y ($Y_start+1.0364) A ($Z_print+6.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-1.7684) Y ($Y_start+1.0364) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-1.7662) Y ($Y_start+1.0408) A ($Z_print+6.8772) F $print_speed
@@ -15338,17 +14204,10 @@ G1 X ($X_start+-1.4781) Y ($Y_start+1.3209) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-1.5692) Y ($Y_start+1.2273) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-1.7570) Y ($Y_start+1.0443) A ($Z_print+6.8772) F $print_speed
 G1 X ($X_start+-1.7684) Y ($Y_start+1.0364) A ($Z_print+6.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 163 
-G1 X ($X_start+-1.7124) Y ($Y_start+0.6585) F $jog_speed
-G1 A ($Z_print+7.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-1.7124) Y ($Y_start+0.6585) A ($Z_print+7.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-1.7124) Y ($Y_start+0.6585) A ($Z_print+7.0772) F $print_speed
 G1 X ($X_start+-1.8969) Y ($Y_start+0.7155) A ($Z_print+7.0772) F $print_speed
@@ -15382,17 +14241,10 @@ G1 X ($X_start+-1.1565) Y ($Y_start+1.0490) A ($Z_print+7.0772) F $print_speed
 G1 X ($X_start+-1.3580) Y ($Y_start+0.8325) A ($Z_print+7.0772) F $print_speed
 G1 X ($X_start+-1.5431) Y ($Y_start+0.6968) A ($Z_print+7.0772) F $print_speed
 G1 X ($X_start+-1.7124) Y ($Y_start+0.6585) A ($Z_print+7.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 164 
-G1 X ($X_start+-1.4932) Y ($Y_start+0.7949) F $jog_speed
-G1 A ($Z_print+7.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-1.4932) Y ($Y_start+0.7949) A ($Z_print+7.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-1.4932) Y ($Y_start+0.7949) A ($Z_print+7.2772) F $print_speed
 G1 X ($X_start+-1.6639) Y ($Y_start+0.8431) A ($Z_print+7.2772) F $print_speed
@@ -15427,17 +14279,10 @@ G1 X ($X_start+-0.9708) Y ($Y_start+1.2050) A ($Z_print+7.2772) F $print_speed
 G1 X ($X_start+-1.1631) Y ($Y_start+0.9797) A ($Z_print+7.2772) F $print_speed
 G1 X ($X_start+-1.3388) Y ($Y_start+0.8375) A ($Z_print+7.2772) F $print_speed
 G1 X ($X_start+-1.4932) Y ($Y_start+0.7949) A ($Z_print+7.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 165 
-G1 X ($X_start+-1.2690) Y ($Y_start+0.9541) F $jog_speed
-G1 A ($Z_print+7.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-1.2690) Y ($Y_start+0.9541) A ($Z_print+7.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-1.2690) Y ($Y_start+0.9541) A ($Z_print+7.4772) F $print_speed
 G1 X ($X_start+-1.4182) Y ($Y_start+0.9982) A ($Z_print+7.4772) F $print_speed
@@ -15470,17 +14315,10 @@ G1 X ($X_start+-0.7663) Y ($Y_start+1.3841) A ($Z_print+7.4772) F $print_speed
 G1 X ($X_start+-0.9570) Y ($Y_start+1.1485) A ($Z_print+7.4772) F $print_speed
 G1 X ($X_start+-1.1289) Y ($Y_start+0.9981) A ($Z_print+7.4772) F $print_speed
 G1 X ($X_start+-1.2690) Y ($Y_start+0.9541) A ($Z_print+7.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 166 
-G1 X ($X_start+-1.0218) Y ($Y_start+1.1281) F $jog_speed
-G1 A ($Z_print+7.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-1.0218) Y ($Y_start+1.1281) A ($Z_print+7.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-1.0218) Y ($Y_start+1.1281) A ($Z_print+7.6772) F $print_speed
 G1 X ($X_start+-1.1557) Y ($Y_start+1.1588) A ($Z_print+7.6772) F $print_speed
@@ -15511,17 +14349,10 @@ G1 X ($X_start+-0.5143) Y ($Y_start+1.6241) A ($Z_print+7.6772) F $print_speed
 G1 X ($X_start+-0.7078) Y ($Y_start+1.3652) A ($Z_print+7.6772) F $print_speed
 G1 X ($X_start+-0.8836) Y ($Y_start+1.1874) A ($Z_print+7.6772) F $print_speed
 G1 X ($X_start+-1.0218) Y ($Y_start+1.1281) A ($Z_print+7.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 167 
-G1 X ($X_start+-0.8373) Y ($Y_start+1.3041) F $jog_speed
-G1 A ($Z_print+7.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-0.8373) Y ($Y_start+1.3041) A ($Z_print+7.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-0.8373) Y ($Y_start+1.3041) A ($Z_print+7.8772) F $print_speed
 G1 X ($X_start+-0.9240) Y ($Y_start+1.3428) A ($Z_print+7.8772) F $print_speed
@@ -15550,17 +14381,10 @@ G1 X ($X_start+-0.3387) Y ($Y_start+1.7650) A ($Z_print+7.8772) F $print_speed
 G1 X ($X_start+-0.5452) Y ($Y_start+1.5121) A ($Z_print+7.8772) F $print_speed
 G1 X ($X_start+-0.7270) Y ($Y_start+1.3430) A ($Z_print+7.8772) F $print_speed
 G1 X ($X_start+-0.8373) Y ($Y_start+1.3041) A ($Z_print+7.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 168 
-G1 X ($X_start+-0.6021) Y ($Y_start+1.4927) F $jog_speed
-G1 A ($Z_print+8.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-0.6021) Y ($Y_start+1.4927) A ($Z_print+8.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-0.6021) Y ($Y_start+1.4927) A ($Z_print+8.0772) F $print_speed
 G1 X ($X_start+-0.6263) Y ($Y_start+1.5058) A ($Z_print+8.0772) F $print_speed
@@ -15587,17 +14411,10 @@ G1 X ($X_start+-0.0945) Y ($Y_start+1.9753) A ($Z_print+8.0772) F $print_speed
 G1 X ($X_start+-0.3127) Y ($Y_start+1.7184) A ($Z_print+8.0772) F $print_speed
 G1 X ($X_start+-0.5108) Y ($Y_start+1.5317) A ($Z_print+8.0772) F $print_speed
 G1 X ($X_start+-0.6021) Y ($Y_start+1.4927) A ($Z_print+8.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 169 
-G1 X ($X_start+-0.3674) Y ($Y_start+1.6903) F $jog_speed
-G1 A ($Z_print+8.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-0.3674) Y ($Y_start+1.6903) A ($Z_print+8.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-0.3674) Y ($Y_start+1.6903) A ($Z_print+8.2772) F $print_speed
 G1 X ($X_start+-0.3762) Y ($Y_start+1.8322) A ($Z_print+8.2772) F $print_speed
@@ -15622,17 +14439,10 @@ G1 X ($X_start+0.0762) Y ($Y_start+2.0930) A ($Z_print+8.2772) F $print_speed
 G1 X ($X_start+-0.1343) Y ($Y_start+1.8692) A ($Z_print+8.2772) F $print_speed
 G1 X ($X_start+-0.3413) Y ($Y_start+1.6990) A ($Z_print+8.2772) F $print_speed
 G1 X ($X_start+-0.3674) Y ($Y_start+1.6903) A ($Z_print+8.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 170 
-G1 X ($X_start+-0.0550) Y ($Y_start+1.9343) F $jog_speed
-G1 A ($Z_print+8.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+-0.0550) Y ($Y_start+1.9343) A ($Z_print+8.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+-0.0550) Y ($Y_start+1.9343) A ($Z_print+8.4772) F $print_speed
 G1 X ($X_start+-0.0547) Y ($Y_start+2.0217) A ($Z_print+8.4772) F $print_speed
@@ -15651,17 +14461,10 @@ G1 X ($X_start+0.4806) Y ($Y_start+2.5367) A ($Z_print+8.4772) F $print_speed
 G1 X ($X_start+0.2926) Y ($Y_start+2.3011) A ($Z_print+8.4772) F $print_speed
 G1 X ($X_start+0.0890) Y ($Y_start+2.0660) A ($Z_print+8.4772) F $print_speed
 G1 X ($X_start+-0.0550) Y ($Y_start+1.9343) A ($Z_print+8.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 171 
-G1 X ($X_start+0.2319) Y ($Y_start+2.1916) F $jog_speed
-G1 A ($Z_print+8.6772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+0.2319) Y ($Y_start+2.1916) A ($Z_print+8.6772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+0.2319) Y ($Y_start+2.1916) A ($Z_print+8.6772) F $print_speed
 G1 X ($X_start+0.2319) Y ($Y_start+2.2008) A ($Z_print+8.6772) F $print_speed
@@ -15677,17 +14480,10 @@ G1 X ($X_start+0.7306) Y ($Y_start+2.8083) A ($Z_print+8.6772) F $print_speed
 G1 X ($X_start+0.5431) Y ($Y_start+2.5613) A ($Z_print+8.6772) F $print_speed
 G1 X ($X_start+0.3589) Y ($Y_start+2.3259) A ($Z_print+8.6772) F $print_speed
 G1 X ($X_start+0.2319) Y ($Y_start+2.1916) A ($Z_print+8.6772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 172 
-G1 X ($X_start+0.5591) Y ($Y_start+2.5218) F $jog_speed
-G1 A ($Z_print+8.8772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+0.5591) Y ($Y_start+2.5218) A ($Z_print+8.8772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+0.5591) Y ($Y_start+2.5218) A ($Z_print+8.8772) F $print_speed
 G1 X ($X_start+0.6282) Y ($Y_start+2.6695) A ($Z_print+8.8772) F $print_speed
@@ -15697,17 +14493,10 @@ G1 X ($X_start+0.9346) Y ($Y_start+3.0983) A ($Z_print+8.8772) F $print_speed
 G1 X ($X_start+0.7817) Y ($Y_start+2.8615) A ($Z_print+8.8772) F $print_speed
 G1 X ($X_start+0.6398) Y ($Y_start+2.6292) A ($Z_print+8.8772) F $print_speed
 G1 X ($X_start+0.5591) Y ($Y_start+2.5218) A ($Z_print+8.8772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 173 
-G1 X ($X_start+2.8030) Y ($Y_start+-2.1119) F $jog_speed
-G1 A ($Z_print+3.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.8030) Y ($Y_start+-2.1119) A ($Z_print+3.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.8030) Y ($Y_start+-2.1119) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+2.5171) Y ($Y_start+-2.0926) A ($Z_print+3.0772) F $print_speed
@@ -15756,17 +14545,10 @@ G1 X ($X_start+3.6224) Y ($Y_start+-1.9729) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+3.3618) Y ($Y_start+-2.0524) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+3.0866) Y ($Y_start+-2.0987) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+2.8030) Y ($Y_start+-2.1119) A ($Z_print+3.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 174 
-G1 X ($X_start+2.8072) Y ($Y_start+-1.7113) F $jog_speed
-G1 A ($Z_print+3.0772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.8072) Y ($Y_start+-1.7113) A ($Z_print+3.0772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.8072) Y ($Y_start+-1.7113) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+2.5660) Y ($Y_start+-1.6950) A ($Z_print+3.0772) F $print_speed
@@ -15815,17 +14597,10 @@ G1 X ($X_start+3.4785) Y ($Y_start+-1.5986) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+3.2699) Y ($Y_start+-1.6622) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+3.0439) Y ($Y_start+-1.7002) A ($Z_print+3.0772) F $print_speed
 G1 X ($X_start+2.8072) Y ($Y_start+-1.7113) A ($Z_print+3.0772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 175 
-G1 X ($X_start+2.3955) Y ($Y_start+-1.7913) F $jog_speed
-G1 A ($Z_print+3.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.3955) Y ($Y_start+-1.7913) A ($Z_print+3.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.3955) Y ($Y_start+-1.7913) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+2.1259) Y ($Y_start+-1.7118) A ($Z_print+3.2772) F $print_speed
@@ -15866,17 +14641,10 @@ G1 X ($X_start+3.2166) Y ($Y_start+-1.7859) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+2.9492) Y ($Y_start+-1.8287) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+2.6725) Y ($Y_start+-1.8305) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+2.3955) Y ($Y_start+-1.7913) A ($Z_print+3.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 176 
-G1 X ($X_start+2.4805) Y ($Y_start+-1.3993) F $jog_speed
-G1 A ($Z_print+3.2772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.4805) Y ($Y_start+-1.3993) A ($Z_print+3.2772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.4805) Y ($Y_start+-1.3993) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+2.2664) Y ($Y_start+-1.3362) A ($Z_print+3.2772) F $print_speed
@@ -15917,17 +14685,10 @@ G1 X ($X_start+3.1211) Y ($Y_start+-1.3960) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+2.9160) Y ($Y_start+-1.4289) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+2.6994) Y ($Y_start+-1.4303) A ($Z_print+3.2772) F $print_speed
 G1 X ($X_start+2.4805) Y ($Y_start+-1.3993) A ($Z_print+3.2772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 177 
-G1 X ($X_start+2.9861) Y ($Y_start+-1.4322) F $jog_speed
-G1 A ($Z_print+3.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.9861) Y ($Y_start+-1.4322) A ($Z_print+3.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.9861) Y ($Y_start+-1.4322) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+2.7400) Y ($Y_start+-1.4183) A ($Z_print+3.4772) F $print_speed
@@ -15956,17 +14717,10 @@ G1 X ($X_start+3.6021) Y ($Y_start+-1.0622) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+3.4207) Y ($Y_start+-1.2464) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+3.2124) Y ($Y_start+-1.3730) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+2.9861) Y ($Y_start+-1.4322) A ($Z_print+3.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
-VelocityBlendingOff()
-CornerRoundingOff()
-G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
+StopExtrusion($dwell_end)
+
 ; Print pass 178 
-G1 X ($X_start+2.9458) Y ($Y_start+-1.0293) F $jog_speed
-G1 A ($Z_print+3.4772) F $jog_speed
-VelocityBlendingOn()
-CornerRoundingOn()
+G1 X ($X_start+2.9458) Y ($Y_start+-1.0293) A ($Z_print+3.4772) F $jog_speed
 StartExtrusion($dwell_start)
 G1 X ($X_start+2.9458) Y ($Y_start+-1.0293) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+2.8150) Y ($Y_start+-1.0219) A ($Z_print+3.4772) F $print_speed
@@ -15995,13 +14749,11 @@ G1 X ($X_start+3.2862) Y ($Y_start+-0.8129) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+3.1705) Y ($Y_start+-0.9304) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+3.0546) Y ($Y_start+-1.0008) A ($Z_print+3.4772) F $print_speed
 G1 X ($X_start+2.9458) Y ($Y_start+-1.0293) A ($Z_print+3.4772) F $print_speed
-StopExtrusion($Z_safe, $dwell_end)
+StopExtrusion($dwell_end)
+
 VelocityBlendingOff()
 CornerRoundingOff()
 G1 A $Z_safe F $jog_speed
-Disable(Y)
-Enable(Y)
-G1 A $Z_safe F $jog_speed 
 
 end
 
@@ -16010,9 +14762,8 @@ function StartExtrusion($dwell_start as real)
       Dwell($dwell_start)
 end
 
-function StopExtrusion($Z_safe as real, $dwell_end as real)
+function StopExtrusion($dwell_end as real)
       DriveBrakeOn(Aa)
       Dwell($dwell_end)
-      G1 A $Z_safe F 10
 end
 

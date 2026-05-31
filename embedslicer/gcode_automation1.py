@@ -1,19 +1,23 @@
 """Automation1 (Aerotech) G-code writer for embedded-printing toolpaths.
 
-Mirrors the single-material structure in xcavate.io.gcode.automation1:
-- file is wrapped in `program ... end` with `var $X_start / $Y_start /
-  $Z_print / $Z_safe / $jog_speed / $dwell_start / $dwell_end` declarations
-- main program calls `print_network(...)` (defined later)
+Lean variant of xcavate.io.gcode.automation1 single-material structure:
+- file wrapped in `program ... end` with var $X_start/$Y_start/$Z_print/
+  $Z_safe/$jog_speed/$print_speed/$dwell_start/$dwell_end declarations
+- main program calls `print_network(...)`
 - motion uses variable-relative coordinates: ($X_start+x), ($Y_start+y),
   ($Z_print+z)
-- per pass: travel XY -> drop Z -> VelocityBlendingOn() / CornerRoundingOn()
-  -> StartExtrusion($dwell_start) -> initial-coord G1 -> loop moves ->
-  StopExtrusion($Z_safe, $dwell_end) -> VelocityBlendingOff() /
-  CornerRoundingOff() -> return to $Z_safe -> Disable(Y) / Enable(Y)
-- StartExtrusion / StopExtrusion are function-defined at file end and wrap
-  DriveBrakeOff/On + Dwell + (for stop) lift to $Z_safe.
+- VelocityBlendingOn() / CornerRoundingOn() are issued ONCE at the top of
+  print_network and turned off ONCE at the very end (smooth motion across
+  the whole print)
+- per pass: one direct XY+Z travel to the next loop start at $jog_speed ->
+  StartExtrusion -> extrude the loop at $print_speed -> StopExtrusion.
+  No safe-Z lift between passes; the bath supports the part, so the nozzle
+  stays near the print plane and Z only changes by layer_height
+- final move lifts to $Z_safe to park
+- StartExtrusion / StopExtrusion functions wrap DriveBrakeOff/On + Dwell;
+  StopExtrusion no longer takes $Z_safe (no lift)
 
-Each closed-loop path becomes one Automation1 pass.
+Each closed-loop path becomes one pass.
 """
 
 from dataclasses import dataclass
@@ -23,14 +27,14 @@ from dataclasses import dataclass
 class Automation1Config:
     """Defaults mirror xcavate.config (single-material Aerotech Automation1)."""
 
-    axis_z: str = "A"             # Z-axis name (xcavate's axis_1)
-    printhead: str = "Aa"         # printhead designator (xcavate's printhead_1)
+    axis_z: str = "A"
+    printhead: str = "Aa"
     dwell_start: float = 0.08
     dwell_end: float = 0.08
     initial_lift: float = 0.5
     amount_up: float = 10.0
     container_height: float = 0.0
-    jog_speed: float = 5.0        # mm/s
+    jog_speed: float = 5.0        # mm/s, between-pass direct travel
     print_feedrate: float = 1.0   # mm/s along extrusion path
     num_decimals: int = 4
 
@@ -73,58 +77,59 @@ def write_automation1_gcode(ordered, config=None):
         "$X_start as real, $Y_start as real, "
         "$Z_print as real, $Z_safe as real, $dwell_start as real, $dwell_end as real)"
     )
-    out.append("; Automation1 Aerotech program")
+    out.append("; Automation1 Aerotech program — direct travel between passes (no safe-Z bouncing)")
     out.append("")
+    # blending stays on for the whole print so motion across pass transitions is smooth
+    out.append("VelocityBlendingOn()")
+    out.append("CornerRoundingOn()")
 
     paths = [(z, p) for z, p in ordered if p.points]
     for i, (z, path) in enumerate(paths):
         x0, y0 = path.points[0]
         marker = "; Print Pass 0 " if i == 0 else f"; Print pass {i} "
+        out.append("")
         out.append(marker)
-        # travel to XY, then drop Z
-        out.append(f"G1 X ($X_start+{_f(x0, nd)}) Y ($Y_start+{_f(y0, nd)}) F $jog_speed")
-        out.append(f"G1 {cfg.axis_z} ($Z_print+{_f(z, nd)}) F $jog_speed")
-        out.append("VelocityBlendingOn()")
-        out.append("CornerRoundingOn()")
+        # one direct XY+Z travel to the next loop start at jog speed
+        out.append(
+            f"G1 X ($X_start+{_f(x0, nd)}) Y ($Y_start+{_f(y0, nd)}) "
+            f"{cfg.axis_z} ($Z_print+{_f(z, nd)}) F $jog_speed"
+        )
         out.append("StartExtrusion($dwell_start)")
+        # extrude around the loop
         out.append(
             f"G1 X ($X_start+{_f(x0, nd)}) Y ($Y_start+{_f(y0, nd)}) "
             f"{cfg.axis_z} ($Z_print+{_f(z, nd)}) F $print_speed"
         )
-        # extrude along the loop and close it
         for x, y in path.points[1:]:
             out.append(
                 f"G1 X ($X_start+{_f(x, nd)}) Y ($Y_start+{_f(y, nd)}) "
                 f"{cfg.axis_z} ($Z_print+{_f(z, nd)}) F $print_speed"
             )
+        # close the loop
         out.append(
             f"G1 X ($X_start+{_f(x0, nd)}) Y ($Y_start+{_f(y0, nd)}) "
             f"{cfg.axis_z} ($Z_print+{_f(z, nd)}) F $print_speed"
         )
-        # pass end
-        out.append("StopExtrusion($Z_safe, $dwell_end)")
-        out.append("VelocityBlendingOff()")
-        out.append("CornerRoundingOff()")
-        out.append(f"G1 {cfg.axis_z} $Z_safe F $jog_speed")
-        out.append("Disable(Y)")
-        out.append("Enable(Y)")
+        out.append("StopExtrusion($dwell_end)")
 
-    # print_network footer
-    out.append(f"G1 {cfg.axis_z} $Z_safe F $jog_speed ")
+    # end of all passes: turn blending off and park at safe Z
+    out.append("")
+    out.append("VelocityBlendingOff()")
+    out.append("CornerRoundingOff()")
+    out.append(f"G1 {cfg.axis_z} $Z_safe F $jog_speed")
     out.append("")
     out.append("end")
     out.append("")
 
-    # --- StartExtrusion / StopExtrusion functions ---
+    # --- StartExtrusion / StopExtrusion (no lift in StopExtrusion) ---
     out.append("function StartExtrusion($dwell_start as real)")
     out.append(f"      DriveBrakeOff({cfg.printhead})")
     out.append("      Dwell($dwell_start)")
     out.append("end")
     out.append("")
-    out.append("function StopExtrusion($Z_safe as real, $dwell_end as real)")
+    out.append("function StopExtrusion($dwell_end as real)")
     out.append(f"      DriveBrakeOn({cfg.printhead})")
     out.append("      Dwell($dwell_end)")
-    out.append(f"      G1 {cfg.axis_z} $Z_safe F 10")
     out.append("end")
     out.append("")
 
