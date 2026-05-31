@@ -1,6 +1,6 @@
 import argparse
 
-from . import gcode, mesh, regions, sequencer, slicer
+from . import gcode, gcode_aerotech, mesh, regions, sequencer, slicer
 
 
 def run(
@@ -16,13 +16,18 @@ def run(
     smoothing=0.05,
     print_feedrate=600.0,
     travel_feedrate=1800.0,
+    flavor="toggle",
+    aerotech_config=None,
     preview=None,
 ):
     m = mesh.load_oriented(input_path, scale=scale, up_axis=up_axis)
     layers = slicer.slice_mesh(m, layer_height, min_island_area)
     plan = regions.build_plan(layers, min_branch_layers)
     ordered = sequencer.order_paths(plan, layers, line_width, perimeters, smoothing=smoothing)
-    text = gcode.write_gcode(ordered, print_feedrate, travel_feedrate)
+    if flavor == "aerotech":
+        text = gcode_aerotech.write_aerotech_gcode(ordered, aerotech_config)
+    else:
+        text = gcode.write_gcode(ordered, print_feedrate, travel_feedrate)
     with open(output, "w") as f:
         f.write(text)
     print(
@@ -55,8 +60,24 @@ def main(argv=None):
     )
     p.add_argument("--print-feedrate", type=float, default=600.0)
     p.add_argument("--travel-feedrate", type=float, default=1800.0)
+    p.add_argument(
+        "--flavor",
+        choices=["toggle", "aerotech"],
+        default="toggle",
+        help="G-code flavor: 'toggle' (StartExtrusion/StopExtrusion) or 'aerotech' (Enable/BRAKE/DWELL passes)",
+    )
+    p.add_argument("--aerotech-axis-z", default="A", help="Aerotech Z-axis name (single-material)")
+    p.add_argument("--aerotech-printhead", default="Aa", help="Aerotech printhead designator")
+    p.add_argument("--aerotech-print-speed", type=float, default=1.0, help="Aerotech extrusion speed (mm/s)")
+    p.add_argument("--aerotech-container-height", type=float, default=0.0, help="Aerotech container/bath surface Z (mm)")
     p.add_argument("--preview", default=None, help="path to write a top-view PNG")
     a = p.parse_args(argv)
+    aero_cfg = gcode_aerotech.AerotechConfig(
+        axis_z=a.aerotech_axis_z,
+        printhead=a.aerotech_printhead,
+        print_feedrate=a.aerotech_print_speed,
+        container_height=a.aerotech_container_height,
+    ) if a.flavor == "aerotech" else None
     run(
         a.input,
         output=a.output,
@@ -70,6 +91,8 @@ def main(argv=None):
         smoothing=a.smoothing,
         print_feedrate=a.print_feedrate,
         travel_feedrate=a.travel_feedrate,
+        flavor=a.flavor,
+        aerotech_config=aero_cfg,
         preview=a.preview,
     )
 
