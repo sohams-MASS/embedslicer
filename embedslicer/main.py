@@ -1,6 +1,6 @@
 import argparse
 
-from . import gcode, gcode_aerotech, mesh, regions, sequencer, slicer
+from . import gcode, gcode_aerotech, gcode_automation1, mesh, regions, sequencer, slicer
 
 
 def run(
@@ -26,6 +26,8 @@ def run(
     ordered = sequencer.order_paths(plan, layers, line_width, perimeters, smoothing=smoothing)
     if flavor == "aerotech":
         text = gcode_aerotech.write_aerotech_gcode(ordered, aerotech_config)
+    elif flavor == "automation1":
+        text = gcode_automation1.write_automation1_gcode(ordered, aerotech_config)
     else:
         text = gcode.write_gcode(ordered, print_feedrate, travel_feedrate)
     with open(output, "w") as f:
@@ -62,9 +64,13 @@ def main(argv=None):
     p.add_argument("--travel-feedrate", type=float, default=1800.0)
     p.add_argument(
         "--flavor",
-        choices=["toggle", "aerotech"],
+        choices=["toggle", "aerotech", "automation1"],
         default="toggle",
-        help="G-code flavor: 'toggle' (StartExtrusion/StopExtrusion) or 'aerotech' (Enable/BRAKE/DWELL passes)",
+        help=(
+            "G-code flavor: 'toggle' (StartExtrusion/StopExtrusion), "
+            "'aerotech' (DVAR + Enable/BRAKE/DWELL passes), "
+            "or 'automation1' (program/function wrapper with variable-relative coords)"
+        ),
     )
     p.add_argument("--aerotech-axis-z", default="A", help="Aerotech Z-axis name (single-material)")
     p.add_argument("--aerotech-printhead", default="Aa", help="Aerotech printhead designator")
@@ -72,12 +78,22 @@ def main(argv=None):
     p.add_argument("--aerotech-container-height", type=float, default=0.0, help="Aerotech container/bath surface Z (mm)")
     p.add_argument("--preview", default=None, help="path to write a top-view PNG")
     a = p.parse_args(argv)
-    aero_cfg = gcode_aerotech.AerotechConfig(
-        axis_z=a.aerotech_axis_z,
-        printhead=a.aerotech_printhead,
-        print_feedrate=a.aerotech_print_speed,
-        container_height=a.aerotech_container_height,
-    ) if a.flavor == "aerotech" else None
+    if a.flavor == "aerotech":
+        aero_cfg = gcode_aerotech.AerotechConfig(
+            axis_z=a.aerotech_axis_z,
+            printhead=a.aerotech_printhead,
+            print_feedrate=a.aerotech_print_speed,
+            container_height=a.aerotech_container_height,
+        )
+    elif a.flavor == "automation1":
+        aero_cfg = gcode_automation1.Automation1Config(
+            axis_z=a.aerotech_axis_z,
+            printhead=a.aerotech_printhead,
+            print_feedrate=a.aerotech_print_speed,
+            container_height=a.aerotech_container_height,
+        )
+    else:
+        aero_cfg = None
     run(
         a.input,
         output=a.output,
