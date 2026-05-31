@@ -45,8 +45,6 @@ def write_automation1_gcode(ordered, config=None):
     nd = cfg.num_decimals
     out = []
 
-    fp = _f(cfg.print_feedrate, nd)
-
     # --- top-level program block ---
     out.append("program")
     out.append("      var $X_start as real = 0")
@@ -54,6 +52,7 @@ def write_automation1_gcode(ordered, config=None):
     out.append("      var $Z_print as real = 0")
     out.append(f"      var $Z_safe as real = $Z_print + {_f(cfg.container_height + cfg.amount_up, nd)}")
     out.append(f"      var $jog_speed as real = {_f(cfg.jog_speed, nd)}")
+    out.append(f"      var $print_speed as real = {_f(cfg.print_feedrate, nd)}")
     out.append(f"      var $dwell_start as real = {_f(cfg.dwell_start, nd)}")
     out.append(f"      var $dwell_end as real = {_f(cfg.dwell_end, nd)}")
     out.append("")
@@ -61,13 +60,17 @@ def write_automation1_gcode(ordered, config=None):
     out.append("      G1 X $X_start Y $Y_start F 20")
     out.append(f"      G1 {cfg.axis_z} $Z_safe F 10")
     out.append("      ProgramPause()")
-    out.append("      print_network($jog_speed, $X_start, $Y_start, $Z_print, $Z_safe, $dwell_start, $dwell_end)")
+    out.append(
+        "      print_network($jog_speed, $print_speed, $X_start, $Y_start, "
+        "$Z_print, $Z_safe, $dwell_start, $dwell_end)"
+    )
     out.append("end")
     out.append("")
 
     # --- print_network function: contains the passes ---
     out.append(
-        "function print_network($jog_speed as real, $X_start as real, $Y_start as real, "
+        "function print_network($jog_speed as real, $print_speed as real, "
+        "$X_start as real, $Y_start as real, "
         "$Z_print as real, $Z_safe as real, $dwell_start as real, $dwell_end as real)"
     )
     out.append("; Automation1 Aerotech program")
@@ -86,17 +89,17 @@ def write_automation1_gcode(ordered, config=None):
         out.append("StartExtrusion($dwell_start)")
         out.append(
             f"G1 X ($X_start+{_f(x0, nd)}) Y ($Y_start+{_f(y0, nd)}) "
-            f"{cfg.axis_z} ($Z_print+{_f(z, nd)}) F {fp}"
+            f"{cfg.axis_z} ($Z_print+{_f(z, nd)}) F $print_speed"
         )
         # extrude along the loop and close it
         for x, y in path.points[1:]:
             out.append(
                 f"G1 X ($X_start+{_f(x, nd)}) Y ($Y_start+{_f(y, nd)}) "
-                f"{cfg.axis_z} ($Z_print+{_f(z, nd)}) F {fp}"
+                f"{cfg.axis_z} ($Z_print+{_f(z, nd)}) F $print_speed"
             )
         out.append(
             f"G1 X ($X_start+{_f(x0, nd)}) Y ($Y_start+{_f(y0, nd)}) "
-            f"{cfg.axis_z} ($Z_print+{_f(z, nd)}) F {fp}"
+            f"{cfg.axis_z} ($Z_print+{_f(z, nd)}) F $print_speed"
         )
         # pass end
         out.append("StopExtrusion($Z_safe, $dwell_end)")

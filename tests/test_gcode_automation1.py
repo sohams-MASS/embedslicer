@@ -21,12 +21,30 @@ def test_program_wrapper_and_variables():
     assert "var $Y_start as real = 0" in text
     assert "var $Z_print as real = 0" in text
     assert "$Z_safe" in text
-    # main program calls into print_network()
+    assert "$jog_speed" in text
+    # print speed is now also a declared variable
+    assert "var $print_speed as real =" in text
+    # main program calls into print_network() with $print_speed
     assert "print_network(" in text
+    assert "$print_speed" in text
     # functions exist
     assert "function print_network(" in text
     assert "function StartExtrusion(" in text
     assert "function StopExtrusion(" in text
+
+
+def test_extrusion_moves_use_print_speed_variable():
+    text = write_automation1_gcode(_sample_ordered())
+    # extrusion moves carry the axis-Z token "($Z_print+"; travel-only moves
+    # don't. Every extrusion move's feedrate must reference $print_speed.
+    extrusion = [
+        ln for ln in text.splitlines()
+        if ln.startswith("G1 X ($X_start+") and "($Z_print+" in ln
+    ]
+    assert extrusion
+    for ln in extrusion:
+        assert "F $print_speed" in ln
+        assert "F 1.0000" not in ln
 
 
 def test_extrusion_functions_use_drive_brake_and_dwell():
