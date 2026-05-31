@@ -1,0 +1,17 @@
+Print sequence for bunny.ply
+============================================================
+78 layers, 5 regions, 179 paths total
+
+Region order (as emitted):
+  paths    0–98    ( 99 paths)  Body (trunk)    z  -6.12 →   2.88  base @(-2.01, 1.12)
+  paths   99–129   ( 31 paths)  Branch 1        z   3.08 →   5.88  base @(-3.95,-0.95)
+  paths  130–152   ( 23 paths)  Ear A (left)    z   6.08 →   8.48  base @(-4.21,-0.90)
+  paths  153–172   ( 20 paths)  Ear B (right)   z   6.08 →   9.08  base @(-1.72, 0.91)
+  paths  173–178   (  6 paths)  Branch 4        z   3.08 →   3.48  base @( 2.60,-0.31)
+
+Continuity check (paths per region == number of contiguous runs?):
+  Body (trunk)    99 paths in 1 run(s) -> continuous: YES
+  Branch 1        31 paths in 1 run(s) -> continuous: YES
+  Ear A (left)    23 paths in 1 run(s) -> continuous: YES
+  Ear B (right)   20 paths in 1 run(s) -> continuous: YES
+  Branch 4         6 paths in 1 run(s) -> continuous: YES

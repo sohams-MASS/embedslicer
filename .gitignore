@@ -2,4 +2,8 @@
 __pycache__/
 *.pyc
 out.gcode
-*.png
+.DS_Store
+embedslicer.egg-info/
+bunny.zip
+# generated PNGs at repo root only; versioned samples are committed under samples/
+/*.png
