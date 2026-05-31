@@ -3,11 +3,16 @@ from scipy.interpolate import splev, splprep
 from shapely.geometry import LinearRing, Polygon
 
 
-def _smooth_ring(coords, tolerance, point_spacing):
+def _smooth_ring(coords, tolerance, point_spacing, seam_shift=0.0):
     """Smooth one ring with a periodic cubic spline; return (N,2) points or None.
 
     None means the ring couldn't be smoothed (too few distinct points or the
     spline fit failed) and the caller should keep the original ring.
+
+    seam_shift in [0, 1) shifts where the closing chord (the small straight
+    segment from the last sample back to the first) lands on the loop. Varying
+    it per layer prevents seams from aligning vertically — which otherwise
+    reads as an "open C-shape" gap in 3D toolpath previews.
     """
     pts = np.asarray(coords, dtype=float)
     # shapely rings repeat the first vertex at the end; drop it for a periodic fit
@@ -33,17 +38,19 @@ def _smooth_ring(coords, tolerance, point_spacing):
         tck, _ = splprep([pts[:, 0], pts[:, 1]], s=s, per=1)
     except Exception:
         return None
-    u = np.linspace(0.0, 1.0, n_out, endpoint=False)
+    u = (np.linspace(0.0, 1.0, n_out, endpoint=False) + (seam_shift % 1.0)) % 1.0
     x, y = splev(u, tck)
     return np.column_stack([x, y])
 
 
-def smooth_polygon(polygon, tolerance=0.05, point_spacing=0.3):
+def smooth_polygon(polygon, tolerance=0.05, point_spacing=0.3, seam_shift=0.0):
     """Smooth a polygon's contours with a periodic spline to remove facet noise.
 
     tolerance: approximate RMS deviation (mm) allowed from the raw contour;
         larger = smoother. tolerance <= 0 disables smoothing (returns input).
     point_spacing: spacing (mm) at which the smoothed curve is resampled.
+    seam_shift: where the closing chord lands on the loop (0..1, fractional).
+        Vary per layer so seams don't align vertically across the stack.
 
     Holes are preserved. Falls back to the original ring where it can't be
     smoothed, and to the original polygon if the smoothed result is invalid.
@@ -51,12 +58,12 @@ def smooth_polygon(polygon, tolerance=0.05, point_spacing=0.3):
     if tolerance <= 0:
         return polygon
 
-    ext = _smooth_ring(polygon.exterior.coords, tolerance, point_spacing)
+    ext = _smooth_ring(polygon.exterior.coords, tolerance, point_spacing, seam_shift)
     shell = LinearRing(ext) if ext is not None else polygon.exterior
 
     holes = []
     for interior in polygon.interiors:
-        sm = _smooth_ring(interior.coords, tolerance, point_spacing)
+        sm = _smooth_ring(interior.coords, tolerance, point_spacing, seam_shift)
         holes.append(LinearRing(sm) if sm is not None else interior)
 
     result = Polygon(shell, holes)

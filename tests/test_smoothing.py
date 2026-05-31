@@ -50,3 +50,16 @@ def test_tiny_polygon_does_not_crash():
     tri = Polygon([(0, 0), (1, 0), (0.5, 1)])
     s = smooth_polygon(tri, tolerance=0.1, point_spacing=0.5)
     assert s.is_valid and not s.is_empty
+
+
+def test_seam_shift_moves_loop_start_point():
+    # smoothing the same polygon with different seam_shift values produces
+    # different exterior starting vertices, so the closing chord lands at
+    # a different position on the loop. (Per-layer shifting is what stops
+    # seams from aligning vertically across layers.)
+    p = _noisy_circle()
+    a = smooth_polygon(p, tolerance=0.2, point_spacing=0.5, seam_shift=0.0)
+    b = smooth_polygon(p, tolerance=0.2, point_spacing=0.5, seam_shift=0.5)
+    assert tuple(a.exterior.coords[0]) != tuple(b.exterior.coords[0])
+    # both must still be valid closed polygons of essentially the same shape
+    assert abs(a.area - b.area) / a.area < 0.01
