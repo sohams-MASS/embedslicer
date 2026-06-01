@@ -40,6 +40,29 @@ def test_each_group_is_bottom_up(y_mesh):
         assert layer_indices == sorted(layer_indices)
 
 
+def test_inverted_y_mesh_gives_bottom_branches_then_trunk(inverted_y_mesh):
+    # Two posts at the BOTTOM merging into a slab on top: each post must
+    # print fully (bottom-up) BEFORE the slab. This is the mirror of the
+    # standard Y-mesh test and the case for the bunny flipped ears-down.
+    layers = slice_mesh(inverted_y_mesh, layer_height=0.5, min_island_area=0.1)
+    plan = build_plan(layers, min_branch_layers=3)
+    assert len(plan) == 3  # left post, right post, slab
+
+    def base_x(group):
+        li, ii = sorted(group, key=lambda c: c[0])[0]
+        return layers[li].islands[ii].centroid.x
+
+    # bottom branches first, ordered left (-3) then right (+3)
+    assert base_x(plan[0]) < 0 < base_x(plan[1])
+    # both branches start at the very bottom (layer 0)
+    assert min(li for li, _ in plan[0]) == 0
+    assert min(li for li, _ in plan[1]) == 0
+    # the slab is emitted LAST and starts strictly above the branches' top
+    branch_top = max(max(li for li, _ in plan[0]), max(li for li, _ in plan[1]))
+    slab_first = min(li for li, _ in plan[2])
+    assert slab_first > branch_top
+
+
 def test_rootless_fragment_does_not_print_first():
     # A rooted body (layers 0-3, at x=10) and a graph-disconnected fragment
     # (layers 4-7, at x=0) that does NOT overlap the body. The rooted body must

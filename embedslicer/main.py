@@ -8,6 +8,7 @@ def run(
     output="out.gcode",
     scale=1.0,
     up_axis="z",
+    flip=False,
     layer_height=0.2,
     line_width=0.4,
     perimeters=2,
@@ -20,7 +21,7 @@ def run(
     aerotech_config=None,
     preview=None,
 ):
-    m = mesh.load_oriented(input_path, scale=scale, up_axis=up_axis)
+    m = mesh.load_oriented(input_path, scale=scale, up_axis=up_axis, flip=flip)
     layers = slicer.slice_mesh(m, layer_height, min_island_area)
     plan = regions.build_plan(layers, min_branch_layers)
     ordered = sequencer.order_paths(plan, layers, line_width, perimeters, smoothing=smoothing)
@@ -49,6 +50,7 @@ def main(argv=None):
     p.add_argument("-o", "--output", default="out.gcode")
     p.add_argument("--scale", type=float, default=1.0)
     p.add_argument("--up-axis", default="z")
+    p.add_argument("--flip", action="store_true", help="flip the mesh upside down (180 deg about X) so ears print first")
     p.add_argument("--layer-height", type=float, default=0.2)
     p.add_argument("--line-width", type=float, default=0.4)
     p.add_argument("--perimeters", type=int, default=2)
@@ -99,6 +101,7 @@ def main(argv=None):
         output=a.output,
         scale=a.scale,
         up_axis=a.up_axis,
+        flip=a.flip,
         layer_height=a.layer_height,
         line_width=a.line_width,
         perimeters=a.perimeters,

@@ -19,10 +19,11 @@ def batlow_plotly_scale(n=256):
     return scale
 
 
-def build_figure(input_path, line_width=0.4, min_branch_layers=3):
+def build_figure(input_path, line_width=0.4, min_branch_layers=3, flip=False):
     _, _, ordered = run(
         input_path,
         output="/tmp/_render.gcode",
+        flip=flip,
         layer_height=0.2,
         line_width=line_width,
         perimeters=2,
@@ -102,8 +103,9 @@ def main():
     p.add_argument("output", nargs="?", default="bunny_3d.html")
     p.add_argument("--line-width", type=float, default=0.4)
     p.add_argument("--min-branch-layers", type=int, default=3)
+    p.add_argument("--flip", action="store_true")
     a = p.parse_args()
-    fig = build_figure(a.input, line_width=a.line_width, min_branch_layers=a.min_branch_layers)
+    fig = build_figure(a.input, line_width=a.line_width, min_branch_layers=a.min_branch_layers, flip=a.flip)
     fig.write_html(a.output, include_plotlyjs=True, full_html=True)
     print(f"wrote {a.output}")
 

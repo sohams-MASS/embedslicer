@@ -69,9 +69,26 @@ def build_plan(layers, min_branch_layers=3):
     return _plan(set(nodes), adj, layers, min_branch_layers)
 
 
-def _plan(nodes, adj, layers, k):
-    if not nodes:
-        return []
+def _attach_smalls(big, all_comps, layers, k):
+    """Build branch sets from the 'big' components and fold small components
+    into the geometrically-nearest branch."""
+    branches = [set(c) for c in big]
+    for c in (c for c in all_comps if _span(c) < k):
+        cx = _base_centroid_x(c, layers)
+        nearest = min(
+            range(len(branches)),
+            key=lambda i: abs(_base_centroid_x(list(branches[i]), layers) - cx),
+        )
+        branches[nearest].update(c)
+    return branches
+
+
+def _try_top_branches(nodes, adj, layers, k):
+    """Lowest layer s where nodes>=s split into >=2 persistent components.
+
+    Means the structure goes: single trunk (layers<s) -> branches (layers>=s).
+    Emit trunk first, then each branch fully.
+    """
     present = sorted({li for li, _ in nodes})
     for s in present:
         upper = {n for n in nodes if n[0] >= s}
@@ -79,20 +96,51 @@ def _plan(nodes, adj, layers, k):
         big = [c for c in comps if _span(c) >= k]
         if len(big) >= 2:
             trunk = sorted((n for n in nodes if n[0] < s), key=lambda n: n[0])
-            branches = [set(c) for c in big]
-            # attach any small leftover components to the nearest branch (by base x)
-            for c in (c for c in comps if _span(c) < k):
-                cx = _base_centroid_x(c, layers)
-                nearest = min(
-                    range(len(branches)),
-                    key=lambda i: abs(_base_centroid_x(list(branches[i]), layers) - cx),
-                )
-                branches[nearest].update(c)
+            branches = _attach_smalls(big, comps, layers, k)
             branches.sort(key=lambda b: (_base_layer(list(b)), _base_centroid_x(list(b), layers)))
             result = []
             if trunk:
-                result.append(trunk)
+                # recurse into trunk so any nested bottom-branches are found
+                result.extend(_plan(set(trunk), adj, layers, k))
             for b in branches:
                 result.extend(_plan(set(b), adj, layers, k))
             return result
+    return None
+
+
+def _try_bottom_branches(nodes, adj, layers, k):
+    """Highest layer s where nodes<=s split into >=2 persistent components.
+
+    Means the structure goes: separate columns (layers<=s) -> single trunk
+    above (layers>s). Each column prints fully bottom-up first, then the
+    merged trunk continues up. This is the case for a bunny flipped ear-down.
+    """
+    present = sorted({li for li, _ in nodes}, reverse=True)
+    for s in present:
+        lower = {n for n in nodes if n[0] <= s}
+        comps = _components(lower, adj)
+        big = [c for c in comps if _span(c) >= k]
+        if len(big) >= 2:
+            trunk = sorted((n for n in nodes if n[0] > s), key=lambda n: n[0])
+            branches = _attach_smalls(big, comps, layers, k)
+            branches.sort(key=lambda b: (_base_layer(list(b)), _base_centroid_x(list(b), layers)))
+            result = []
+            for b in branches:
+                result.extend(_plan(set(b), adj, layers, k))
+            if trunk:
+                # recurse into trunk in case it has further (top) splits
+                result.extend(_plan(set(trunk), adj, layers, k))
+            return result
+    return None
+
+
+def _plan(nodes, adj, layers, k):
+    if not nodes:
+        return []
+    plan = _try_top_branches(nodes, adj, layers, k)
+    if plan is not None:
+        return plan
+    plan = _try_bottom_branches(nodes, adj, layers, k)
+    if plan is not None:
+        return plan
     return [sorted(nodes, key=lambda n: n[0])]
